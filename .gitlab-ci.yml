@@ -21,14 +21,14 @@ staging:
     tags:
         - ugrad
 
-# production:
-#     type: deploy
-#     stage: production
-#     image: ruby:latest
-#     script:
-#         - export PATH=$PATH:/home/gitlab-runner/.gem/ruby/2.5.0/bin
-#         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
-#     only:
-#         - main
-#     tags:
-#         - ugrad
+production:
+    type: deploy
+    stage: production
+    image: ruby:latest
+    script:
+        - export PATH=$PATH:/home/gitlab-runner/.gem/ruby/2.5.0/bin
+        - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+    only:
+        - main
+    tags:
+        - ugrad
