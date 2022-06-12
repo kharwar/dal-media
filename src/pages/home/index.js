@@ -1,13 +1,11 @@
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Container } from '@mui/material'
+import { Post } from '../../components'
 
 const Home = () => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2 }}>
-      <Typography variant='h2'>
-        Home
-      </Typography>
-    </Box>
+    <Container maxWidth="sm">
+      <Post />
+    </Container>
   )
 }
 
