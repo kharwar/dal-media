@@ -191,7 +191,7 @@ const CreatePost = () => {
           sx={{ width: '100%' }}
           variant="filled"
         >
-          {`Post ${state.post ? 'updated' : 'created'} successfully`}
+          {`Post ${state?.post ? 'updated' : 'created'} successfully`}
         </Alert>
       </Snackbar>
     </Paper>
