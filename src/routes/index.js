@@ -6,6 +6,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/create-post" element={<CreatePost />} />
+      <Route path="/edit-post/:id" element={<CreatePost />} />
     </Routes>
   )
 }

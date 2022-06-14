@@ -1,6 +1,7 @@
 import React from 'react'
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material'
 import Images from '../../../assets'
+import { loggedInUser } from '../../../data';
 
 const settings = ['Profile', 'Logout'];
 
@@ -20,13 +21,13 @@ const NavUser = () => {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, }}>
-          <Avatar alt="Jeff Hardy" src={Images.avatar} />
+          <Avatar alt={loggedInUser.name} src={loggedInUser.image} />
           <Typography textAlign="center" sx={{
             ml: 1,
             display: { xs: 'none', md: 'flex' },
             ...styling.title
           }}>
-            {'Jeff'}
+            {loggedInUser.name}
           </Typography>
         </IconButton>
       </Tooltip>
