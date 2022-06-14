@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Chip, Menu, MenuItem, Tooltip, Typography } from '@mui/material'
+import { Box, Chip, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const options = ['Post', 'Group', 'Event', 'Blog'];
@@ -18,6 +18,10 @@ const NavCreateButton = () => {
 
     if (option && option === 'Post') {
       navigate('/create-post');
+    }
+
+    if (option && option === 'Event') {
+      navigate('/create-event');
     }
 
     setAnchorElCreate(null);
@@ -56,7 +60,7 @@ const NavCreateButton = () => {
         ))}
       </Menu>
     </Box>
-  )
-}
+  );
+};
 
 export default NavCreateButton;

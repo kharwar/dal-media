@@ -1,5 +1,5 @@
-import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 
@@ -58,8 +58,8 @@ const NavMenuPages = (props) => {
         ))}
       </Menu>
     </Box>
-  )
-}
+  );
+};
 
 
 export default NavMenuPages;

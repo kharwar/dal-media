@@ -14,9 +14,13 @@ const Navbar = () => {
 
   const navigateToPage = (page) => {
     if (page === 'Home') {
-      navigate('/')
+      navigate('/');
     }
-  }
+
+    if (page === 'Events') {
+      navigate('/event-page');
+    }
+  };
 
   return (
     <AppBar position="sticky">
