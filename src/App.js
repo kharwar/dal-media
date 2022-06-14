@@ -4,14 +4,21 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import AppRoutes from './routes';
 import { BrowserRouter } from 'react-router-dom';
+import AlertDialog, { AlertProvider } from './components/alert-dialog';
 
 function App() {
+
+  console.log('app');
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <CssBaseline />
-        <Navbar />
-        <AppRoutes />
+        <AlertProvider>
+          <CssBaseline />
+          <Navbar />
+          <AppRoutes />
+          <AlertDialog />
+        </AlertProvider>
       </BrowserRouter>
     </ThemeProvider>
   );
