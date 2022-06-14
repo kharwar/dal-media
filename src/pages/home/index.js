@@ -1,13 +1,23 @@
-import { Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Container, } from '@mui/material'
+import { useEffect } from 'react';
+import PostList from '../../components/post-list';
 
 const Home = () => {
+
+  console.log('HOME');
+
+  useEffect(() => {
+    console.log('mount');
+
+    return () => {
+      console.log('unmout')
+    }
+  }, []);
+
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pt: 2 }}>
-      <Typography variant='h2'>
-        Home
-      </Typography>
-    </Box>
+    <Container maxWidth="sm">
+      <PostList />
+    </Container>
   )
 }
 
