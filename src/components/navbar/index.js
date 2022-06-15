@@ -15,6 +15,9 @@ const Navbar = () => {
     if (page === "Home") {
       navigate("/");
     }
+    if (page === "Groups") {
+      navigate("/groups");
+    }
   };
 
   return (
