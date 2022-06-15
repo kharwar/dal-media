@@ -1,27 +1,36 @@
-import { Avatar, Box, Stack, Typography, IconButton } from '@mui/material'
 import React from 'react'
-import Images from '../../../assets';
+import { Avatar, Box, Stack, Typography, IconButton, Divider } from '@mui/material'
 import { grey } from '@mui/material/colors';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { loggedInUser } from '../../../data';
 
-const PostHeader = () => {
+const PostHeader = ({ post: { user, createdAt }, handleMenu }) => {
+
+  console.log('PostHeader');
+
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-      <Box sx={{ display: 'flex', flex: 1, mr: 1 }}>
-        <Avatar src={Images.avatar} />
-        <Stack ml={1}>
-          <Typography variant='subtitle1' sx={{ lineHeight: 1.3, }} >
-            Jeff Hardy
-          </Typography>
-          <Typography variant="caption" sx={{ fontWeight: '400', lineHeight: 1, color: grey[600] }}>
-            June 2, 2022
-          </Typography>
-        </Stack>
+    <>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+        <Box sx={{ display: 'flex', flex: 1, mr: 1 }}>
+          <Avatar src={user.image} />
+          <Stack ml={1}>
+            <Typography variant='body1' sx={{ lineHeight: 1.4, }} >
+              {user.name}
+            </Typography>
+            <Typography variant="body2" sx={{ lineHeight: 1, color: grey[600] }}>
+              {createdAt}
+            </Typography>
+          </Stack>
+        </Box>
+        {
+          user.id === loggedInUser.id &&
+          <IconButton onClick={handleMenu}>
+            <MoreHorizIcon />
+          </IconButton>
+        }
       </Box>
-      <IconButton sx={{ alignSelf: 'flex-end' }}>
-        <MoreHorizIcon />
-      </IconButton>
-    </Box>
+      <Divider sx={{ mb: 1 }} />
+    </>
   )
 }
 

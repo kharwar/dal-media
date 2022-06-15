@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   Avatar, Paper, Typography,
   Stack, IconButton, Button, Box,
@@ -8,15 +8,33 @@ import Images from '../../assets'
 import { DeleteRounded, ImageRounded } from '@mui/icons-material';
 import './styles.css';
 import { PostTextInput } from '../../components';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { grey } from '@mui/material/colors';
+import { loggedInUser } from '../../data';
+import { dateFormat } from '../../utils';
 
 const CreatePost = () => {
 
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const fileInput = useRef(null);
   const textInput = useRef(null);
   const [textFilled, setTextFilled] = useState(false);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
+
+  console.log({ post: state?.post });
+
+  useEffect(() => {
+
+    if (state?.post) {
+      const { post } = state
+      post.description && textInput.current.setValue(post.description);
+      setImages(post.images);
+    }
+
+  }, [])
 
   const onImageChange = (e) => {
 
@@ -35,7 +53,8 @@ const CreatePost = () => {
         const file = fileList[i];
         const url = URL.createObjectURL(file);
         const id = lastId + 1;
-        newImages.push({ id, url });
+        // newImages.push({ id, url });
+        newImages.push(url);
         lastId = id;
       }
 
@@ -43,8 +62,8 @@ const CreatePost = () => {
     }
   }
 
-  const onDeleteImage = (id) => {
-    const filteredImages = images.filter((image) => image.id != id);
+  const onDeleteImage = (url) => {
+    const filteredImages = images.filter((image) => image != url);
     setImages(filteredImages);
   }
 
@@ -67,7 +86,8 @@ const CreatePost = () => {
       setImages([]);
       setTextFilled(false);
       setSnackOpen(true)
-    }, 5000);
+      navigate('/');
+    }, 3000);
 
   }
 
@@ -77,16 +97,16 @@ const CreatePost = () => {
     <Paper sx={{ m: '50px', p: '30px' }}>
       <Stack direction="row" spacing={1.5}>
         <Avatar
-          alt="Jeff Hardy"
-          src={Images.avatar}
+          alt={loggedInUser.name}
+          src={loggedInUser.image}
           sx={{ width: 56, height: 56 }}
         />
         <Stack>
-          <Typography variant="h5" component="h5" >
-            Jeff Hardy
+          <Typography variant="h6" component="h6" sx={{ lineHeight: 1.2 }}>
+            {loggedInUser.name}
           </Typography>
-          <Typography variant="body1">
-            June 2, 2022
+          <Typography variant="body2" sx={{ lineHeight: 1.2, color: grey[600] }} >
+            {dateFormat(Date.now(), 'MMM DD, YYYY')}
           </Typography>
         </Stack>
       </Stack>
@@ -106,14 +126,14 @@ const CreatePost = () => {
             <div className="img-container" key={index + ''}>
               <img
                 className="img"
-                src={image.url}
-                width="350"
-                height="350"
+                src={image}
+                width="200"
+                height="200"
               />
               <IconButton
                 disabled={loading}
                 sx={styling.btnDelete}
-                onClick={() => onDeleteImage(image.id)}
+                onClick={() => onDeleteImage(image)}
               >
                 <DeleteRounded />
               </IconButton>
@@ -149,7 +169,7 @@ const CreatePost = () => {
             sx={{
               backgroundColor: '#455A64'
             }}>
-            Post
+            {state?.post ? 'Save' : 'Post'}
           </Button>
           {loading && (
             <CircularProgress
@@ -171,7 +191,7 @@ const CreatePost = () => {
           sx={{ width: '100%' }}
           variant="filled"
         >
-          Post created successfully
+          {`Post ${state?.post ? 'updated' : 'created'} successfully`}
         </Alert>
       </Snackbar>
     </Paper>
