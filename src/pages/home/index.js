@@ -1,24 +1,23 @@
-import { Container, } from '@mui/material'
-import { useEffect } from 'react';
-import PostList from '../../components/post-list';
+import { Container } from "@mui/material";
+import { useEffect } from "react";
+import PostList from "../../components/post-list";
 
 const Home = () => {
-
-  console.log('HOME');
+  console.log("HOME");
 
   useEffect(() => {
-    console.log('mount');
+    console.log("mount");
 
     return () => {
-      console.log('unmout')
-    }
+      console.log("unmout");
+    };
   }, []);
 
   return (
     <Container maxWidth="sm">
       <PostList />
     </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

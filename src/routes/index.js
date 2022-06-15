@@ -8,7 +8,7 @@ const AppRoutes = () => {
       <Route path="/create-post" element={<CreatePost />} />
       <Route path="/edit-post/:id" element={<CreatePost />} />
     </Routes>
-  )
-}
+  );
+};
 
 export default AppRoutes;

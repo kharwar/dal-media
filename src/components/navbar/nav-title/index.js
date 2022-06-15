@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material'
-import React from 'react'
+import { Typography } from "@mui/material";
+import React from "react";
 
 const NavTitle = (props) => {
   return (
@@ -10,23 +10,22 @@ const NavTitle = (props) => {
       href="/"
       sx={{
         ...props.sx,
-        ...styling.title
-      }}>
-
+        ...styling.title,
+      }}
+    >
       {props.title}
-
     </Typography>
-  )
-}
+  );
+};
 
 export default NavTitle;
 
 const styling = {
   title: {
     mr: 2,
-    fontFamily: 'monospace',
+    fontFamily: "monospace",
     fontWeight: 700,
-    color: 'white',
-    textDecoration: 'none',
-  }
-}
+    color: "white",
+    textDecoration: "none",
+  },
+};

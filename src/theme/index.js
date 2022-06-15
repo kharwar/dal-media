@@ -1,25 +1,24 @@
-import { grey } from '@mui/material/colors';
-import { createTheme } from '@mui/material/styles';
+import { grey } from "@mui/material/colors";
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
-
   palette: {
-    mode: 'light',
+    mode: "light",
     background: {
-      default: grey[100]
+      default: grey[100],
     },
     primary: {
-      main: '#263238',
+      main: "#263238",
     },
     secondary: {
-      main: '#b0bec5',
+      main: "#b0bec5",
     },
   },
   typography: {
     button: {
-      textTransform: 'none'
-    }
-  }
+      textTransform: "none",
+    },
+  },
 });
 
 export default theme;

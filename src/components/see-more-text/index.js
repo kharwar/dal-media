@@ -1,18 +1,10 @@
-import { useCallback, useState } from 'react'
-import { Button, Typography, Box } from '@mui/material'
-import { grey } from '@mui/material/colors';
-import { styled } from '@mui/material/styles';
-import ButtonBase from '@mui/material/ButtonBase';
+import { useCallback, useState } from "react";
+import { Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
-const NoStyleButton = styled(Button)(({ theme }) => ({
-  '&:hover': {
-    backgroundColor: 'transparent',
-    fontStyle: 'underlined'
-  },
-}));
+import ButtonBase from "@mui/material/ButtonBase";
 
 const SeeMoreText = (props) => {
-
   const [showMore, setShowMore] = useState(!(props.children.length > 250));
 
   const handleClick = useCallback(() => {
@@ -21,25 +13,23 @@ const SeeMoreText = (props) => {
 
   return (
     <Typography {...props}>
-      {
-        showMore ? props.children : `${props.children.substring(0, 250)}.. `}
-      {
-        !showMore &&
+      {showMore ? props.children : `${props.children.substring(0, 250)}.. `}
+      {!showMore && (
         <ButtonBase
-          size='small'
+          size="small"
           sx={{
             p: 0,
             color: grey[700],
-            fontWeight: '600'
+            fontWeight: "600",
           }}
           disableRipple
           onClick={handleClick}
         >
           See more
         </ButtonBase>
-      }
+      )}
     </Typography>
-  )
-}
+  );
+};
 
 export default SeeMoreText;

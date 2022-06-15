@@ -1,11 +1,17 @@
-import { InputBase } from '@mui/material'
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { InputBase } from "@mui/material";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 const PostTextInput = forwardRef((props, ref) => {
-
   const inputRef = useRef();
-  const [text, setText] = useState('');
-  const { onChange, disabled, minRows, maxRows, autoFocus, sx, placeholder } = props;
+  const [text, setText] = useState("");
+  const { onChange, disabled, minRows, maxRows, autoFocus, sx, placeholder } =
+    props;
 
   useEffect(() => {
     onChange?.(text);
@@ -13,12 +19,12 @@ const PostTextInput = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     getValue: () => text,
-    setValue: (text) => setText(text)
+    setValue: (text) => setText(text),
   }));
 
   const onTextChange = (e) => {
     setText(e.target.value);
-  }
+  };
 
   return (
     <InputBase
@@ -34,7 +40,7 @@ const PostTextInput = forwardRef((props, ref) => {
       placeholder={placeholder}
       sx={sx}
     />
-  )
-})
+  );
+});
 
 export default PostTextInput;
