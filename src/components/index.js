@@ -4,6 +4,7 @@ import Post from './post';
 import Event from './event';
 import SeeMoreText from './see-more-text';
 import PostList from './post-list';
+import EventList from './event-list';
 import AlertDialog from './alert-dialog';
 
 export {
@@ -12,6 +13,7 @@ export {
   Post,
   Event,
   PostList,
+  EventList,
   SeeMoreText,
   AlertDialog
 };

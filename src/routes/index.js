@@ -9,6 +9,7 @@ const AppRoutes = () => {
       <Route path="/create-event" element={<CreateEvent />} />
       <Route path="/event-page" element={<EventPage />} />
       <Route path="/edit-post/:id" element={<CreatePost />} />
+      <Route path="/event-page/edit-event/:id" element={<CreateEvent />} />
     </Routes>
   );
 };

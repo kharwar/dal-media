@@ -4,14 +4,14 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 
-const EventFooter = () => {
+const EventFooter = ({ event: { total_interests } }) => {
   return (
     <Box>
       <Stack direction="row" sx={{ justifyContent: 'space-between', mb: 1 }}>
         <Stack direction="row" spacing={1}>
           <ThumbUpIcon />
           <Typography variant='body1'>
-            200
+            {total_interests}
           </Typography>
         </Stack>
       </Stack>

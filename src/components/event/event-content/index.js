@@ -14,24 +14,30 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const EventContent = () => {
+const EventContent = ({ event: { description, images, startDT, endDT, location } }) => {
 
   const renderImages = () => {
     return (
       <ImageList
         sx={{ width: '100%', m: 0 }}
         variant="quilted"
-        cols={3}
+        //cols={3}
         rowHeight={180}
       >
-        {itemData.map((item) => (
-          <ImageListItem key={item.img} >
-            <img
-              src={`${item.img}?fit=crop&auto=format`}
-              alt={item.title}
-              loading="lazy"
-            />
-          </ImageListItem>
+        {images.map((image, index) => (
+          <Paper
+            variant='outlined' key={index + ''}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}>
+            <ImageListItem>
+              <img
+                src={`${image}?fit=crop&auto=format`}
+                loading="lazy"
+              />
+            </ImageListItem>
+          </Paper>
         ))}
       </ImageList>
     );
@@ -42,7 +48,7 @@ const EventContent = () => {
       <Stack spacing={1}>
         <Item>
           <SeeMoreText variant='body1' sx={{ mb: 1, fontSize: '15px' }}>
-            Event Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            {description}
           </SeeMoreText>
         </Item>
 
@@ -55,7 +61,7 @@ const EventContent = () => {
               Starts On:&nbsp;&nbsp;
             </Typography>
             <Typography variant='subtitle1' sx={{ lineHeight: 2.2, }} >
-              20th Jun 2020, 12AM
+              {startDT}
             </Typography>
 
           </Box>
@@ -69,7 +75,7 @@ const EventContent = () => {
               Ends On:&nbsp;&nbsp;
             </Typography>
             <Typography variant='subtitle1' sx={{ lineHeight: 2.2, }} >
-              25th Jun 2020, 12AM
+              {endDT}
             </Typography>
 
           </Box>
@@ -82,7 +88,7 @@ const EventContent = () => {
             <LocationOnIcon fontSize="medium" />
             <Stack ml={1}>
               <Typography variant='subtitle1' sx={{ lineHeight: 1.8, fontWeight: 'bold' }} >
-                6056 University Ave, Halifax, NS.
+                {location}
               </Typography>
             </Stack>
           </Box>
@@ -90,7 +96,7 @@ const EventContent = () => {
         </Item>
 
         <Item>
-          {renderImages()}
+          {images.length > 0 && renderImages()}
         </Item>
 
       </Stack>

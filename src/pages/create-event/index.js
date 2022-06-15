@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   Avatar, Paper, Typography,
   Stack, IconButton, Button, Box,
@@ -8,15 +8,19 @@ import Images from '../../assets';
 import { DeleteRounded, ImageRounded } from '@mui/icons-material';
 import './styles.css';
 import { PostTextInput } from '../../components';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { loggedInUser } from '../../data';
+import { dateFormat } from '../../utils';
 
 
 
 const CreateEvent = () => {
 
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const fileInput = useRef(null);
   const textInput = useRef('');
   const [textFilled, setTextFilled] = useState(false);
@@ -46,6 +50,18 @@ const CreateEvent = () => {
   };
 
 
+  useEffect(() => {
+
+    if (state?.event) {
+      const { event } = state;
+      event.description && textInput.current.setValue(event.description);
+      setImages(event.images);
+      setLocation(event.location);
+      setTitle(event.title);
+    }
+
+  }, []);
+
 
   const onImageChange = (e) => {
 
@@ -64,7 +80,7 @@ const CreateEvent = () => {
         const file = fileList[i];
         const url = URL.createObjectURL(file);
         const id = lastId + 1;
-        newImages.push({ id, url });
+        newImages.push(url);
         lastId = id;
       }
 
@@ -72,8 +88,8 @@ const CreateEvent = () => {
     }
   };
 
-  const onDeleteImage = (id) => {
-    const filteredImages = images.filter((image) => image.id != id);
+  const onDeleteImage = (url) => {
+    const filteredImages = images.filter((image) => image != url);
     setImages(filteredImages);
   };
 
@@ -109,16 +125,16 @@ const CreateEvent = () => {
     <Paper sx={{ m: '50px', p: '30px' }}>
       <Stack direction="row" spacing={1.5}>
         <Avatar
-          alt="Jeff Hardy"
-          src={Images.avatar}
+          alt={loggedInUser.name}
+          src={loggedInUser.image}
           sx={{ width: 56, height: 56 }}
         />
         <Stack>
           <Typography variant="h5" component="h5" >
-            Jeff Hardy
+            {loggedInUser.name}
           </Typography>
           <Typography variant="body1">
-            June 2, 2022
+            {dateFormat(Date.now(), 'MMM DD, YYYY')}
           </Typography>
         </Stack>
       </Stack>
@@ -179,14 +195,14 @@ const CreateEvent = () => {
             <div className="img-container" key={index + ''}>
               <img
                 className="img"
-                src={image.url}
+                src={image}
                 width="350"
                 height="350"
               />
               <IconButton
                 disabled={loading}
                 sx={styling.btnDelete}
-                onClick={() => onDeleteImage(image.id)}
+                onClick={() => onDeleteImage(image)}
               >
                 <DeleteRounded />
               </IconButton>
@@ -231,7 +247,7 @@ const CreateEvent = () => {
             sx={{
               backgroundColor: '#455A64'
             }}>
-            Create Event
+            {state?.event ? 'Save' : 'Create Event'}
           </Button>
           {loading && (
             <CircularProgress
@@ -253,7 +269,7 @@ const CreateEvent = () => {
           sx={{ width: '100%' }}
           variant="filled"
         >
-          Event created successfully
+          {`Event ${state?.event ? 'updated' : 'created'} successfully`}
         </Alert>
       </Snackbar>
     </Paper>

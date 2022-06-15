@@ -1,12 +1,10 @@
 import { Container } from '@mui/material';
-import { Event } from '../../components';
+import EventList from '../../components/event-list';
 
 const EventPage = () => {
   return (
     <Container >
-      <Event />
-      <Event />
-      <Event />
+      <EventList />
     </Container>
   );
 };
