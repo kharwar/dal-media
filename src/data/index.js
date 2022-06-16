@@ -223,3 +223,117 @@ export const posts = [
     createdAt: "April 28, 2022",
   },
 ];
+
+export const files = [
+  {
+    id: 1,
+    name: "This Group Memo.pdf",
+    uploadedBy: "Art Murphy",
+    uploadedAt: "May 31, 2022",
+  },
+  {
+    id: 2,
+    name: "Are we there yet?.png",
+    uploadedBy: "Jeff Santos",
+    uploadedAt: "June 1, 2022",
+  },
+  {
+    id: 3,
+    name: "Home Alone.pdf",
+    uploadedBy: "Mason Peterson",
+    uploadedAt: "June 8, 2022",
+  },
+  {
+    id: 4,
+    name: "Grudge.pdf",
+    uploadedBy: "Eric Harvey",
+    uploadedAt: "June 15, 2022",
+  },
+  {
+    id: 5,
+    name: "Ring.pdf",
+    uploadedBy: "Art Murphy",
+    uploadedAt: "May 31, 2022",
+  },
+  {
+    id: 6,
+    name: "MI5.pdf",
+    uploadedBy: "Jeff Santos",
+    uploadedAt: "June 1, 2022",
+  },
+  {
+    id: 7,
+    name: "Top Gun.pdf",
+    uploadedBy: "Mason Peterson",
+    uploadedAt: "June 8, 2022",
+  },
+  {
+    id: 8,
+    name: "Atomic Habit.pdf",
+    uploadedBy: "Eric Harvey",
+    uploadedAt: "June 15, 2022",
+  },
+  {
+    id: 9,
+    name: "I am having fun.pdf",
+    uploadedBy: "Art Murphy",
+    uploadedAt: "May 31, 2022",
+  },
+  {
+    id: 10,
+    name: "This is boring.pdf",
+    uploadedBy: "Jeff Santos",
+    uploadedAt: "June 1, 2022",
+  },
+  {
+    id: 11,
+    name: "Wow, I am almost done.pdf",
+    uploadedBy: "Mason Peterson",
+    uploadedAt: "June 8, 2022",
+  },
+  {
+    id: 12,
+    name: "Am I done yet?.pdf",
+    uploadedBy: "Eric Harvey",
+    uploadedAt: "June 15, 2022",
+  },
+];
+
+export const groups = [
+  {
+    id: 1,
+    name: "Web App Dev",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+  },
+  {
+    id: 2,
+    name: "Data Science",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+  },
+  {
+    id: 3,
+    name: "Cloud Computing",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+  },
+  {
+    id: 4,
+    name: "Adv Serverless",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+  },
+  {
+    id: 5,
+    name: "Hiking in the morning",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+  },
+  {
+    id: 6,
+    name: "The Lazy kids",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
+  },
+];

@@ -1,10 +1,10 @@
 import { Container, Tabs, Tab, Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import FileList from "./file-list";
-import GroupManage from "./group-manage";
+import FileList from "../file-list";
+import GroupManage from "../group-manage";
 import PostList from "../post-list";
 
-const Group = () => {
+const Groups = () => {
   const [tab, setTab] = useState(0);
   console.log("GROUP");
 
@@ -76,4 +76,4 @@ function a11yProps(index) {
   };
 }
 
-export default Group;
+export default Groups;

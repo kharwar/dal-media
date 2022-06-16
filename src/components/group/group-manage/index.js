@@ -1,0 +1,53 @@
+import { useEffect } from "react";
+import { Box, Button, Stack } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useAlert } from "../../alert-dialog";
+import GroupMemberList from "../group-member-list";
+import GroupAddMember from "../group-add-member";
+
+const GroupManage = () => {
+  console.log("memberList");
+
+  const { setAlert, setOnAgree } = useAlert();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setOnAgree(onDelete);
+  }, []);
+
+  const onDelete = () => {
+    console.log("delete");
+  };
+
+  const deleteGroupHandler = () => {
+    setAlert(
+      true,
+      "Delete Group",
+      "Are you sure you want to delete this group?"
+    );
+  };
+
+  return (
+    <>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+        <Box sx={{ display: "flex", flex: 1, mr: 1 }}>
+          <Button
+            variant="contained"
+            onClick={deleteGroupHandler}
+            sx={{
+              backgroundColor: "#e74c3c",
+            }}
+          >
+            Delete Group
+          </Button>
+        </Box>
+        <Box sx={{ display: "flex", flex: 1, mr: 1 }}>
+          <GroupAddMember />
+        </Box>
+      </Box>
+      <GroupMemberList />
+    </>
+  );
+};
+
+export default GroupManage;
