@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Home, Groups, CreatePost, CreateGroup, Group, CreateEvent, EventPage, CreatePoll, DisplayPoll } from "../pages";
+import {Login, Register, ForgotPassword, ResetPassword, Profile, EditProfile, Notifications} from "../pages";
 
 const AppRoutes = () => {
   console.log("app");
@@ -17,6 +18,13 @@ const AppRoutes = () => {
       <Route path="/event-page" element={<EventPage />} />
       <Route path="/edit-post/:id" element={<CreatePost />} />
       <Route path="/event-page/edit-event/:id" element={<CreateEvent />} />
+      <Route path="/login" element={<Login />}/>
+      <Route path="/register" element={<Register />}/>
+      <Route path="/forgotpassword" element={<ForgotPassword />}/>
+      <Route path="/resetpassword" element={<ResetPassword />}/>
+      <Route path="/profile" element={<Profile />}/>
+      <Route path="/editprofile" element={<EditProfile />}/>
+      <Route path="/notifications" element={<Notifications />}/>
     </Routes>
   );
 };
