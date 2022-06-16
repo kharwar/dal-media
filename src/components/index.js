@@ -1,4 +1,5 @@
 import PostTextInput from "./post-textInput";
+import TextInput from "./textInput";
 import Navbar from "./navbar";
 import Post from "./post";
 import PostList from "./post-list";
@@ -8,6 +9,7 @@ import MaterialSnackbar from "./material-snackbar";
 
 export {
   PostTextInput,
+  TextInput,
   Navbar,
   Post,
   PostList,
