@@ -1,12 +1,11 @@
-import React from 'react'
-import AddIcon from '@mui/icons-material/Add';
-import { Box, Chip, Menu, MenuItem, Tooltip, Typography } from '@mui/material'
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import AddIcon from "@mui/icons-material/Add";
+import { Box, Chip, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const options = ['Post', 'Group', 'Event', 'Blog'];
+const options = ["Post", "Group", "Event", "Blog"];
 
 const NavCreateButton = () => {
-
   const navigate = useNavigate();
   const [anchorElCreate, setAnchorElCreate] = React.useState(null);
 
@@ -15,9 +14,8 @@ const NavCreateButton = () => {
   };
 
   const handleCloseUserMenu = (option) => {
-
-    if (option && option === 'Post') {
-      navigate('/create-post');
+    if (option && option === "Post") {
+      navigate("/create-post");
     }
 
     setAnchorElCreate(null);
@@ -29,22 +27,26 @@ const NavCreateButton = () => {
         <Chip
           icon={<AddIcon />}
           label="Create"
-          sx={{ backgroundColor: 'white', ':hover': { backgroundColor: 'white' }, mx: 3 }}
+          sx={{
+            backgroundColor: "white",
+            ":hover": { backgroundColor: "white" },
+            mx: 3,
+          }}
           onClick={handleOpenUserMenu}
         />
       </Tooltip>
       <Menu
-        sx={{ mt: '45px' }}
+        sx={{ mt: "45px" }}
         id="menu-appbar"
         anchorEl={anchorElCreate}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         keepMounted
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         open={Boolean(anchorElCreate)}
         onClose={() => handleCloseUserMenu()}
@@ -56,7 +58,7 @@ const NavCreateButton = () => {
         ))}
       </Menu>
     </Box>
-  )
-}
+  );
+};
 
 export default NavCreateButton;

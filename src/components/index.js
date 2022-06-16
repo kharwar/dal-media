@@ -1,9 +1,10 @@
-import PostTextInput from './post-textInput'
-import Navbar from './navbar'
-import Post from './post'
-import PostList from './post-list'
-import SeeMoreText from './see-more-text'
-import AlertDialog from './alert-dialog'
+import PostTextInput from "./post-textInput";
+import Navbar from "./navbar";
+import Post from "./post";
+import PostList from "./post-list";
+import SeeMoreText from "./see-more-text";
+import AlertDialog from "./alert-dialog";
+import MaterialSnackbar from "./material-snackbar";
 
 export {
   PostTextInput,
@@ -11,5 +12,6 @@ export {
   Post,
   PostList,
   SeeMoreText,
-  AlertDialog
-}
+  AlertDialog,
+  MaterialSnackbar,
+};

@@ -1,17 +1,13 @@
-import { useState, useContext, createContext, useRef } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { useState, useContext, createContext, useRef } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 export default function AlertDialog() {
-
-  const {
-    isOpen, heading, body, setAlert,
-    onAgree
-  } = useAlert();
+  const { isOpen, heading, body, setAlert, onAgree } = useAlert();
 
   const handleClose = () => {
     setAlert(false);
@@ -20,7 +16,7 @@ export default function AlertDialog() {
   const handleAgree = () => {
     setAlert(false);
     onAgree?.();
-  }
+  };
 
   return (
     <Dialog
@@ -29,9 +25,7 @@ export default function AlertDialog() {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
-        {heading}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title">{heading}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           {body}
@@ -39,9 +33,7 @@ export default function AlertDialog() {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>No</Button>
-        <Button onClick={handleAgree}>
-          Yes
-        </Button>
+        <Button onClick={handleAgree}>Yes</Button>
       </DialogActions>
     </Dialog>
   );
@@ -50,10 +42,9 @@ export default function AlertDialog() {
 const AlertContext = createContext();
 
 export const AlertProvider = ({ children }) => {
-
   const [isOpen, setIsOpen] = useState(false);
-  const [heading, setHeading] = useState('');
-  const [body, setBody] = useState('');
+  const [heading, setHeading] = useState("");
+  const [body, setBody] = useState("");
   const agreeRef = useRef(null);
 
   const setAlert = (isOpen, title, msg) => {
@@ -63,9 +54,8 @@ export const AlertProvider = ({ children }) => {
   };
 
   const setOnAgree = (onAgree) => {
-    agreeRef.current = onAgree
-  }
-
+    agreeRef.current = onAgree;
+  };
 
   return (
     <AlertContext.Provider
@@ -76,7 +66,8 @@ export const AlertProvider = ({ children }) => {
         setAlert,
         setOnAgree,
         onAgree: agreeRef.current,
-      }}>
+      }}
+    >
       {children}
     </AlertContext.Provider>
   );
