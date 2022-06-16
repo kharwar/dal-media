@@ -3,8 +3,8 @@ import {
   Avatar, Paper, Typography,
   Stack, IconButton, Button, Box,
   CircularProgress, Snackbar, Alert
-} from '@mui/material'
-import Images from '../../assets'
+} from '@mui/material';
+import Images from '../../assets';
 import { DeleteRounded, ImageRounded } from '@mui/icons-material';
 import './styles.css';
 import { PostTextInput } from '../../components';
@@ -29,23 +29,23 @@ const CreatePost = () => {
   useEffect(() => {
 
     if (state?.post) {
-      const { post } = state
+      const { post } = state;
       post.description && textInput.current.setValue(post.description);
       setImages(post.images);
     }
 
-  }, [])
+  }, []);
 
   const onImageChange = (e) => {
 
     if (fileInput.current != null) {
       fileInput.current.click();
     }
-  }
+  };
 
   const onImageSelect = (e) => {
     if (e.target.files) {
-      const fileList = e.target.files
+      const fileList = e.target.files;
       const newImages = [];
       let lastId = images.length;
 
@@ -60,12 +60,12 @@ const CreatePost = () => {
 
       setImages((oldImages) => [...oldImages, ...newImages]);
     }
-  }
+  };
 
   const onDeleteImage = (url) => {
     const filteredImages = images.filter((image) => image != url);
     setImages(filteredImages);
-  }
+  };
 
   const onTextChange = (text) => {
     if (text != '' && !textFilled) {
@@ -74,7 +74,7 @@ const CreatePost = () => {
     else if (text === '' && textFilled) {
       setTextFilled(false);
     }
-  }
+  };
 
   const onPost = () => {
 
@@ -85,11 +85,11 @@ const CreatePost = () => {
       textInput.current?.setValue('');
       setImages([]);
       setTextFilled(false);
-      setSnackOpen(true)
+      setSnackOpen(true);
       navigate('/');
     }, 3000);
 
-  }
+  };
 
   const closeSnackbar = () => setSnackOpen(false);
 
@@ -195,10 +195,10 @@ const CreatePost = () => {
         </Alert>
       </Snackbar>
     </Paper>
-  )
-}
+  );
+};
 
-export default CreatePost
+export default CreatePost;
 
 const styling = {
   btnDelete: {
@@ -218,4 +218,4 @@ const styling = {
     justifyContent: 'space-between',
     alignItems: 'center'
   }
-}
+};

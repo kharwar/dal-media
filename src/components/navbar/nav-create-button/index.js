@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Chip, Menu, MenuItem, Tooltip, Typography } from '@mui/material'
+import { Box, Chip, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const options = ['Post', 'Group', 'Event', 'Blog'];
@@ -16,8 +16,13 @@ const NavCreateButton = () => {
 
   const handleCloseUserMenu = (option) => {
 
-    if (option && option === 'Post') {
-      navigate('/create-post');
+    switch (option) {
+      case "Post":
+        navigate('/create-post');
+        break;
+      case 'Blog':
+        navigate('blogs/create');
+        break;
     }
 
     setAnchorElCreate(null);
@@ -56,7 +61,7 @@ const NavCreateButton = () => {
         ))}
       </Menu>
     </Box>
-  )
-}
+  );
+};
 
 export default NavCreateButton;

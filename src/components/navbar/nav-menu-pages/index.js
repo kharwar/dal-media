@@ -1,5 +1,5 @@
-import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,8 +14,13 @@ const NavMenuPages = (props) => {
   };
 
   const handleCloseNavMenu = (page) => {
-    if (page && page === 'Home') {
-      navigate('/');
+    switch (page) {
+      case 'Home':
+        navigate('/');
+        break;
+      case 'Blogs':
+        navigate('/blogs');
+        break;
     }
     setAnchorElNav(null);
   };
@@ -58,8 +63,8 @@ const NavMenuPages = (props) => {
         ))}
       </Menu>
     </Box>
-  )
-}
+  );
+};
 
 
 export default NavMenuPages;

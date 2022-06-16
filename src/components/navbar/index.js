@@ -13,10 +13,15 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const navigateToPage = (page) => {
-    if (page === 'Home') {
-      navigate('/')
+    switch (page) {
+      case 'Home':
+        navigate('/');
+        break;
+      case 'Blogs':
+        navigate('/blogs');
+        break;
     }
-  }
+  };
 
   return (
     <AppBar position="sticky">
