@@ -1,6 +1,6 @@
 import React from 'react'
 // import {Paper,  Box, styled} from "@material-ui/core";
-import {Paper,Typography, Stack, TableRow, Button, TableBody} from "@mui/material";
+import {Paper,Typography, Stack, TableRow, Button, TableBody, Box} from "@mui/material";
 import ProfileUi from 'react-profile-card';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -8,11 +8,12 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
   let navigate = useNavigate();
   const changeRoute = () => {
-    navigate('/editprofile');
+    navigate('/edit-profile');
   }
     return (
         
         <Paper elevation={11} style={{ margin: '100px auto', width: 700, height: 450, padding: '60px 60px' }}>
+          <Box component='form'>
         {/* <div style={{align:'left'}}>  */}
         <Stack direction='row' spacing={5}>
         <ProfileUi 
@@ -54,7 +55,7 @@ const Profile = () => {
             </Stack>
         {/* </div> */}
 
-      
+        </Box>
         </Paper>
       
     )
@@ -79,41 +80,5 @@ export const Label = styled.td`
   padding: 10px;
   width: 70%;
 `;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

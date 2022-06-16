@@ -1,6 +1,5 @@
 import React from 'react'
 import { TextField, Container, Button, Box, Grid, Link, Paper } from "@material-ui/core"
-import styling, { MainCard } from "./Styling"
 import { useState } from 'react';
 import swal from "sweetalert";
 import { useNavigate } from 'react-router-dom';
@@ -58,10 +57,10 @@ const Login = () => {
   return (
 
     <Container maxWidth="xs">
-      <h2 > CONNECT AROUND DAL </h2>
+      <h2 align="center"> CONNECT AROUND DAL </h2>
       <Paper elevation={11} style={{ margin: '20px auto', padding: '20px 20px' }}>
         <Box component='form' onSubmit={handleSubmissionRequest}>
-          <h2> Sign-In </h2>
+          <h2 align= "center"> SIGN-IN </h2>
           <TextField margin="normal"
             required
             fullWidth
@@ -84,15 +83,15 @@ const Login = () => {
             autoComplete="password" variant='outlined' color='secondary' />
 
           <Grid container item>
-            <Link href="/forgotpassword" >Forgot password?</Link>
+            <Link onClick = {() => navigate('/forgot-password')} style={{cursor: 'pointer'}}>Forgot password?</Link>
           </Grid>
-          <br /> <br />
-          <Button variant='contained' color='secondary' type='submit'> Login </Button>
+          <Grid>
+            <Button style={{marginTop:'5px', marginBottom:'5px'}} variant='contained' color='secondary' type='submit'> Login </Button>
+          </Grid>
         </Box>
-
         <Grid>
           <Grid item >
-            Don't have an account? <Link href="/register" align='center' color='secondary'>Sign Up</Link>
+            Don't have an account? <Link onClick = {() => navigate('/register')} style={{cursor: 'pointer'}} align='center' color='secondary'>Sign Up</Link>
           </Grid>
         </Grid>
 
@@ -102,4 +101,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

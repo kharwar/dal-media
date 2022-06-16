@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     if(!isValidEmail) {
       swal("An email has been sent with reset link to your email");
-      navigate('/resetpassword');
+      navigate('/reset-password');
       e.target.email.value = "";
     }
   }
@@ -47,7 +47,7 @@ const ForgotPassword = () => {
           variant='outlined' color='secondary' />
         {isValidEmail && <span className='err' style={{ color: 'red' }}>Provide a valid Email address</span>}
         <Grid item >
-          Remember Already? <Link href="/login" align='center' color='secondary'>Sign In</Link>
+          Remember Already? <Link onClick = {() => navigate('/login')} style={{cursor: 'pointer'}} align='center' color='secondary'>Sign In</Link>
         </Grid>
         <br />
         <Button variant='contained' type='submit' color='secondary'> Submit </Button>

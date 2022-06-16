@@ -20,10 +20,10 @@ const AppRoutes = () => {
       <Route path="/event-page/edit-event/:id" element={<CreateEvent />} />
       <Route path="/login" element={<Login />}/>
       <Route path="/register" element={<Register />}/>
-      <Route path="/forgotpassword" element={<ForgotPassword />}/>
-      <Route path="/resetpassword" element={<ResetPassword />}/>
+      <Route path="/forgot-password" element={<ForgotPassword />}/>
+      <Route path="/reset-password" element={<ResetPassword />}/>
       <Route path="/profile" element={<Profile />}/>
-      <Route path="/editprofile" element={<EditProfile />}/>
+      <Route path="/edit-profile" element={<EditProfile />}/>
       <Route path="/notifications" element={<Notifications />}/>
     </Routes>
   );

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Stack} from "@mui/material";
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Paper } from '@material-ui/core';
 import { Container } from '@mui/system';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -67,9 +67,10 @@ const EditProfile = () => {
         navigate("/profile");
     }
     return (
-        <Container maxWidth="xs" style={{ margin: '20px auto', padding: '20px 20px' }}>
+        <Container maxWidth="xs">
+            <Paper elevation={11} style={{margin:'20px auto',padding:'20px 20px'}}>
             <Box component='form'>
-                <h2> Edit Profile </h2>
+                <h2 align="center"> Edit Profile </h2>
                 <TextField margin="normal"
                     required
                     fullWidth
@@ -127,9 +128,9 @@ const EditProfile = () => {
                     <Button variant='contained' type="submit" color='secondary' onClick={handleCancel}> Cancel </Button>
                 </Stack>
             </Box>
-
+            </Paper>
         </Container>
     )
 }
 
-export default EditProfile
+export default EditProfile;

@@ -158,7 +158,7 @@ const Register = () => {
             </Box>
             <Grid>
                 <Grid item >
-                    Already have an account? <Link href="/login" align='center' color='secondary'>Sign In</Link>
+                    Already have an account? <Link onClick = {() => navigate('/login')} style={{cursor: 'pointer'}} align='center' color='secondary'>Sign In</Link>
                 </Grid>
             </Grid>
             </Paper>
