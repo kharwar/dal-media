@@ -4,5 +4,14 @@ import Post from "./post";
 import PostList from "./post-list";
 import SeeMoreText from "./see-more-text";
 import AlertDialog from "./alert-dialog";
+import MaterialSnackbar from "./material-snackbar";
 
-export { PostTextInput, Navbar, Post, PostList, SeeMoreText, AlertDialog };
+export {
+  PostTextInput,
+  Navbar,
+  Post,
+  PostList,
+  SeeMoreText,
+  AlertDialog,
+  MaterialSnackbar,
+};

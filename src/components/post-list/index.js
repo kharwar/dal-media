@@ -4,15 +4,15 @@ import Post from "../post";
 import { posts } from "../../data";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../alert-dialog";
+import { useSnackbar } from "../../context";
 
 const PostList = () => {
-  console.log("postList");
-
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
   const postRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
     setOnAgree(onDelete);
@@ -35,11 +35,19 @@ const PostList = () => {
 
   const onDelete = () => {
     console.log("delete");
+    showSnackbar(true, "Post Deleted");
   };
 
   const handleDelete = () => {
     handleClose();
     setAlert(true, "Delete Post", "Are you sure you want to delete this post?");
+  };
+
+  const handleLike = () => {
+    showSnackbar(true, "Post Liked");
+  };
+  const handleComment = () => {
+    showSnackbar(true, "Write Comment");
   };
 
   const renderPost = useCallback((post) => {
@@ -48,6 +56,8 @@ const PostList = () => {
         post={post}
         key={post.id}
         handleMenu={(event) => handleMenu(event, post)}
+        handleLike={handleLike}
+        handleComment={handleComment}
       />
     );
   }, []);

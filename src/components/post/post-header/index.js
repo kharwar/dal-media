@@ -12,8 +12,6 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { loggedInUser } from "../../../data";
 
 const PostHeader = ({ post: { user, createdAt }, handleMenu }) => {
-  console.log("PostHeader");
-
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>

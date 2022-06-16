@@ -4,9 +4,11 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 
-const PostFooter = ({ post: { total_likes, total_comments } }) => {
-  console.log("PostFooter");
-
+const PostFooter = ({
+  post: { total_likes, total_comments },
+  handleLike,
+  handleComment,
+}) => {
   return (
     <Box>
       <Stack direction="row" sx={{ justifyContent: "space-between", mb: 1 }}>
@@ -18,12 +20,12 @@ const PostFooter = ({ post: { total_likes, total_comments } }) => {
       </Stack>
       <Divider sx={{ mb: 1 }} />
       <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
-        <Button variant="outlined" fullWidth>
+        <Button variant="outlined" fullWidth onClick={handleLike}>
           <ThumbUpOutlinedIcon sx={{ mr: 1 }} />
           <Typography variant="body1">Like</Typography>
         </Button>
         <Divider />
-        <Button variant="outlined" fullWidth>
+        <Button variant="outlined" fullWidth onClick={handleComment}>
           <ChatBubbleOutlineOutlinedIcon sx={{ mr: 1 }} />
           <Typography variant="body1">Comment</Typography>
         </Button>

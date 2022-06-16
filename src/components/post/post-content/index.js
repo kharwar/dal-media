@@ -3,8 +3,6 @@ import React from "react";
 import SeeMoreText from "../../see-more-text";
 
 const PostContent = ({ post: { description, images } }) => {
-  console.log("PostContent");
-
   const renderImages = () => {
     return (
       <ImageList
