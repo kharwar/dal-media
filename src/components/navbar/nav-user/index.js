@@ -9,17 +9,22 @@ import {
   Typography,
 } from "@mui/material";
 import { loggedInUser } from "../../../data";
+import { useNavigate } from "react-router-dom";
 
 const settings = ["Profile", "Logout"];
 
 const NavUser = () => {
+  const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (setting) => {
+    if (setting === "Logout") {
+      //navigate to login
+    }
     setAnchorElUser(null);
   };
 
@@ -57,7 +62,7 @@ const NavUser = () => {
         onClose={handleCloseUserMenu}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
+          <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
             <Typography textAlign="center">{setting}</Typography>
           </MenuItem>
         ))}

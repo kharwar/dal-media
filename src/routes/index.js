@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Home, CreatePost } from "../pages";
 
 const AppRoutes = () => {
+  console.log("app");
   return (
     <Routes>
       <Route path="/" element={<Home />} />

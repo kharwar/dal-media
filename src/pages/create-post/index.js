@@ -8,8 +8,6 @@ import {
   Button,
   Box,
   CircularProgress,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import { DeleteRounded, ImageRounded } from "@mui/icons-material";
 import "./styles.css";
@@ -18,6 +16,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { loggedInUser } from "../../data";
 import { dateFormat } from "../../utils";
+import { useSnackbar } from "../../context";
 
 const CreatePost = () => {
   const { state } = useLocation();
@@ -27,9 +26,7 @@ const CreatePost = () => {
   const [textFilled, setTextFilled] = useState(false);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [snackOpen, setSnackOpen] = useState(false);
-
-  console.log({ post: state?.post });
+  const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (state?.post) {
@@ -55,7 +52,6 @@ const CreatePost = () => {
         const file = fileList[i];
         const url = URL.createObjectURL(file);
         const id = lastId + 1;
-        // newImages.push({ id, url });
         newImages.push(url);
         lastId = id;
       }
@@ -85,12 +81,12 @@ const CreatePost = () => {
       textInput.current?.setValue("");
       setImages([]);
       setTextFilled(false);
-      setSnackOpen(true);
+
+      const key = state?.post ? "updated" : "created";
+      showSnackbar(true, `Post ${key}`);
       navigate("/");
     }, 3000);
   };
-
-  const closeSnackbar = () => setSnackOpen(false);
 
   return (
     <Paper sx={{ m: "50px", p: "30px" }}>
@@ -164,21 +160,6 @@ const CreatePost = () => {
           {loading && <CircularProgress size={24} sx={styling.progress} />}
         </Box>
       </Stack>
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={6000}
-        onClose={closeSnackbar}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert
-          onClose={closeSnackbar}
-          severity="success"
-          sx={{ width: "100%" }}
-          variant="filled"
-        >
-          {`Post ${state?.post ? "updated" : "created"} successfully`}
-        </Alert>
-      </Snackbar>
     </Paper>
   );
 };
