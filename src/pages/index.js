@@ -7,10 +7,14 @@ import CreateEvent from './create-event';
 import EventPage from './event-page';
 import CreatePoll from './create-poll';
 import DisplayPoll from './display-poll';
+import CreateBlog from './create-blog';
+import Blogs from './blogs';
 
 export {
   Home, Groups, CreatePost, CreateGroup, Group, CreateEvent,
   EventPage,
   CreatePoll,
-  DisplayPoll
+  DisplayPoll,
+  CreateBlog,
+  Blogs
 };

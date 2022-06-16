@@ -22,6 +22,9 @@ const NavMenuPages = (props) => {
     if (page && page === 'Events') {
       navigate('/event-page');
     }
+    if (page && page === 'Blogs') {
+      navigate('/blogs');
+    }
     setAnchorElNav(null);
   };
 

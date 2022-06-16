@@ -1,0 +1,17 @@
+/* .rich-text-container {
+  margin-top: 16px;
+  border: solid 0.1rem #b0bec5;
+  padding: 16px;
+  border-radius: 15px;
+  max-height: 50vh;
+} */
+
+.rich-text-container {
+  position: sticky;
+  /* top: 80px; */
+  padding: 16px;
+  border-radius: 15px;
+  margin-top: 16px;
+  border: 0.1rem solid #b0bec5;
+  min-height: 50vh;
+}
