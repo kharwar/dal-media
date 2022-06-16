@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# csci5709-group11-dal-media
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

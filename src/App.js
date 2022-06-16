@@ -1,29 +1,41 @@
-import {BrowserRouter,Route, Routes} from "react-router-dom";
-import Login from './pages/Login';
-import Register from './pages/Register';
-import './App.css';
-import ForgotPassword from './pages/ForgotPassword';
-import Profile from './pages/Profile';
-import ResetPassword from './pages/ResetPassword';
-import Notifications from './pages/Notifications';
-import EditProfile from "./pages/EditProfile";
+import { useState } from "react";
+import { Navbar, MaterialSnackbar } from "./components";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme";
+import AppRoutes from "./routes";
+import { BrowserRouter } from "react-router-dom";
+import AlertDialog, { AlertProvider } from "./components/alert-dialog";
+import { SnackbarProvider } from "./context";
 
 function App() {
+  const [snackbar, setSnackbar] = useState({
+    show: false,
+    message: "",
+  });
+
+  const showSnackbar = (show, message) => {
+    setSnackbar({ show, message });
+  };
+
+  const closeSnackbar = () => {
+    setSnackbar({ ...snackbar, show: false });
+  };
+
   return (
-    <BrowserRouter>
-    <div className="App">
-      <Routes>
-        <Route path="/login" element={<Login />}/>
-        <Route path="/register" element={<Register />}/>
-        <Route path="/forgotpassword" element={<ForgotPassword />}/>
-        <Route path="/resetpassword" element={<ResetPassword />}/>
-        <Route path="/profile" element={<Profile />}/>
-        <Route path="/editprofile" element={<EditProfile />}/>
-        <Route path="/notifications" element={<Notifications />}/>
-      </Routes>
-    </div>
-    </BrowserRouter>
-    
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <AlertProvider>
+          <SnackbarProvider>
+            <CssBaseline />
+            <Navbar />
+            <AppRoutes />
+            <AlertDialog />
+            <MaterialSnackbar />
+          </SnackbarProvider>
+        </AlertProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
