@@ -21,6 +21,9 @@ const Navbar = () => {
     if (page === 'Events') {
       navigate('/event-page');
     }
+    if (page === 'Blogs') {
+      navigate('/blogs');
+    }
   };
 
   return (

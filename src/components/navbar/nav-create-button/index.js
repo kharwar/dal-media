@@ -18,9 +18,9 @@ const NavCreateButton = () => {
       navigate("/create-post");
     } else if (option && option === "Group") {
       navigate("/create-group");
-    }
-
-    if (option && option === 'Event') {
+    } else if (option && option === 'Blog') {
+      navigate('/blogs/create');
+    } else if (option && option === 'Event') {
       navigate('/create-event');
     }
 

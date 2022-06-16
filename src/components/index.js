@@ -8,7 +8,8 @@ import AlertDialog from "./alert-dialog";
 import MaterialSnackbar from "./material-snackbar";
 import EventList from './event-list';
 import Event from './event';
-
+import RichTextInput from './RichTextInput';
+import BlogList from './BlogList';
 export {
   PostTextInput,
   TextInput,
@@ -20,4 +21,6 @@ export {
   SeeMoreText,
   AlertDialog,
   MaterialSnackbar,
+  RichTextInput,
+  BlogList
 };

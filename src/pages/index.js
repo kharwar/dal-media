@@ -14,11 +14,15 @@ import Notifications from './notifications';
 import Profile from './profile';
 import Register from './register';
 import ResetPassword from './reset-password';
+import CreateBlog from './create-blog';
+import Blogs from './blogs';
 
 export {
   Home, Groups, CreatePost, CreateGroup, Group, CreateEvent,
   EventPage,
   CreatePoll,
   DisplayPoll,
-  EditProfile, ForgotPassword, Login, Notifications, Profile, Register, ResetPassword
+  EditProfile, ForgotPassword, Login, Notifications, Profile, Register, ResetPassword,
+  CreateBlog,
+  Blogs
 };

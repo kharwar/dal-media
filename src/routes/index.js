@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, Groups, CreatePost, CreateGroup, Group, CreateEvent, EventPage, CreatePoll, DisplayPoll } from "../pages";
 import {Login, Register, ForgotPassword, ResetPassword, Profile, EditProfile, Notifications} from "../pages";
+import { Home, Groups, CreatePost, CreateGroup, Group, CreateEvent, EventPage, CreatePoll, DisplayPoll, CreateBlog, Blogs } from "../pages";
 
 const AppRoutes = () => {
   console.log("app");
@@ -17,6 +17,9 @@ const AppRoutes = () => {
       <Route path="/create-event" element={<CreateEvent />} />
       <Route path="/event-page" element={<EventPage />} />
       <Route path="/edit-post/:id" element={<CreatePost />} />
+      <Route path="/blogs/create" element={<CreateBlog />} />
+      <Route path="/blogs" element={<Blogs />} />
+      <Route path="blogs/edit/:id" element={<CreateBlog />} />
       <Route path="/event-page/edit-event/:id" element={<CreateEvent />} />
       <Route path="/login" element={<Login />}/>
       <Route path="/register" element={<Register />}/>
