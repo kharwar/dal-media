@@ -1,10 +1,14 @@
-import { Container, Tabs, Tab, Box, Typography } from "@mui/material";
+import { Container, Tabs, Tab, Box, Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FileList from "./file-list";
 import GroupManage from "./group-manage";
 import PostList from "../post-list";
+import { CreatePoll, DisplayPoll } from "../../pages";
 
 const Group = () => {
+
+  const navigate = useNavigate();
   const [tab, setTab] = useState(0);
   console.log("GROUP");
 
@@ -37,10 +41,28 @@ const Group = () => {
         <PostList />
       </TabPanel>
       <TabPanel value={tab} index={1}>
-       <FileList />
+        <FileList />
       </TabPanel>
       <TabPanel value={tab} index={2}>
-        Polls
+        <>
+          <Box sx={{ m: 1 }}>
+
+
+            <Button
+              onClick={() => navigate('./create-poll')}
+              variant="contained"
+              component="span"
+              sx={{
+                backgroundColor: "#2c3e50",
+              }}
+            >
+              Create
+            </Button>
+
+          </Box>
+          <DisplayPoll />
+        </>
+
       </TabPanel>
       <TabPanel value={tab} index={3}>
         <GroupManage />

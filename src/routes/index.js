@@ -11,7 +11,7 @@ const AppRoutes = () => {
       <Route path="groups/:group/edit-post/:id" element={<CreatePost />} />
       <Route path="/create-group" element={<CreateGroup />} />
       <Route path="/create-post" element={<CreatePost />} />
-      <Route path="/create-poll" element={<CreatePoll />} />
+      <Route path="/groups/:id/create-poll" element={<CreatePoll />} />
       <Route path="/display-poll" element={<DisplayPoll />} />
       <Route path="/create-event" element={<CreateEvent />} />
       <Route path="/event-page" element={<EventPage />} />
