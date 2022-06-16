@@ -20,6 +20,10 @@ const NavCreateButton = () => {
       navigate("/create-group");
     }
 
+    if (option && option === 'Event') {
+      navigate('/create-event');
+    }
+
     setAnchorElCreate(null);
   };
 

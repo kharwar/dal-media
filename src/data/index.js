@@ -337,3 +337,51 @@ export const groups = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry...",
   },
 ];
+
+
+
+
+//EVENTS
+export const events = [
+  {
+    id: 1,
+    title: "Here We code",
+    description: "Here We Code Month is a platform to showcase the diverse digital activities and events taking place across Nova Scotia, showcasing the digital education and opportunities available to all. All organizations and institutions involved in providing digital programming and opportunities in Nova Scotia are invited to get involved with Here We Code Month through hosting events and interactive sessions throughout May 2022.",
+    images: [
+      "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+      "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
+      "https://images.unsplash.com/photo-1551782450-a2132b4ba21d"
+
+    ],
+    total_interests: 200,
+    user: loggedInUser,
+    startDT: 'June 1, 2022 11AM',
+    endDT: 'June 2, 2022 11AM',
+    location: 'University Avenue'
+  },
+  {
+    id: 2,
+    title: "Mobile Event",
+    description: "Event Samsung's new variant which goes beyond Galaxy to the Universe",
+    images: [
+      "https://dummyjson.com/image/i/products/3/1.jpg",
+    ],
+    total_interests: 300,
+    user: loggedInUser,
+    startDT: 'June 1, 2022 11AM',
+    endDT: 'June 2, 2022 11AM',
+    location: 'Brunswick st'
+  },
+
+];
+
+
+
+
+
+
+
+
+
+
+

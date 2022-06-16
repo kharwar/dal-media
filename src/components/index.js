@@ -6,13 +6,17 @@ import PostList from "./post-list";
 import SeeMoreText from "./see-more-text";
 import AlertDialog from "./alert-dialog";
 import MaterialSnackbar from "./material-snackbar";
+import EventList from './event-list';
+import Event from './event';
 
 export {
   PostTextInput,
   TextInput,
   Navbar,
   Post,
+  Event,
   PostList,
+  EventList,
   SeeMoreText,
   AlertDialog,
   MaterialSnackbar,
