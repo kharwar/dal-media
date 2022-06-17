@@ -16,6 +16,12 @@ const NavCreateButton = () => {
   const handleCloseUserMenu = (option) => {
     if (option && option === "Post") {
       navigate("/create-post");
+    } else if (option && option === "Group") {
+      navigate("/create-group");
+    } else if (option && option === 'Blog') {
+      navigate('/blogs/create');
+    } else if (option && option === 'Event') {
+      navigate('/create-event');
     }
 
     setAnchorElCreate(null);

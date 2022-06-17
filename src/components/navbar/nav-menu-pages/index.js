@@ -16,6 +16,15 @@ const NavMenuPages = (props) => {
     if (page && page === "Home") {
       navigate("/");
     }
+    if (page && page === "Groups") {
+      navigate("/groups");
+    }
+    if (page && page === 'Events') {
+      navigate('/event-page');
+    }
+    if (page && page === 'Blogs') {
+      navigate('/blogs');
+    }
     setAnchorElNav(null);
   };
 
