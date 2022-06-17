@@ -1,7 +1,7 @@
 import { Container, Tabs, Tab, Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import FileList from "../file-list";
-import GroupManage from "../group-manage";
+import FileList from "../group/file-list";
+import GroupManage from "../group/group-manage";
 import PostList from "../post-list";
 
 const Groups = () => {
@@ -23,10 +23,7 @@ const Groups = () => {
   return (
     <Container maxWidth="md">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={tab}
-          onChange={onTabChanged}
-        >
+        <Tabs value={tab} onChange={onTabChanged}>
           <Tab label="News Feed" {...a11yProps(0)} />
           <Tab label="Shared Files" {...a11yProps(1)} />
           <Tab label="Polls" {...a11yProps(2)} />
@@ -37,7 +34,7 @@ const Groups = () => {
         <PostList />
       </TabPanel>
       <TabPanel value={tab} index={1}>
-       <FileList />
+        <FileList />
       </TabPanel>
       <TabPanel value={tab} index={2}>
         Polls
