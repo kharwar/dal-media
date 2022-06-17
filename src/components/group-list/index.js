@@ -3,12 +3,12 @@ import { Menu, MenuItem, Box, Typography } from "@mui/material";
 import { groups } from "../../data";
 import { useAlert } from "../alert-dialog";
 import GroupItem from "../group-item";
-
+import { useSnackbar } from "../../context";
 const GroupList = () => {
   console.log("fileList");
 
   const { setAlert, setOnAgree } = useAlert();
-
+  const { showSnackbar } = useSnackbar();
   const fileRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -27,7 +27,7 @@ const GroupList = () => {
   };
 
   const onDelete = () => {
-    console.log("delete");
+    showSnackbar(true, "You left the group");
   };
 
   const handleLeave = () => {

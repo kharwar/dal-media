@@ -1,37 +1,39 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from "react";
 import {
-  Avatar, Paper, Typography,
-  Stack, IconButton, Button, Box,
-  CircularProgress, Snackbar, Alert, TextField
-} from '@mui/material';
-import Images from '../../assets';
-import { DeleteRounded, ImageRounded } from '@mui/icons-material';
-import './styles.css';
-import { PostTextInput } from '../../components';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { loggedInUser } from '../../data';
-import { dateFormat } from '../../utils';
-
-
+  Avatar,
+  Paper,
+  Typography,
+  Stack,
+  IconButton,
+  Button,
+  Box,
+  CircularProgress,
+  TextField,
+} from "@mui/material";
+import { DeleteRounded, ImageRounded } from "@mui/icons-material";
+import "./styles.css";
+import { PostTextInput } from "../../components";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { loggedInUser } from "../../data";
+import { dateFormat } from "../../utils";
+import { useSnackbar } from "../../context";
 
 const CreateEvent = () => {
-
   const { state } = useLocation();
   const navigate = useNavigate();
   const fileInput = useRef(null);
-  const textInput = useRef('');
+  const textInput = useRef("");
   const [textFilled, setTextFilled] = useState(false);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [snackOpen, setSnackOpen] = useState(false);
-
+  const { showSnackbar } = useSnackbar();
   const [startDTvalue, setStartDTValue] = useState(new Date());
   const [endDTvalue, setEndDTValue] = useState(new Date());
-  const [location, setLocation] = useState('');
-  const [title, setTitle] = useState('');
+  const [location, setLocation] = useState("");
+  const [title, setTitle] = useState("");
 
   const handleStartDTChange = (newValue) => {
     setStartDTValue(newValue);
@@ -49,9 +51,7 @@ const CreateEvent = () => {
     setLocation(event.target.value);
   };
 
-
   useEffect(() => {
-
     if (state?.event) {
       const { event } = state;
       event.description && textInput.current.setValue(event.description);
@@ -59,12 +59,9 @@ const CreateEvent = () => {
       setLocation(event.location);
       setTitle(event.title);
     }
-
   }, []);
 
-
   const onImageChange = (e) => {
-
     if (fileInput.current != null) {
       fileInput.current.click();
     }
@@ -94,35 +91,31 @@ const CreateEvent = () => {
   };
 
   const onTextChange = (text) => {
-    if (text !== '' && !textFilled) {
+    if (text !== "" && !textFilled) {
       setTextFilled(true);
-    }
-    else if (text === '' && textFilled) {
+    } else if (text === "" && textFilled) {
       setTextFilled(false);
     }
   };
 
   const onPost = () => {
-
     setLoading(true);
     //write you store logic here, api call and all
     // console.log(title + " " + textInput.current + " " + startDTvalue.toString() + " " + location);
     setTimeout(() => {
       setLoading(false);
-      textInput.current?.setValue('');
+      textInput.current?.setValue("");
       setImages([]);
       setTextFilled(false);
-      setSnackOpen(true);
-      setTitle('');
-      setLocation('');
-    }, 5000);
-
+      setTitle("");
+      setLocation("");
+      const key = state?.event ? "updated" : "created";
+      showSnackbar(true, `Event ${key}`);
+    }, 3000);
   };
 
-  const closeSnackbar = () => setSnackOpen(false);
-
   return (
-    <Paper sx={{ m: '50px', p: '30px' }}>
+    <Paper sx={{ m: "50px", p: "30px" }}>
       <Stack direction="row" spacing={1.5}>
         <Avatar
           alt={loggedInUser.name}
@@ -130,17 +123,21 @@ const CreateEvent = () => {
           sx={{ width: 56, height: 56 }}
         />
         <Stack>
-          <Typography variant="h5" component="h5" >
+          <Typography variant="h5" component="h5">
             {loggedInUser.name}
           </Typography>
           <Typography variant="body1">
-            {dateFormat(Date.now(), 'MMM DD, YYYY')}
+            {dateFormat(Date.now(), "MMM DD, YYYY")}
           </Typography>
         </Stack>
       </Stack>
 
       {/* added textfield for eventTitle */}
-      <TextField id="standard-Title" label="Title" variant="standard" required
+      <TextField
+        id="standard-Title"
+        label="Title"
+        variant="standard"
+        required
         margin="normal"
         value={title}
         InputProps={{ style: { fontSize: 30 } }}
@@ -156,13 +153,13 @@ const CreateEvent = () => {
         maxRows={20}
         autoFocus={true}
         placeholder={"Event Description"}
-        sx={{ mt: '30px', fontSize: 20 }}
+        sx={{ mt: "30px", fontSize: 20 }}
       />
 
       {/* Date time */}
 
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <Stack spacing='auto' direction="row" className="date-list">
+        <Stack spacing="auto" direction="row" className="date-list">
           <DateTimePicker
             label="Start Date&Time"
             value={startDTvalue}
@@ -177,28 +174,24 @@ const CreateEvent = () => {
             renderInput={(params) => <TextField {...params} />}
           />
 
-          <TextField id="Location" label="Location" variant="standard"
+          <TextField
+            id="Location"
+            label="Location"
+            variant="standard"
             margin="normal"
             value={location}
             onChange={handleLocationChange}
             InputProps={{ style: { fontSize: 20 } }}
             InputLabelProps={{ style: { fontSize: 20 } }}
           />
-
         </Stack>
       </LocalizationProvider>
 
-
-      {images.length > 0 &&
+      {images.length > 0 && (
         <Box className="img-list">
-          {images.map((image, index) =>
-            <div className="img-container" key={index + ''}>
-              <img
-                className="img"
-                src={image}
-                width="350"
-                height="350"
-              />
+          {images.map((image, index) => (
+            <div className="img-container" key={index + ""}>
+              <img className="img" src={image} width="350" height="350" />
               <IconButton
                 disabled={loading}
                 sx={styling.btnDelete}
@@ -207,71 +200,37 @@ const CreateEvent = () => {
                 <DeleteRounded />
               </IconButton>
             </div>
-          )}
+          ))}
         </Box>
-      }
+      )}
 
-
-
-
-
-      <Stack
-        direction="row"
-        sx={styling.btnContainer}
-      >
+      <Stack direction="row" sx={styling.btnContainer}>
         <input
           type="file"
           multiple
           accept="image/*"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           ref={fileInput}
           onChange={onImageSelect}
         />
-        <IconButton
-          onClick={onImageChange}
-          disabled={loading}
-        >
+        <IconButton onClick={onImageChange} disabled={loading}>
           <ImageRounded fontSize="medium" />
         </IconButton>
 
-
-
-
-        <Box
-          sx={{ m: 1, position: 'relative' }}
-        >
+        <Box sx={{ m: 1, position: "relative" }}>
           <Button
             variant="contained"
             disabled={(images.length == 0 && !textFilled) || loading || !title}
             onClick={onPost}
             sx={{
-              backgroundColor: '#455A64'
-            }}>
-            {state?.event ? 'Save' : 'Create Event'}
+              backgroundColor: "#455A64",
+            }}
+          >
+            {state?.event ? "Save" : "Create Event"}
           </Button>
-          {loading && (
-            <CircularProgress
-              size={24}
-              sx={styling.progress}
-            />
-          )}
+          {loading && <CircularProgress size={24} sx={styling.progress} />}
         </Box>
       </Stack>
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={6000}
-        onClose={closeSnackbar}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert
-          onClose={closeSnackbar}
-          severity="success"
-          sx={{ width: '100%' }}
-          variant="filled"
-        >
-          {`Event ${state?.event ? 'updated' : 'created'} successfully`}
-        </Alert>
-      </Snackbar>
     </Paper>
   );
 };
@@ -280,20 +239,20 @@ export default CreateEvent;
 
 const styling = {
   btnDelete: {
-    position: 'absolute',
-    top: '2%',
-    right: '2%',
-    backgroundColor: 'lightgrey'
+    position: "absolute",
+    top: "2%",
+    right: "2%",
+    backgroundColor: "lightgrey",
   },
   progress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: '-12px',
-    marginLeft: '-12px',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: "-12px",
+    marginLeft: "-12px",
   },
   btnContainer: {
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 };

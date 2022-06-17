@@ -1,30 +1,24 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Editable, withReact, Slate } from 'slate-react';
-import { withHistory } from 'slate-history';
-import {
-  Editor,
-  createEditor,
-  Text,
-  Node
-} from 'slate';
-import { ToggleButton, ToggleButtonGroup, Stack, Button } from '@mui/material';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Editable, withReact, Slate } from "slate-react";
+import { withHistory } from "slate-history";
+import { Editor, createEditor, Text, Node } from "slate";
+import { ToggleButton, ToggleButtonGroup, Stack, Button } from "@mui/material";
 import {
   FormatBold,
   FormatItalic,
-  FormatUnderlined
-} from '@mui/icons-material/';
+  FormatUnderlined,
+} from "@mui/icons-material/";
 
-import './style.css';
-import escapeHTML from 'escape-html';
-
+import "./style.css";
+import escapeHTML from "escape-html";
 
 const RichTextInput = ({ value, setValue, style }) => {
-  const allFormats = ['bold', 'italic', 'underline'];
+  const allFormats = ["bold", "italic", "underline"];
   const [formats, setFormats] = useState([]);
 
-
+  console.log({ value });
   useEffect(() => {
-    allFormats.forEach(format => {
+    allFormats.forEach((format) => {
       if (formats.includes(format)) {
         Editor.addMark(editor, format, true);
       } else {
@@ -37,32 +31,32 @@ const RichTextInput = ({ value, setValue, style }) => {
     setFormats(newFormats);
   };
 
-  const renderLeaf = useCallback(props => <Leaf {...props} />, []);
+  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   return (
     <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
-      <div className='rich-text-container'>
-        <Stack style={{ position: 'sticky' }}>
+      <div className="rich-text-container">
+        <Stack style={{ position: "sticky" }}>
           <ToggleButtonGroup
             value={formats}
             onChange={handleFormat}
             aria-label="Text Formatting"
           >
-            <ToggleButton value='bold' aria-label='bold'>
+            <ToggleButton value="bold" aria-label="bold">
               <FormatBold />
             </ToggleButton>
-            <ToggleButton value='italic' aria-label='italic'>
+            <ToggleButton value="italic" aria-label="italic">
               <FormatItalic />
             </ToggleButton>
-            <ToggleButton value='underline' aria-label='underline'>
+            <ToggleButton value="underline" aria-label="underline">
               <FormatUnderlined />
             </ToggleButton>
           </ToggleButtonGroup>
 
           <Editable
             renderLeaf={renderLeaf}
-            placeholder={'Your rich Blog here'}
+            placeholder={"Your rich Blog here"}
             spellCheck
             autoFocus
             style={style}
@@ -90,7 +84,7 @@ const Leaf = ({ attributes, children, leaf }) => {
 };
 
 export const serializePlainText = (nodes) => {
-  return nodes.map(n => Node.string(n)).join('\n');
+  return nodes.map((n) => Node.string(n)).join("\n");
 };
 
 export const serialize = (node) => {
@@ -111,10 +105,10 @@ export const serialize = (node) => {
     return string;
   }
   if (node && node.children) {
-    const children = node.children.map(n => serialize(n)).join('');
+    const children = node.children.map((n) => serialize(n)).join("");
 
     switch (node.type) {
-      case 'paragraph':
+      case "paragraph":
         return `<p>${children}</p>`;
       default:
         return children;

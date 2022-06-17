@@ -79,18 +79,20 @@ const CreateGroup = () => {
         multiline={true}
         sx={{ mt: "30px", fontSize: 20 }}
       />
-      <Box sx={{ m: 1, position: "relative" }}>
-        <Button
-          variant="contained"
-          disabled={!(nameFilled && descriptionFilled) || loading}
-          onClick={onCreateGroup}
-          sx={{
-            backgroundColor: "#455A64",
-          }}
-        >
-          Create
-        </Button>
-        {loading && <CircularProgress size={24} sx={styling.progress} />}
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Box sx={{ m: 1, position: "relative" }}>
+          <Button
+            variant="contained"
+            disabled={!(nameFilled && descriptionFilled) || loading}
+            onClick={onCreateGroup}
+            sx={{
+              backgroundColor: "#455A64",
+            }}
+          >
+            Create
+          </Button>
+          {loading && <CircularProgress size={24} sx={styling.progress} />}
+        </Box>
       </Box>
     </Paper>
   );

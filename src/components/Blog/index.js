@@ -1,20 +1,33 @@
-import { Card, CardMedia, CardContent, CardActions, Typography, Button, Box, Paper, Grid } from '@mui/material';
-import { grey } from '@mui/material/colors';
-import react from 'react';
-import BlogContent from './BlogContent';
-import BlogFooter from './BlogFooter';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  Box,
+  Paper,
+  Grid,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
+import react from "react";
+import BlogContent from "./BlogContent";
+import BlogFooter from "./BlogFooter";
 
 const Blog = ({ blog, handleMenu }) => {
   return (
     <>
-      <Paper sx={{
-        ...styling.blogContainer, backgroundImage: blog.image
-      }}>
+      <Paper
+        sx={{
+          ...styling.blogContainer,
+          backgroundImage: blog.image,
+        }}
+      >
         {/* Fix image not showing in bg */}
-        {<img style={{ display: 'none' }} src={blog.image} />}
+        {<img style={{ display: "none" }} src={blog.image} />}
         <Box
           sx={{
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             bottom: 0,
             right: 0,
@@ -26,7 +39,7 @@ const Blog = ({ blog, handleMenu }) => {
           <Grid item md={6}>
             <Box
               sx={{
-                position: 'relative',
+                position: "relative",
                 p: { xs: 3, md: 6 },
                 pr: { md: 0 },
               }}
@@ -37,7 +50,6 @@ const Blog = ({ blog, handleMenu }) => {
               {/* <Typography variant="h5" color="#000" paragraph>
                 { }
               </Typography> */}
-
             </Box>
           </Grid>
         </Grid>
@@ -51,13 +63,13 @@ export default Blog;
 
 const styling = {
   blogContainer: {
-    marginTop: '8px',
-    position: 'relative',
-    backgroundColor: 'grey.800',
+    marginTop: "8px",
+    position: "relative",
+    backgroundColor: "grey.800",
     // color: '#000000',
     mb: 4,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
-  }
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  },
 };

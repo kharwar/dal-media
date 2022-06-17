@@ -1,9 +1,8 @@
-import { Paper, Autocomplete, TextField } from "@mui/material";
-import React, { memo } from "react";
+import { Autocomplete, TextField } from "@mui/material";
+import React from "react";
 import { Stack } from "@mui/material";
 import { users } from "../../../data";
 import _ from "lodash";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const GroupAddMember = () => {
   console.log("Member");
@@ -19,8 +18,4 @@ const GroupAddMember = () => {
   );
 };
 
-const propsAreEqual = (prevProps, nextProps) => {
-  return _.isEqual(prevProps.post, nextProps.post);
-};
-
-export default memo(GroupAddMember, propsAreEqual);
+export default GroupAddMember;
