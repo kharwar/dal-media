@@ -8,9 +8,8 @@ import {
   Divider,
 } from "@mui/material";
 import "./styles.css";
-import { TextInput } from "../../components";
+import { TextInput, snackbar } from "../../components";
 import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "../../context";
 
 const CreateGroup = () => {
   const navigate = useNavigate();
@@ -19,7 +18,6 @@ const CreateGroup = () => {
   const [nameFilled, setNameFilled] = useState(false);
   const [descriptionFilled, setDescriptionFilled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { showSnackbar } = useSnackbar();
 
   const onNameChanged = (text) => {
     if (text !== "" && !nameFilled) {
@@ -46,7 +44,7 @@ const CreateGroup = () => {
       descriptionInput.current?.setValue("");
       setNameFilled(false);
       setDescriptionFilled(false);
-      showSnackbar(true, `Group created!`);
+      snackbar.current.showSnackbar(true, `Group created!`);
       navigate("/");
     }, 2000);
   };

@@ -4,7 +4,7 @@ import { users } from "../../../data";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../../alert-dialog";
 import GroupMember from "../group-member";
-import { useSnackbar } from "../../../context";
+import { snackbar } from "../../../components";
 
 const GroupMemberList = () => {
   console.log("memberList");
@@ -14,7 +14,6 @@ const GroupMemberList = () => {
   const userRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { showSnackbar } = useSnackbar();
 
   const handleMenu = (event, user) => {
     userRef.current = user;
@@ -37,7 +36,7 @@ const GroupMemberList = () => {
   };
 
   const handleMakeAdmin = () => {
-    showSnackbar(true, "This user is mow admin");
+    snackbar.current.showSnackbar(true, "This user is mow admin");
   };
 
   const handleRemove = () => {
@@ -51,7 +50,7 @@ const GroupMemberList = () => {
   };
 
   const handleRemoveUser = () => {
-    showSnackbar(true, "User removed from group");
+    snackbar.current.showSnackbar(true, "User removed from group");
   };
 
   const renderMember = useCallback((user) => {
