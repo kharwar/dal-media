@@ -1,13 +1,13 @@
 import { Container, InputBase, Paper, Stack } from "@mui/material";
-import PostList from "../../components/post-list";
+import { PostList, snackbar } from "../../components";
 import SearchIcon from "@mui/icons-material/Search";
-import { useSnackbar } from "../../context";
 
 const Home = () => {
-  const { open, showSnackbar } = useSnackbar();
+  // const { open, showSnackbar } = useSnackbar();
   const handleSearch = (event) => {
-    if (!open) {
-      showSnackbar(true, "Searching...");
+    if (!snackbar.current.open) {
+      snackbar.current.showSnackbar(true, "Searching...");
+      // showSnackbar(true, "Searching...");
     }
   };
 

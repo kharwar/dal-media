@@ -19,7 +19,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { loggedInUser } from "../../data";
 import { dateFormat } from "../../utils";
-import { useSnackbar } from "../../context";
+import { snackbar } from "../../components";
 
 const CreateEvent = () => {
   const { state } = useLocation();
@@ -29,7 +29,6 @@ const CreateEvent = () => {
   const [textFilled, setTextFilled] = useState(false);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { showSnackbar } = useSnackbar();
   const [startDTvalue, setStartDTValue] = useState(new Date());
   const [endDTvalue, setEndDTValue] = useState(new Date());
   const [location, setLocation] = useState("");
@@ -110,7 +109,7 @@ const CreateEvent = () => {
       setTitle("");
       setLocation("");
       const key = state?.event ? "updated" : "created";
-      showSnackbar(true, `Event ${key}`);
+      snackbar.current.showSnackbar(true, `Event ${key}`);
     }, 3000);
   };
 

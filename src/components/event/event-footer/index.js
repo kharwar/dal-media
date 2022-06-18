@@ -2,11 +2,9 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import { useSnackbar } from "../../../context";
+import { snackbar } from "../../../components";
 
 const EventFooter = ({ event: { total_interests } }) => {
-  const { showSnackbar } = useSnackbar();
-
   return (
     <Box>
       <Stack direction="row" sx={{ justifyContent: "space-between", mb: 1 }}>
@@ -20,7 +18,9 @@ const EventFooter = ({ event: { total_interests } }) => {
         <Button
           variant="outlined"
           fullWidth
-          onClick={() => showSnackbar(true, "You joined this event")}
+          onClick={() =>
+            snackbar.current.showSnackbar(true, "You joined this event")
+          }
         >
           <ThumbUpOutlinedIcon sx={{ mr: 1 }} />
           <Typography variant="body1">Interested</Typography>

@@ -11,9 +11,8 @@ import {
 } from "@mui/material";
 import { ImageRounded, DeleteRounded } from "@mui/icons-material";
 import "./style.css";
-import { RichTextInput } from "../../components";
+import { RichTextInput, snackbar } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useSnackbar } from "../../context";
 
 const initialValue = [
   {
@@ -31,7 +30,6 @@ const CreateBlog = () => {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const fileInput = useRef(null);
-  const { showSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
   const isPublishDisable = !textFilled || loading;
@@ -54,7 +52,7 @@ const CreateBlog = () => {
       setBody(initialValue);
       navigate("/blogs");
       const key = state?.blog ? "updated" : "created";
-      showSnackbar(true, `Blog ${key}`);
+      snackbar.current.showSnackbar(true, `Blog ${key}`);
     }, 3000);
   };
 

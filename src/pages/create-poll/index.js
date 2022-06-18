@@ -12,7 +12,7 @@ import {
 import "./styles.css";
 import { loggedInUser } from "../../data";
 import { dateFormat } from "../../utils";
-import { useSnackbar } from "../../context";
+import { snackbar } from "../../components";
 
 const CreatePoll = () => {
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,6 @@ const CreatePoll = () => {
   const [question, setQuestion] = useState("");
   const [optionA, setOptionA] = useState("");
   const [optionB, setOptionB] = useState("");
-  const { showSnackbar } = useSnackbar();
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -48,7 +47,7 @@ const CreatePoll = () => {
       setQuestion("");
       setOptionA("");
       setOptionB("");
-      showSnackbar(true, "Poll Created");
+      snackbar.current.showSnackbar(true, "Poll Created");
     }, 3000);
   };
 

@@ -1,12 +1,25 @@
-import { useSnackbar } from "../../context";
+import { createRef, forwardRef, useImperativeHandle, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 
-const MaterialSnackbar = () => {
-  const { open, message, showSnackbar } = useSnackbar();
+export const snackbarRef = createRef();
+export const snackbar = snackbarRef;
+
+const MaterialSnackbar = forwardRef((props, ref) => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
+  useImperativeHandle(ref, () => ({
+    open,
+    showSnackbar,
+  }));
+
+  const showSnackbar = (open, message) => {
+    setOpen(open);
+    message && setMessage(message);
+  };
 
   const closeSnackbar = () => showSnackbar(false);
 
-  console.log({ open, message });
   return (
     <Snackbar
       open={open}
@@ -15,6 +28,6 @@ const MaterialSnackbar = () => {
       message={message}
     />
   );
-};
+});
 
 export default MaterialSnackbar;
