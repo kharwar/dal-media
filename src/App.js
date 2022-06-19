@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
         <AlertProvider>
           <CssBaseline />
-          <Navbar />
+          {/* <Navbar /> */}
           <AppRoutes />
           <AlertDialog />
           <MaterialSnackbar ref={snackbarRef} />

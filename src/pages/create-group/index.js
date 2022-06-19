@@ -45,7 +45,7 @@ const CreateGroup = () => {
       setNameFilled(false);
       setDescriptionFilled(false);
       snackbar.current.showSnackbar(true, `Group created!`);
-      navigate("/");
+      navigate("/home");
     }, 2000);
   };
 

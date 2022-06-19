@@ -23,7 +23,7 @@ const NavUser = () => {
 
   const handleCloseUserMenu = (setting) => {
     if (setting === "Logout") {
-      //navigate to login
+      navigate("/", { replace: true });
     }
     setAnchorElUser(null);
   };
