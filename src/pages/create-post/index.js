@@ -82,7 +82,7 @@ const CreatePost = () => {
 
       const key = state?.post ? "updated" : "created";
       snackbar.current.showSnackbar(true, `Post ${key}`);
-      navigate("/home");
+      navigate("/");
     }, 3000);
   };
 

@@ -1,84 +1,122 @@
-import React from 'react'
-// import {Paper,  Box, styled} from "@material-ui/core";
-import {Paper,Typography, Stack, TableRow, Button, TableBody, Box} from "@mui/material";
-import ProfileUi from 'react-profile-card';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-
+import {
+  Avatar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
+import { Box, Container } from "@mui/system";
+import React, { useState } from "react";
+import { PostList } from "../../components";
+import { loggedInUser } from "../../data";
+import theme from "../../theme";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useNavigate } from "react-router-dom";
+import { posts } from "../../data";
 const Profile = () => {
-  let navigate = useNavigate();
-  const changeRoute = () => {
-    navigate('/edit-profile');
-  }
-    return (
-        
-        <Paper elevation={11} style={{ margin: '100px auto', width: 700, height: 450, padding: '60px 60px' }}>
-          <Box component='form'>
-        {/* <div style={{align:'left'}}>  */}
-        <Stack direction='row' spacing={5}>
-        <ProfileUi 
-            imgUrl='https://miro.medium.com/max/2048/0*0fClPmIScV5pTLoE.jpg' 
-            name='Kavya Kasaraneni' 
-            designation='Student' 
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenu = (event, post) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleEditProfile = () => {
+    handleClose();
+    navigate("/edit-profile", { state: { user: loggedInUser } });
+  };
+
+  const handleChangePassword = () => {
+    handleClose();
+    navigate("/change-password");
+  };
+
+  const getPosts = () => {
+    return posts.filter(({ user }) => user.id == loggedInUser.id);
+  };
+
+  return (
+    <>
+      <Container maxWidth="sm">
+        <Paper sx={{ p: 2, mt: 2 }}>
+          <Stack direction="row">
+            <Avatar
+              src={loggedInUser.image}
+              sx={{
+                width: 100,
+                height: 100,
+                borderStyle: "solid",
+                borderWidth: 0.5,
+                borderColor: theme.palette.primary,
+              }}
             />
-            <div>
-           <h2 >User Details</h2>
-           <Typography variant='body'>
-
-            <TableBody >
-              <TableRow>
-                <Label>First Name</Label>
-                <LabelValue >Kavya</LabelValue>
-              </TableRow>
-              <TableRow >
-                <Label>Last Name</Label>
-                <LabelValue >Kasaraneni</LabelValue>
-              </TableRow>
-              <TableRow >
-                <Label>Email</Label>
-                <LabelValue >kv919136@dal.ca</LabelValue>
-              </TableRow>
-              <TableRow >
-                <Label>Password</Label>
-                <LabelValue type='password'>*****</LabelValue>
-              </TableRow>
-              <TableRow >
-                <Label>DOB</Label>
-                <LabelValue >29-01-1998</LabelValue>
-              </TableRow>
-            </TableBody>
-              
-           </Typography>
-           <br /> <br />
-           <Button variant='outlined' type="submit" color='secondary' onClick={changeRoute}>Edit Profile </Button>
-           </div>
-            </Stack>
-        {/* </div> */}
-
-        </Box>
+            <Box sx={{ width: "100%", ml: 3 }}>
+              <Stack
+                direction="row"
+                sx={{ justifyContent: "space-between", alignItems: "center" }}
+              >
+                <Typography variant="h5">{loggedInUser.name}</Typography>
+                <IconButton onClick={handleMenu}>
+                  <MoreHorizIcon />
+                </IconButton>
+              </Stack>
+              <Typography variant="body2" color={grey[600]}>
+                {loggedInUser.email}
+              </Typography>
+              <Stack direction="row" spacing={3} sx={{ mt: 2 }}>
+                <Stack direction="row" spacing={0.5}>
+                  <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                    {`${loggedInUser.total_posts}`}
+                  </Typography>
+                  <Typography>Posts</Typography>
+                </Stack>
+                <Stack direction="row" spacing={0.5}>
+                  <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                    {`${loggedInUser.total_friends}`}
+                  </Typography>
+                  <Typography>Friends</Typography>
+                </Stack>
+              </Stack>
+            </Box>
+          </Stack>
+          <Typography sx={{ mt: 2 }} variant="body2">
+            {loggedInUser.bio}
+          </Typography>
         </Paper>
-      
-    )
-}
+      </Container>
+      <Container maxWidth="sm">
+        <PostList posts={getPosts()} />
+      </Container>
+      <Menu
+        id="menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        <MenuItem onClick={handleEditProfile}>Edit Profile</MenuItem>
+        <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
+      </Menu>
+    </>
+  );
+};
 
 export default Profile;
-
-
-export const LabelValue = styled.td`
-  font-weight: 450;
-  font-size: 18px;
-  margin-left: 50px; 
-  width: 70%;
-  text-align: left;
-  padding: 10px;;
-`;
-
-export const Label = styled.td`
-  font-size: 16px;
-  font-weight: bold;
-  text-align: left;
-  padding: 10px;
-  width: 70%;
-`;
-
-

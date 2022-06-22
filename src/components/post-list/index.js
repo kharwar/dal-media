@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import Post from "../post";
-import { posts } from "../../data";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../alert-dialog";
 import { snackbar } from "../../components";
 
-const PostList = () => {
+const PostList = ({ posts }) => {
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
   const postRef = useRef(null);
