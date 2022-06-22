@@ -1,19 +1,18 @@
 import { Avatar, Box, InputBase, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useState, useRef } from "react";
-import { useSnackbar } from "../../../context";
+import { snackbar } from "../../../components";
 import { loggedInUser } from "../../../data";
 import SeeMoreText from "../../see-more-text";
 
 const PostComment = ({ post }) => {
   const [comments, setComments] = useState(post.comments);
   const inputRef = useRef(null);
-  const { showSnackbar } = useSnackbar();
 
   const handleAddComment = (e) => {
     if (e.key === "Enter") {
       inputRef.current.value = "";
-      showSnackbar(true, "Comment Posted");
+      snackbar.current.showSnackbar(true, "Comment Posted");
     }
   };
 

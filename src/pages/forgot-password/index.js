@@ -1,60 +1,98 @@
-import React from 'react'
-import { TextField, Container, Button, Box, Grid, Link, Paper } from "@material-ui/core"
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import swal from "sweetalert";
+import React, { useState } from "react";
+import LockRoundedIcon from "@mui/icons-material/LockRounded";
+import { useNavigate } from "react-router-dom";
+import {
+  Paper,
+  Box,
+  TextField,
+  Container,
+  Typography,
+  Button,
+} from "@mui/material";
+import { formValidationMsgs, formValidator } from "../../utils";
+import { grey } from "@mui/material/colors";
 
 const ForgotPassword = () => {
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
-  const [isValidEmail, setIsValidEmail] = useState(false);
-  const [email, setEmail] = useState('');
-  const [err, setErr] = useState(false);
-  let navigate = useNavigate();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formdata = new FormData(event.currentTarget);
+    setErrors({});
 
-  const checkValid = (e) => {
-    console.log(e.target.value);
-    const email = e.target.value
-    setEmail(email);
-    if (email.match(/^\w+@dal.ca/)) {
-      setIsValidEmail(false);
+    let errors = {};
+    const data = {};
+
+    const value = formdata.get("email").toString().trim();
+    data["email"] = value;
+
+    const isValid = formValidator("email", value);
+
+    if (!isValid) {
+      errors["email"] = formValidationMsgs("email", value);
+    }
+
+    const isError = Object.keys(errors).length === 0;
+
+    if (!isError) {
+      setErrors(errors);
     } else {
-      setIsValidEmail(true);
+      console.log({ data });
+      navigate("/");
     }
-  }
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if(!isValidEmail) {
-      swal("An email has been sent with reset link to your email");
-      navigate('/reset-password');
-      e.target.email.value = "";
-    }
-  }
   return (
-
-    <Container maxWidth="xs">
-  <Paper elevation={11} style={{margin:'20px auto',padding:'20px 20px'}}>
-      <h2 color='secondary' align="center"> Forgot Password </h2>
-      <Box component='form' onSubmit={handleSubmit}>
-        <TextField margin="normal"
-          required
-          fullWidth
-          type={"email"}
-          label="Email Address"
-          name="email"
-          placeholder='test@dal.ca'
-          onChange={checkValid}
-          variant='outlined' color='secondary' />
-        {isValidEmail && <span className='err' style={{ color: 'red' }}>Provide a valid Email address</span>}
-        <Grid item >
-          Remember Already? <Link onClick = {() => navigate('/login')} style={{cursor: 'pointer'}} align='center' color='secondary'>Sign In</Link>
-        </Grid>
-        <br />
-        <Button variant='contained' type='submit' color='secondary'> Submit </Button>
-      </Box>
+    <Container component="main" maxWidth="sm">
+      <Paper sx={{ p: 8, mt: 8 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <LockRoundedIcon />
+          <Typography component="h1" variant="h5">
+            Forgot Password
+          </Typography>
+          <Typography textAlign={"center"} color={grey[700]} mt={2}>
+            Enter the email address associated with your account.
+          </Typography>
+          <Typography textAlign={"center"} color={grey[700]}>
+            We will email you a link to reset your password.
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3, width: "100%" }}
+          >
+            <TextField
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              error={!!errors.email}
+              helperText={errors.email}
+              sx={{ mb: 2 }}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Box>
       </Paper>
     </Container>
-  )
-}
+  );
+};
 
 export default ForgotPassword;

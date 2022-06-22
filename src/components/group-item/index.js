@@ -5,7 +5,7 @@ import { grey } from "@mui/material/colors";
 import _ from "lodash";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
-import GroupsIcon from '@mui/icons-material/Groups';
+import GroupsIcon from "@mui/icons-material/Groups";
 
 const GroupItem = ({ group, handleMenu }) => {
   const navigate = useNavigate();
@@ -14,8 +14,14 @@ const GroupItem = ({ group, handleMenu }) => {
   return (
     <Paper sx={{ p: 1.5, my: 1 }}>
       <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-        <Stack sx={{ display: "flex", flex: 1, cursor: "pointer" }} direction="row" onClick={() => navigate(`./${group.id}`)}>
-          <Avatar sx={{ bgcolor: '#2c3e50' }} ><GroupsIcon /></Avatar>
+        <Stack
+          sx={{ display: "flex", flex: 1, cursor: "pointer" }}
+          direction="row"
+          onClick={() => navigate(`./${group.id}`)}
+        >
+          <Avatar sx={{ bgcolor: "#2c3e50" }}>
+            <GroupsIcon />
+          </Avatar>
           <Stack
             sx={{ display: "flex", flex: 1, mr: 1, ml: 2, cursor: "pointer" }}
           >
@@ -41,6 +47,7 @@ const GroupItem = ({ group, handleMenu }) => {
     </Paper>
   );
 };
+
 const propsAreEqual = (prevProps, nextProps) => {
   return _.isEqual(prevProps.post, nextProps.post);
 };

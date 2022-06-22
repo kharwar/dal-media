@@ -1,104 +1,132 @@
-import React from 'react'
-import { TextField, Container, Button, Box, Grid, Link, Paper } from "@material-ui/core"
-import { useState } from 'react';
-import swal from "sweetalert";
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockRoundedIcon from "@mui/icons-material/LockRounded";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { useNavigate } from "react-router-dom";
+import { Checkbox, FormControlLabel, Link, Paper, Stack } from "@mui/material";
+import { formValidationMsgs, formValidator } from "../../utils";
 
 const Login = () => {
-  let navigate = useNavigate();
-  const [isValidEmail, setIsValidEmail] = useState(false);
-  const [isLoginFailed, setIsLoginFailed] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
 
-  const handleSubmissionRequest = (e) => {
-    setIsLoginFailed(false);
-    e.preventDefault();
-    console.log(e.target);
-    if (email === "kavya@dal.ca" && password === "pass") {
-      console.log("Login success!");
-      swal("Logged in successfully");
-      setIsLoginFailed(false);
-      if(!isLoginFailed) {
-          navigate("/");
-      }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate("/home", { replace: true });
+    // const formdata = new FormData(event.currentTarget);
 
-    }else if (email === "" && password === "") {
-      console.log("Login failure")
-      setIsLoginFailed(true);
-      e.stopPropagation();
-    }
-    else {
-      console.log("Login failure")
-      setIsLoginFailed(true);
-      swal("Invalid Credentials");
-      e.stopPropagation();
-      e.target.email.value = "";
-      e.target.password.value = "";
-    }
+    // setApiError(null);
+    // setErrors({});
+
+    // let errors = {};
+    // const data = {};
+
+    // formdata.forEach((formValue, key) => {
+    //   const value = formValue.toString().trim();
+    //   data[key] = value;
+
+    //   const isValid = formValidator(key, value);
+
+    //   if (!isValid) {
+    //     errors[key] = formValidationMsgs(key, value);
+    //   }
+    // });
+
+    // const isError = Object.keys(errors).length === 0;
+
+    // if (!isError) {
+    //   setErrors(errors);
+    // } else {
+    //   console.log({ data });
+    //   navigate("/home", { replace: true });
+    // }
   };
 
-  const checkValid = (e) => {
-    console.log(e.target.value);
-    const email = e.target.value
-    setEmail(email);
-    if (email.match(/^\w+@dal.ca/)) {
-      setIsValidEmail(false);
-    } else {
-      setIsValidEmail(true);
-    }
-  }
+  const handleSignup = () => {
+    navigate("/signup");
+  };
 
-  const setPasswordValue = (e) => {
-    setPassword(e.target.value);
-  }
-
+  const handleForgotPassword = () => {
+    navigate("/forgot-password");
+  };
 
   return (
-
-    <Container maxWidth="xs">
-      <h2 align="center"> CONNECT AROUND DAL </h2>
-      <Paper elevation={11} style={{ margin: '20px auto', padding: '20px 20px' }}>
-        <Box component='form' onSubmit={handleSubmissionRequest}>
-          <h2 align= "center"> SIGN-IN </h2>
-          <TextField margin="normal"
-            required
-            fullWidth
-            type="email"
-            label="Email Address"
-            name="email"
-            placeholder='test@dal.ca'
-            onChange={checkValid}
-            variant='outlined' color='secondary' />
-          {isValidEmail && <span className='err' style={{ color: 'red'}}>Invalid email</span>}
-
-          <TextField margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            onChange={setPasswordValue}
-            autoComplete="password" variant='outlined' color='secondary' />
-
-          <Grid container item>
-            <Link onClick = {() => navigate('/forgot-password')} style={{cursor: 'pointer'}}>Forgot password?</Link>
-          </Grid>
-          <Grid>
-            <Button style={{marginTop:'5px', marginBottom:'5px'}} variant='contained' color='secondary' type='submit'> Login </Button>
+    <Container component="main" maxWidth="sm">
+      <Paper sx={{ p: 8, mt: 8 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <LockRoundedIcon />
+          <Typography component="h1" variant="h5">
+            Login
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
+            <TextField
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              error={!!errors.email}
+              helperText={errors.email}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="new-password"
+              error={!!errors.password}
+              helperText={errors.password}
+              sx={{ mb: 2 }}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Login
+            </Button>
+          </Box>
+          <Grid container>
+            <Grid item xs>
+              <Link onClick={handleForgotPassword} variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link onClick={handleSignup} variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
           </Grid>
         </Box>
-        <Grid>
-          <Grid item >
-            Don't have an account? <Link onClick = {() => navigate('/register')} style={{cursor: 'pointer'}} align='center' color='secondary'>Sign Up</Link>
-          </Grid>
-        </Grid>
-
       </Paper>
     </Container>
-
-  )
-}
+  );
+};
 
 export default Login;

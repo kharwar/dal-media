@@ -14,16 +14,16 @@ const NavMenuPages = (props) => {
 
   const handleCloseNavMenu = (page) => {
     if (page && page === "Home") {
-      navigate("/");
+      navigate("/home");
     }
     if (page && page === "Groups") {
       navigate("/groups");
     }
-    if (page && page === 'Events') {
-      navigate('/event-page');
+    if (page && page === "Events") {
+      navigate("/event-page");
     }
-    if (page && page === 'Blogs') {
-      navigate('/blogs');
+    if (page && page === "Blogs") {
+      navigate("/blogs");
     }
     setAnchorElNav(null);
   };

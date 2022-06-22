@@ -8,9 +8,8 @@ import {
   Divider,
 } from "@mui/material";
 import "./styles.css";
-import { TextInput } from "../../components";
+import { TextInput, snackbar } from "../../components";
 import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "../../context";
 
 const CreateGroup = () => {
   const navigate = useNavigate();
@@ -19,7 +18,6 @@ const CreateGroup = () => {
   const [nameFilled, setNameFilled] = useState(false);
   const [descriptionFilled, setDescriptionFilled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { showSnackbar } = useSnackbar();
 
   const onNameChanged = (text) => {
     if (text !== "" && !nameFilled) {
@@ -46,8 +44,8 @@ const CreateGroup = () => {
       descriptionInput.current?.setValue("");
       setNameFilled(false);
       setDescriptionFilled(false);
-      showSnackbar(true, `Group created!`);
-      navigate("/");
+      snackbar.current.showSnackbar(true, `Group created!`);
+      navigate("/home");
     }, 2000);
   };
 
@@ -79,18 +77,20 @@ const CreateGroup = () => {
         multiline={true}
         sx={{ mt: "30px", fontSize: 20 }}
       />
-      <Box sx={{ m: 1, position: "relative" }}>
-        <Button
-          variant="contained"
-          disabled={!(nameFilled && descriptionFilled) || loading}
-          onClick={onCreateGroup}
-          sx={{
-            backgroundColor: "#455A64",
-          }}
-        >
-          Create
-        </Button>
-        {loading && <CircularProgress size={24} sx={styling.progress} />}
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Box sx={{ m: 1, position: "relative" }}>
+          <Button
+            variant="contained"
+            disabled={!(nameFilled && descriptionFilled) || loading}
+            onClick={onCreateGroup}
+            sx={{
+              backgroundColor: "#455A64",
+            }}
+          >
+            Create
+          </Button>
+          {loading && <CircularProgress size={24} sx={styling.progress} />}
+        </Box>
       </Box>
     </Paper>
   );

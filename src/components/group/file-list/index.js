@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, MenuItem, Box, Button } from "@mui/material";
-import { files } from "../../../data"
+import { files } from "../../../data";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../../alert-dialog";
 import File from "../file";
+import { snackbar } from "../../../components";
 
 const FileList = () => {
   console.log("fileList");
@@ -28,11 +29,12 @@ const FileList = () => {
   };
 
   const handleDownload = () => {
-    console.log("Downloaded");
+    snackbar.current.showSnackbar(true, "File Downloaded");
     handleClose();
   };
 
   const onDelete = () => {
+    snackbar.current.showSnackbar(true, "File Deleted");
     console.log("delete");
   };
 
@@ -58,6 +60,7 @@ const FileList = () => {
           style={{ display: "none" }}
           id="raised-button-file"
           type="file"
+          onChange={() => snackbar.current.showSnackbar(true, "File Uploaded")}
         />
         <label htmlFor="raised-button-file">
           <Button

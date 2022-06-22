@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 import FileList from "./file-list";
 import GroupManage from "./group-manage";
 import PostList from "../post-list";
-import { CreatePoll, DisplayPoll } from "../../pages";
+import { DisplayPoll } from "../../pages";
 
 const Group = () => {
-
   const navigate = useNavigate();
   const [tab, setTab] = useState(0);
   console.log("GROUP");
@@ -27,10 +26,7 @@ const Group = () => {
   return (
     <Container maxWidth="md">
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={tab}
-          onChange={onTabChanged}
-        >
+        <Tabs value={tab} onChange={onTabChanged}>
           <Tab label="News Feed" {...a11yProps(0)} />
           <Tab label="Shared Files" {...a11yProps(1)} />
           <Tab label="Polls" {...a11yProps(2)} />
@@ -44,12 +40,10 @@ const Group = () => {
         <FileList />
       </TabPanel>
       <TabPanel value={tab} index={2}>
-        <>
+        <Box>
           <Box sx={{ m: 1 }}>
-
-
             <Button
-              onClick={() => navigate('./create-poll')}
+              onClick={() => navigate("./create-poll")}
               variant="contained"
               component="span"
               sx={{
@@ -58,11 +52,9 @@ const Group = () => {
             >
               Create
             </Button>
-
           </Box>
           <DisplayPoll />
-        </>
-
+        </Box>
       </TabPanel>
       <TabPanel value={tab} index={3}>
         <GroupManage />
