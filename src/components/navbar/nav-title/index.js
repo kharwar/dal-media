@@ -7,7 +7,7 @@ const NavTitle = (props) => {
       variant="h6"
       noWrap
       component="a"
-      href="/"
+      href="/home"
       sx={{
         ...props.sx,
         ...styling.title,
