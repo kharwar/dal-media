@@ -13,7 +13,7 @@ const Navbar = () => {
 
   const navigateToPage = (page) => {
     if (page === "Home") {
-      navigate("/home");
+      navigate("/");
     }
     if (page === "Groups") {
       navigate("/groups");

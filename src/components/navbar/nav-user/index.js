@@ -23,7 +23,9 @@ const NavUser = () => {
 
   const handleCloseUserMenu = (setting) => {
     if (setting === "Logout") {
-      navigate("/", { replace: true });
+      navigate("/login", { replace: true });
+    } else if (setting === "Profile") {
+      navigate("/profile");
     }
     setAnchorElUser(null);
   };
@@ -51,7 +53,7 @@ const NavUser = () => {
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: "top",
-          horizontal: "right",
+          horizontal: "center",
         }}
         keepMounted
         transformOrigin={{

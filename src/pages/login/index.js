@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -10,14 +10,17 @@ import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, FormControlLabel, Link, Paper, Stack } from "@mui/material";
 import { formValidationMsgs, formValidator } from "../../utils";
+import { AuthContext } from "../../context";
 
 const Login = () => {
+  const { isLogin, setLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/home", { replace: true });
+    setLogin(true);
+    navigate("/", { replace: true });
     // const formdata = new FormData(event.currentTarget);
 
     // setApiError(null);
@@ -43,7 +46,7 @@ const Login = () => {
     //   setErrors(errors);
     // } else {
     //   console.log({ data });
-    //   navigate("/home", { replace: true });
+    //   navigate("/", { replace: true });
     // }
   };
 

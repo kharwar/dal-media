@@ -5,6 +5,9 @@ export const loggedInUser = {
   email: "Diana@yopmail.com",
   phone: "454 45632",
   dob: "04-06-1994",
+  total_posts: 100,
+  total_friends: 54,
+  bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
   image:
     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRsbRYnwHo7eSy-5Uc29L1UgYk2kgVhH9qO1A&usqp=CAU",
 };
@@ -17,6 +20,9 @@ export const users = [
     username: "elberta",
     phone: "+1 454 456300",
     dob: "04-06-1994",
+    total_posts: 600,
+    total_friends: 504,
+    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRsbRYnwHo7eSy-5Uc29L1UgYk2kgVhH9qO1A&usqp=CAU",
   },
@@ -27,6 +33,9 @@ export const users = [
     username: "Salome",
     phone: "+1 454 49932",
     dob: "04-06-1994",
+    total_posts: 800,
+    total_friends: 34,
+    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTmwNthcjpXHesWhhgiZgQhTTREec_7EP-dNw&usqp=CAU",
   },
@@ -37,6 +46,9 @@ export const users = [
     username: "Frederich",
     phone: "+1 454 45632",
     dob: "04-06-1994",
+    total_posts: 200,
+    total_friends: 94,
+    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS1HWDB6J1D4N-80QGiBJ8hgqVq3fFkSkcOTQ&usqp=CAU",
   },
@@ -47,6 +59,9 @@ export const users = [
     username: "Vernen",
     phone: "+1 454 45632",
     dob: "04-06-1994",
+    total_posts: 10,
+    total_friends: 150,
+    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRsbRYnwHo7eSy-5Uc29L1UgYk2kgVhH9qO1A&usqp=CAU",
   },
@@ -57,6 +72,9 @@ export const users = [
     username: "Edwina",
     phone: "+1 454 45632",
     dob: "04-06-1994",
+    total_posts: 500,
+    total_friends: 124,
+    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     image:
       "https://cdn.dribbble.com/users/2364329/screenshots/4812010/dribbble-23.jpg",
   },
@@ -67,6 +85,9 @@ export const users = [
     username: "John",
     phone: "+1 454 45635",
     dob: "04-06-1998",
+    total_posts: 200,
+    total_friends: 64,
+    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     image:
       "https://www.shareicon.net/data/128x128/2016/05/24/770117_people_512x512.png",
   },
@@ -77,6 +98,9 @@ export const users = [
     username: "Edward",
     phone: "+1 454 45632",
     dob: "04-06-1994",
+    total_posts: 700,
+    total_friends: 60,
+    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     image:
       "https://w7.pngwing.com/pngs/312/283/png-transparent-man-s-face-avatar-computer-icons-user-profile-business-user-avatar-blue-face-heroes.png",
   },
@@ -88,6 +112,9 @@ export const users = [
     phone: "+1 454 45632",
     dob: "04-06-1994",
     noOfPosts: 21,
+    total_posts: 90,
+    total_friends: 10,
+    bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe1_6-PtcF48iM3PkReAZlBpbSaLDhKNyisg&usqp=CAU",
   },
@@ -343,83 +370,285 @@ export const events = [
   {
     id: 1,
     title: "Here We code",
-    description: "Here We Code Month is a platform to showcase the diverse digital activities and events taking place across Nova Scotia, showcasing the digital education and opportunities available to all. All organizations and institutions involved in providing digital programming and opportunities in Nova Scotia are invited to get involved with Here We Code Month through hosting events and interactive sessions throughout May 2022.",
+    description:
+      "Here We Code Month is a platform to showcase the diverse digital activities and events taking place across Nova Scotia, showcasing the digital education and opportunities available to all. All organizations and institutions involved in providing digital programming and opportunities in Nova Scotia are invited to get involved with Here We Code Month through hosting events and interactive sessions throughout May 2022.",
     images: [
       "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
       "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-      "https://images.unsplash.com/photo-1551782450-a2132b4ba21d"
-
+      "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
     ],
     total_interests: 200,
     user: loggedInUser,
-    startDT: 'June 1, 2022 11AM',
-    endDT: 'June 2, 2022 11AM',
-    location: 'University Avenue'
+    startDT: "June 1, 2022 11AM",
+    endDT: "June 2, 2022 11AM",
+    location: "University Avenue",
   },
   {
     id: 2,
     title: "Mobile Event",
-    description: "Event Samsung's new variant which goes beyond Galaxy to the Universe",
-    images: [
-      "https://dummyjson.com/image/i/products/3/1.jpg",
-    ],
+    description:
+      "Event Samsung's new variant which goes beyond Galaxy to the Universe",
+    images: ["https://dummyjson.com/image/i/products/3/1.jpg"],
     total_interests: 300,
     user: loggedInUser,
-    startDT: 'June 1, 2022 11AM',
-    endDT: 'June 2, 2022 11AM',
-    location: 'Brunswick st'
+    startDT: "June 1, 2022 11AM",
+    endDT: "June 2, 2022 11AM",
+    location: "Brunswick st",
   },
-
 ];
 
 //BLOGS
 export const blogs = [
   {
     id: 1,
-    title: 'Lorem ipsum dolor',
-    createdAt: 'May 11, 2022',
+    title: "Lorem ipsum dolor",
+    createdAt: "May 11, 2022",
     user: loggedInUser,
-    image: '../assets/images/blog-bg.jpg',
-    body: [{ "type": "paragraph", "children": [{ "text": "Lorem ipsum dolor sit amet, ", "italic": true }, { "text": "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. " }, { "text": "Nam in risus nec massa tincidunt", "bold": true }, { "text": " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. " }, { "text": "Donec vitae orci molestie, scelerisque", "underline": true }, { "text": " dui vehicula, venenatis felis. Aliquam erat volutpat." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh." }] }]
+    image: "../assets/images/blog-bg.jpg",
+    body: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "Lorem ipsum dolor sit amet, ", italic: true },
+          {
+            text: "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis.",
+          },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. ",
+          },
+          { text: "Nam in risus nec massa tincidunt", bold: true },
+          {
+            text: " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. ",
+          },
+          { text: "Donec vitae orci molestie, scelerisque", underline: true },
+          { text: " dui vehicula, venenatis felis. Aliquam erat volutpat." },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh.",
+          },
+        ],
+      },
+    ],
   },
   {
     id: 2,
-    title: 'Consectetur adipiscing elit',
-    createdAt: 'May 12, 2022',
+    title: "Consectetur adipiscing elit",
+    createdAt: "May 12, 2022",
     user: users[2],
-    image: '../assets/images/blog-bg.jpg',
-    body: [{ "type": "paragraph", "children": [{ "text": "Lorem ipsum dolor sit amet, ", "italic": true }, { "text": "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. " }, { "text": "Nam in risus nec massa tincidunt", "bold": true }, { "text": " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. " }, { "text": "Donec vitae orci molestie, scelerisque", "underline": true }, { "text": " dui vehicula, venenatis felis. Aliquam erat volutpat." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh." }] }]
+    image: "../assets/images/blog-bg.jpg",
+    body: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "Lorem ipsum dolor sit amet, ", italic: true },
+          {
+            text: "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis.",
+          },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. ",
+          },
+          { text: "Nam in risus nec massa tincidunt", bold: true },
+          {
+            text: " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. ",
+          },
+          { text: "Donec vitae orci molestie, scelerisque", underline: true },
+          { text: " dui vehicula, venenatis felis. Aliquam erat volutpat." },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh.",
+          },
+        ],
+      },
+    ],
   },
   {
     id: 3,
-    title: 'Nulla aliquam tristique',
-    createdAt: 'June 1, 2022',
+    title: "Nulla aliquam tristique",
+    createdAt: "June 1, 2022",
     user: users[0],
-    image: '../assets/images/blog-bg.jpg',
-    body: [{ "type": "paragraph", "children": [{ "text": "Lorem ipsum dolor sit amet, ", "italic": true }, { "text": "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. " }, { "text": "Nam in risus nec massa tincidunt", "bold": true }, { "text": " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. " }, { "text": "Donec vitae orci molestie, scelerisque", "underline": true }, { "text": " dui vehicula, venenatis felis. Aliquam erat volutpat." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh." }] }]
+    image: "../assets/images/blog-bg.jpg",
+    body: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "Lorem ipsum dolor sit amet, ", italic: true },
+          {
+            text: "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis.",
+          },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. ",
+          },
+          { text: "Nam in risus nec massa tincidunt", bold: true },
+          {
+            text: " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. ",
+          },
+          { text: "Donec vitae orci molestie, scelerisque", underline: true },
+          { text: " dui vehicula, venenatis felis. Aliquam erat volutpat." },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh.",
+          },
+        ],
+      },
+    ],
   },
   {
     id: 4,
-    title: 'Ut vitae libero dictum',
+    title: "Ut vitae libero dictum",
     user: users[1],
-    createdAt: 'June 5, 2022',
-    image: '../assets/images/blog-bg.jpg',
-    body: [{ "type": "paragraph", "children": [{ "text": "Lorem ipsum dolor sit amet, ", "italic": true }, { "text": "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. " }, { "text": "Nam in risus nec massa tincidunt", "bold": true }, { "text": " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. " }, { "text": "Donec vitae orci molestie, scelerisque", "underline": true }, { "text": " dui vehicula, venenatis felis. Aliquam erat volutpat." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh." }] }]
+    createdAt: "June 5, 2022",
+    image: "../assets/images/blog-bg.jpg",
+    body: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "Lorem ipsum dolor sit amet, ", italic: true },
+          {
+            text: "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis.",
+          },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. ",
+          },
+          { text: "Nam in risus nec massa tincidunt", bold: true },
+          {
+            text: " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. ",
+          },
+          { text: "Donec vitae orci molestie, scelerisque", underline: true },
+          { text: " dui vehicula, venenatis felis. Aliquam erat volutpat." },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh.",
+          },
+        ],
+      },
+    ],
   },
   {
     id: 5,
-    title: 'Sed vel elit sed',
-    createdAt: 'June 7, 2022',
+    title: "Sed vel elit sed",
+    createdAt: "June 7, 2022",
     user: users[2],
-    image: '../assets/images/blog-bg.jpg',
-    body: [{ "type": "paragraph", "children": [{ "text": "Lorem ipsum dolor sit amet, ", "italic": true }, { "text": "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. " }, { "text": "Nam in risus nec massa tincidunt", "bold": true }, { "text": " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. " }, { "text": "Donec vitae orci molestie, scelerisque", "underline": true }, { "text": " dui vehicula, venenatis felis. Aliquam erat volutpat." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh." }] }]
+    image: "../assets/images/blog-bg.jpg",
+    body: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "Lorem ipsum dolor sit amet, ", italic: true },
+          {
+            text: "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis.",
+          },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. ",
+          },
+          { text: "Nam in risus nec massa tincidunt", bold: true },
+          {
+            text: " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. ",
+          },
+          { text: "Donec vitae orci molestie, scelerisque", underline: true },
+          { text: " dui vehicula, venenatis felis. Aliquam erat volutpat." },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh.",
+          },
+        ],
+      },
+    ],
   },
   {
     id: 6,
-    title: 'Quisque at hendrerit eros',
-    createdAt: 'June 10, 2022',
+    title: "Quisque at hendrerit eros",
+    createdAt: "June 10, 2022",
     user: users[1],
-    image: '../assets/images/blog-bg.jpg',
-    body: [{ "type": "paragraph", "children": [{ "text": "Lorem ipsum dolor sit amet, ", "italic": true }, { "text": "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. " }, { "text": "Nam in risus nec massa tincidunt", "bold": true }, { "text": " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. " }, { "text": "Donec vitae orci molestie, scelerisque", "underline": true }, { "text": " dui vehicula, venenatis felis. Aliquam erat volutpat." }] }, { "type": "paragraph", "children": [{ "text": "" }] }, { "type": "paragraph", "children": [{ "text": "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh." }] }]
-  }
+    image: "../assets/images/blog-bg.jpg",
+    body: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "Lorem ipsum dolor sit amet, ", italic: true },
+          {
+            text: "consectetur adipiscing elit. Curabitur sed dui tellus. Morbi aliquet mi quis imperdiet efficitur. Nulla sed urna in augue dignissim dapibus. Aenean efficitur in lectus ac efficitur. Nunc varius consectetur sollicitudin. Cras eleifend malesuada ipsum, sed consectetur mauris elementum nec. Donec id sapien pharetra, convallis enim ut, consequat ipsum. Vivamus fermentum purus quis venenatis volutpat. Duis ut enim eget orci aliquam facilisis.",
+          },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Donec quis arcu efficitur, mollis justo viverra, sollicitudin velit. ",
+          },
+          { text: "Nam in risus nec massa tincidunt", bold: true },
+          {
+            text: " egestas. Praesent gravida eu est sit amet sodales. Fusce eget nibh velit. Nullam hendrerit ut mi non finibus. Vestibulum varius egestas nunc nec bibendum. Maecenas vel viverra purus, vel sodales diam. Pellentesque scelerisque, nunc ac tincidunt euismod, tortor elit elementum neque, accumsan fringilla neque diam ac turpis. Nulla at risus nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce dui ipsum, efficitur ac egestas vitae, imperdiet nec quam. ",
+          },
+          { text: "Donec vitae orci molestie, scelerisque", underline: true },
+          { text: " dui vehicula, venenatis felis. Aliquam erat volutpat." },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Etiam vestibulum sem ut ultricies congue. Morbi sem magna, porta et bibendum quis, feugiat eget purus. Sed fermentum, nulla ut facilisis feugiat, odio elit consequat mauris, sit amet scelerisque sem mi posuere mi. Phasellus imperdiet vel ligula in imperdiet. Donec id justo et eros dignissim posuere eu et erat. Nunc dictum lectus sed vulputate dapibus. Phasellus consectetur vehicula eros ac congue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam aliquet convallis tellus, vitae varius enim rhoncus sit amet. Curabitur condimentum, sapien ac sollicitudin dignissim, mi purus posuere est, lacinia ornare elit quam ut augue. Aliquam et tempus risus. Aenean id quam nisi. Maecenas tincidunt consequat nibh et vehicula. Nullam vel purus ornare, mattis ante ut, elementum sem. Proin vel sapien tincidunt, pretium ex non, tempor neque. Etiam diam tellus, tristique ut ante in, rutrum sodales nibh.",
+          },
+        ],
+      },
+    ],
+  },
 ];

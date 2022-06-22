@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -6,13 +6,24 @@ import Box from "@mui/material/Box";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { formValidator, formValidationMsgs } from "../../utils";
-import { Link, Paper } from "@mui/material";
+import { Avatar, ButtonBase, Link, Paper } from "@mui/material";
+import Images from "../../assets";
+import { grey } from "@mui/material/colors";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [errors, setErrors] = useState({});
+  const [image, setImage] = useState(
+    state?.user?.image ?? Images.avatarPlaceholder
+  );
+
+  const isEditMode = useMemo(() => {
+    return state?.user ? true : false;
+  }, [state]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -47,7 +58,11 @@ const Signup = () => {
       setErrors(errors);
     } else {
       console.log({ data });
-      navigate("/profile", { state: { data } });
+      if (isEditMode) {
+        navigate("/profile");
+      } else {
+        navigate("/");
+      }
     }
   };
 
@@ -55,9 +70,18 @@ const Signup = () => {
     navigate("/");
   };
 
+  const onImageSelect = (e) => {
+    if (e.target.files) {
+      const fileList = e.target.files;
+      const file = fileList[0];
+      const url = URL.createObjectURL(file);
+      setImage(url);
+    }
+  };
+
   return (
     <Container maxWidth="sm">
-      <Paper sx={{ p: 8, mt: 8 }}>
+      <Paper sx={{ p: 8, my: 8 }}>
         <Box
           sx={{
             display: "flex",
@@ -65,21 +89,43 @@ const Signup = () => {
             alignItems: "center",
           }}
         >
-          <LockRoundedIcon />
+          {isEditMode ? <ManageAccountsIcon /> : <LockRoundedIcon />}
           <Typography component="h1" variant="h5">
-            Sign up
+            {isEditMode ? "Edit Profile" : "Sign up"}
           </Typography>
+          <input
+            id="select-avatar"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={onImageSelect}
+          />
+          <label htmlFor="select-avatar">
+            <ButtonBase sx={{ borderRadius: 40, my: 2 }} component="span">
+              <Avatar
+                src={image}
+                sx={{
+                  width: 100,
+                  height: 100,
+                  borderStyle: "solid",
+                  borderWidth: 3,
+                  borderColor: grey[600],
+                }}
+              />
+            </ButtonBase>
+          </label>
           <Box
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{ mt: 2 }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
+                  defaultValue={state?.user.name ?? ""}
                   required
                   fullWidth
                   id="firstName"
@@ -93,6 +139,7 @@ const Signup = () => {
                   required
                   fullWidth
                   id="lastName"
+                  defaultValue={state?.user.name ?? ""}
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
@@ -105,6 +152,7 @@ const Signup = () => {
                   required
                   fullWidth
                   id="email"
+                  defaultValue={state?.user.email ?? ""}
                   label="Email Address"
                   name="email"
                   autoComplete="email"
@@ -114,30 +162,45 @@ const Signup = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                  multiline
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  error={!!errors.password}
-                  helperText={errors.password}
+                  maxRows={3}
+                  id="bio"
+                  defaultValue={state?.user.bio ?? ""}
+                  label="Bio"
+                  name="bio"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="cpassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="cpassword"
-                  autoComplete="new-password"
-                  error={!!errors.cpassword}
-                  helperText={errors.cpassword}
-                />
-              </Grid>
+              {!isEditMode && (
+                <>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="new-password"
+                      error={!!errors.password}
+                      helperText={errors.password}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="cpassword"
+                      label="Confirm Password"
+                      type="password"
+                      id="cpassword"
+                      autoComplete="new-password"
+                      error={!!errors.cpassword}
+                      helperText={errors.cpassword}
+                    />
+                  </Grid>
+                </>
+              )}
             </Grid>
             <Button
               type="submit"
@@ -145,16 +208,18 @@ const Signup = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign up
+              {isEditMode ? "Save" : "Sign up"}
             </Button>
           </Box>
-          <Grid container sx={{ justifyContent: "flex-end" }}>
-            <Grid item>
-              <Link onClick={login} variant="body2">
-                {"Already have an account? Login"}
-              </Link>
+          {!isEditMode && (
+            <Grid container sx={{ justifyContent: "flex-end" }}>
+              <Grid item>
+                <Link onClick={login} variant="body2">
+                  {"Already have an account? Login"}
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
         </Box>
       </Paper>
     </Container>

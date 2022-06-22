@@ -12,6 +12,8 @@ import CreatePoll from "./create-poll";
 import DisplayPoll from "./display-poll";
 import CreateBlog from "./create-blog";
 import Blogs from "./blogs";
+import Profile from "./profile";
+import ChangePassword from "./change-password";
 
 export {
   Login,
@@ -28,4 +30,6 @@ export {
   DisplayPoll,
   CreateBlog,
   Blogs,
+  Profile,
+  ChangePassword,
 };

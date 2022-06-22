@@ -14,7 +14,7 @@ const NavMenuPages = (props) => {
 
   const handleCloseNavMenu = (page) => {
     if (page && page === "Home") {
-      navigate("/home");
+      navigate("/");
     }
     if (page && page === "Groups") {
       navigate("/groups");
