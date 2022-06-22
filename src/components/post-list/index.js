@@ -1,18 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import Post from "../post";
-import { posts } from "../../data";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../alert-dialog";
-import { useSnackbar } from "../../context";
+import { snackbar } from "../../components";
 
-const PostList = () => {
+const PostList = ({ posts }) => {
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
   const postRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
     setOnAgree(onDelete);
@@ -35,7 +33,7 @@ const PostList = () => {
 
   const onDelete = () => {
     console.log("delete");
-    showSnackbar(true, "Post Deleted");
+    snackbar.current.showSnackbar(true, "Post Deleted");
   };
 
   const handleDelete = () => {
@@ -44,10 +42,11 @@ const PostList = () => {
   };
 
   const handleLike = () => {
-    showSnackbar(true, "Post Liked");
+    console.log("like");
+    snackbar.current.showSnackbar(true, "Post Liked");
   };
   const handleComment = () => {
-    showSnackbar(true, "Write Comment");
+    snackbar.current.showSnackbar(true, "Write Comment");
   };
 
   const renderPost = useCallback((post) => {

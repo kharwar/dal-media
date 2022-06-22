@@ -6,8 +6,6 @@ const NavTitle = (props) => {
     <Typography
       variant="h6"
       noWrap
-      component="a"
-      href="/"
       sx={{
         ...props.sx,
         ...styling.title,
