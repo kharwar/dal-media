@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -12,8 +12,10 @@ import { Avatar, ButtonBase, Link, Paper } from "@mui/material";
 import Images from "../../assets";
 import { grey } from "@mui/material/colors";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { AuthContext } from "../../context";
 
 const Signup = () => {
+  const { isLogin, setLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const { state } = useLocation();
   const [errors, setErrors] = useState({});
@@ -32,7 +34,7 @@ const Signup = () => {
 
     let errors = {};
     const data = {};
-    console.log({ formdata });
+
     formdata.forEach((formValue, key) => {
       console.log({ formValue, key });
       const value = formValue.toString().trim();
@@ -61,13 +63,14 @@ const Signup = () => {
       if (isEditMode) {
         navigate("/profile");
       } else {
-        navigate("/");
+        setLogin(true);
+        navigate("/", { replace: true });
       }
     }
   };
 
   const login = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   const onImageSelect = (e) => {
