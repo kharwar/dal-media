@@ -21,33 +21,33 @@ const Login = () => {
     event.preventDefault();
     setLogin(true);
     navigate("/", { replace: true });
-    // const formdata = new FormData(event.currentTarget);
+    const formdata = new FormData(event.currentTarget);
 
-    // setApiError(null);
-    // setErrors({});
+    setApiError(null);
+    setErrors({});
 
-    // let errors = {};
-    // const data = {};
+    let errors = {};
+    const data = {};
 
-    // formdata.forEach((formValue, key) => {
-    //   const value = formValue.toString().trim();
-    //   data[key] = value;
+    formdata.forEach((formValue, key) => {
+      const value = formValue.toString().trim();
+      data[key] = value;
 
-    //   const isValid = formValidator(key, value);
+      const isValid = formValidator(key, value);
 
-    //   if (!isValid) {
-    //     errors[key] = formValidationMsgs(key, value);
-    //   }
-    // });
+      if (!isValid) {
+        errors[key] = formValidationMsgs(key, value);
+      }
+    });
 
-    // const isError = Object.keys(errors).length === 0;
+    const isError = Object.keys(errors).length === 0;
 
-    // if (!isError) {
-    //   setErrors(errors);
-    // } else {
-    //   console.log({ data });
-    //   navigate("/", { replace: true });
-    // }
+    if (!isError) {
+      setErrors(errors);
+    } else {
+      console.log({ data });
+      navigate("/", { replace: true });
+    }
   };
 
   const handleSignup = () => {
