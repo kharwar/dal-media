@@ -1,13 +1,16 @@
 import { Container, InputBase, Paper, Stack } from "@mui/material";
-import PostList from "../../components/post-list";
+import { PostList, snackbar } from "../../components";
 import SearchIcon from "@mui/icons-material/Search";
-import { useSnackbar } from "../../context";
-
+import { posts } from "../../data";
+import { useEffect } from "react";
 const Home = () => {
-  const { open, showSnackbar } = useSnackbar();
+  useEffect(() => {
+    console.log("home");
+  }, []);
+
   const handleSearch = (event) => {
-    if (!open) {
-      showSnackbar(true, "Searching...");
+    if (!snackbar.current.open) {
+      snackbar.current.showSnackbar(true, "Searching...");
     }
   };
 
@@ -15,7 +18,7 @@ const Home = () => {
     <Container maxWidth="sm">
       <Paper
         variant="outlined"
-        sx={{ display: "flex", alignItems: "center", mt: 1 }}
+        sx={{ display: "flex", alignItems: "center", mt: 2 }}
       >
         <InputBase
           sx={{ mx: 1, flex: 1, py: 0.75 }}
@@ -25,7 +28,7 @@ const Home = () => {
         />
         <SearchIcon sx={{ mr: 1 }} />
       </Paper>
-      <PostList />
+      <PostList posts={posts} />
     </Container>
   );
 };

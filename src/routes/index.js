@@ -1,27 +1,93 @@
-import { Routes, Route } from "react-router-dom";
-import { Home, Groups, CreatePost, CreateGroup, Group, CreateEvent, EventPage, CreatePoll, DisplayPoll, CreateBlog, Blogs } from "../pages";
+import { Routes, Route, Outlet, useNavigate, Navigate } from "react-router-dom";
+import { Navbar } from "../components";
+import { useAuth } from "../context";
+import {
+  Home,
+  Groups,
+  CreatePost,
+  CreateGroup,
+  Group,
+  CreateEvent,
+  EventPage,
+  CreatePoll,
+  DisplayPoll,
+  CreateBlog,
+  Blogs,
+  Login,
+  Signup,
+  ForgotPassword,
+  Profile,
+  ChangePassword,
+} from "../pages";
 
 const AppRoutes = () => {
-  console.log("app");
+  const { isLogin } = useAuth();
+  console.log({ isLogin });
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/groups" element={<Groups />} />
-      <Route path="/groups/:id" element={<Group />} />
-      <Route path="groups/:group/edit-post/:id" element={<CreatePost />} />
-      <Route path="/create-group" element={<CreateGroup />} />
-      <Route path="/create-post" element={<CreatePost />} />
-      <Route path="/groups/:id/create-poll" element={<CreatePoll />} />
-      <Route path="/display-poll" element={<DisplayPoll />} />
-      <Route path="/create-event" element={<CreateEvent />} />
-      <Route path="/event-page" element={<EventPage />} />
-      <Route path="/edit-post/:id" element={<CreatePost />} />
-      <Route path="/blogs/create" element={<CreateBlog />} />
-      <Route path="/blogs" element={<Blogs />} />
-      <Route path="blogs/edit/:id" element={<CreateBlog />} />
-      <Route path="/event-page/edit-event/:id" element={<CreateEvent />} />
+      <Route element={<WithoutNavbar />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+      </Route>
+      <Route
+        path="*"
+        element={
+          <RequireAuth>
+            <ProtectedRoutes />
+          </RequireAuth>
+        }
+      />
     </Routes>
   );
 };
+
+const ProtectedRoutes = () => {
+  return (
+    <Routes>
+      <Route element={<WithNavbar />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/groups/:id" element={<Group />} />
+        <Route path="groups/:group/edit-post/:id" element={<CreatePost />} />
+        <Route path="/create-group" element={<CreateGroup />} />
+        <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/groups/:id/create-poll" element={<CreatePoll />} />
+        <Route path="/display-poll" element={<DisplayPoll />} />
+        <Route path="/create-event" element={<CreateEvent />} />
+        <Route path="/event-page" element={<EventPage />} />
+        <Route path="/edit-post/:id" element={<CreatePost />} />
+        <Route path="/blogs/create" element={<CreateBlog />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="blogs/edit/:id" element={<CreateBlog />} />
+        <Route path="/event-page/edit-event/:id" element={<CreateEvent />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile" element={<Signup />} />
+        <Route path="/change-password" element={<ChangePassword />} />
+      </Route>
+    </Routes>
+  );
+};
+
+const RequireAuth = ({ children }) => {
+  const { isLogin } = useAuth();
+
+  if (!isLogin) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
+
+const WithNavbar = () => {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  );
+};
+
+const WithoutNavbar = () => <Outlet />;
 
 export default AppRoutes;

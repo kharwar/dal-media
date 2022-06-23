@@ -1,32 +1,27 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  Avatar,
   Paper,
   Typography,
   Stack,
   Button,
   Box,
   CircularProgress,
-  Snackbar,
-  Alert,
   Checkbox,
   FormGroup,
   FormControlLabel,
 } from "@mui/material";
 import "./styles.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSnackbar } from "../../context";
+import { snackbar } from "../../components";
 
 const DisplayPoll = () => {
   const [loading, setLoading] = useState(false);
-  const { showSnackbar } = useSnackbar();
 
   const onPost = () => {
     setLoading(true);
 
     setTimeout(() => {
       setLoading(false);
-      showSnackbar(true, "Poll Submitted");
+      snackbar.current.showSnackbar(true, "Poll Submitted");
     }, 3000);
   };
 

@@ -1,21 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 
-export const SnackbarContext = createContext();
+export const AuthContext = createContext();
 
-export const useSnackbar = () => useContext(SnackbarContext);
-
-export const SnackbarProvider = ({ children }) => {
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
-
-  const showSnackbar = (open, message) => {
-    setOpen(open);
-    message && setMessage(message);
-  };
-
-  return (
-    <SnackbarContext.Provider value={{ open, message, showSnackbar }}>
-      {children}
-    </SnackbarContext.Provider>
-  );
-};
+export const useAuth = () => useContext(AuthContext);

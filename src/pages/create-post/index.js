@@ -11,12 +11,11 @@ import {
 } from "@mui/material";
 import { DeleteRounded, ImageRounded } from "@mui/icons-material";
 import "./styles.css";
-import { PostTextInput } from "../../components";
+import { PostTextInput, snackbar } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { loggedInUser } from "../../data";
 import { dateFormat } from "../../utils";
-import { useSnackbar } from "../../context";
 
 const CreatePost = () => {
   const { state } = useLocation();
@@ -26,7 +25,6 @@ const CreatePost = () => {
   const [textFilled, setTextFilled] = useState(false);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (state?.post) {
@@ -83,7 +81,7 @@ const CreatePost = () => {
       setTextFilled(false);
 
       const key = state?.post ? "updated" : "created";
-      showSnackbar(true, `Post ${key}`);
+      snackbar.current.showSnackbar(true, `Post ${key}`);
       navigate("/");
     }, 3000);
   };

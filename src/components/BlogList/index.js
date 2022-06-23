@@ -4,14 +4,14 @@ import { blogs } from "../../data";
 import { Menu, MenuItem } from "@mui/material";
 import { useAlert } from "../alert-dialog";
 import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "../../context";
+import { snackbar } from "../../components";
+
 const BlogList = () => {
   const blogRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
-  const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
     setOnAgree(onDelete);
@@ -33,7 +33,7 @@ const BlogList = () => {
   };
 
   const onDelete = () => {
-    showSnackbar(true, "Blog Deleted");
+    snackbar.current.showSnackbar(true, "Blog Deleted");
     console.log("delete");
   };
 

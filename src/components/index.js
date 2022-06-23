@@ -5,11 +5,11 @@ import Post from "./post";
 import PostList from "./post-list";
 import SeeMoreText from "./see-more-text";
 import AlertDialog from "./alert-dialog";
-import MaterialSnackbar from "./material-snackbar";
-import EventList from './event-list';
-import Event from './event';
-import RichTextInput from './RichTextInput';
-import BlogList from './BlogList';
+import MaterialSnackbar, { snackbar } from "./material-snackbar";
+import EventList from "./event-list";
+import Event from "./event";
+import RichTextInput from "./RichTextInput";
+import BlogList from "./BlogList";
 export {
   PostTextInput,
   TextInput,
@@ -20,7 +20,8 @@ export {
   EventList,
   SeeMoreText,
   AlertDialog,
-  MaterialSnackbar,
+  MaterialSnackbar, //this is actual snackbar
+  snackbar, //this is just a snackbar reference
   RichTextInput,
-  BlogList
+  BlogList,
 };

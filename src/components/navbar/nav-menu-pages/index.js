@@ -19,11 +19,11 @@ const NavMenuPages = (props) => {
     if (page && page === "Groups") {
       navigate("/groups");
     }
-    if (page && page === 'Events') {
-      navigate('/event-page');
+    if (page && page === "Events") {
+      navigate("/event-page");
     }
-    if (page && page === 'Blogs') {
-      navigate('/blogs');
+    if (page && page === "Blogs") {
+      navigate("/blogs");
     }
     setAnchorElNav(null);
   };

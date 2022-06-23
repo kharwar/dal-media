@@ -4,11 +4,9 @@ import Event from "../event";
 import { events } from "../../data";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../alert-dialog";
-import { useSnackbar } from "../../context";
+import { snackbar } from "../../components";
 
 const EventList = () => {
-  const { showSnackbar } = useSnackbar();
-
   console.log("eventList");
 
   const { setAlert, setOnAgree } = useAlert();
@@ -37,7 +35,7 @@ const EventList = () => {
   };
 
   const onDelete = () => {
-    showSnackbar(true, "Event Deleted");
+    snackbar.current.showSnackbar(true, "Event Deleted");
     console.log("delete");
   };
 

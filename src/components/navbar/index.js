@@ -18,11 +18,11 @@ const Navbar = () => {
     if (page === "Groups") {
       navigate("/groups");
     }
-    if (page === 'Events') {
-      navigate('/event-page');
+    if (page === "Events") {
+      navigate("/event-page");
     }
-    if (page === 'Blogs') {
-      navigate('/blogs');
+    if (page === "Blogs") {
+      navigate("/blogs");
     }
   };
 

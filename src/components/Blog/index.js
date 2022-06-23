@@ -20,12 +20,19 @@ const Blog = ({ blog, handleMenu }) => {
       <Paper
         sx={{
           ...styling.blogContainer,
-          backgroundImage: blog.image,
+          // backgroundImage: blog.image,
         }}
       >
         {/* Fix image not showing in bg */}
-        {<img style={{ display: "none" }} src={blog.image} />}
-        <Box
+        {
+          <img
+            style={{}}
+            height={"100%"}
+            width={"100%"}
+            src={require("../../assets/images/blog-bg.jpg")}
+          />
+        }
+        {/* <Box
           sx={{
             position: "absolute",
             top: 0,
@@ -34,8 +41,8 @@ const Blog = ({ blog, handleMenu }) => {
             left: 0,
             // backgroundColor: grey[500],
           }}
-        />
-        <Grid container>
+        /> */}
+        {/* <Grid container>
           <Grid item md={6}>
             <Box
               sx={{
@@ -47,12 +54,23 @@ const Blog = ({ blog, handleMenu }) => {
               <Typography component="h3" variant="h5" color="#fff" gutterBottom>
                 {blog.title}
               </Typography>
-              {/* <Typography variant="h5" color="#000" paragraph>
-                { }
-              </Typography> */}
             </Box>
           </Grid>
-        </Grid>
+        </Grid> */}
+        <Typography
+          component="h3"
+          variant="h5"
+          style={{
+            textAlign: "center",
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+          }}
+        >
+          {blog.title}
+        </Typography>
         <BlogFooter blog={blog} handleMenu={handleMenu} />
       </Paper>
     </>
@@ -65,7 +83,7 @@ const styling = {
   blogContainer: {
     marginTop: "8px",
     position: "relative",
-    backgroundColor: "grey.800",
+    // backgroundColor: "grey.800",
     // color: '#000000',
     mb: 4,
     backgroundSize: "cover",
