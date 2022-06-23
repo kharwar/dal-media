@@ -70,7 +70,7 @@ const Signup = () => {
   };
 
   const login = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   const onImageSelect = (e) => {
