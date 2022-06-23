@@ -6,7 +6,7 @@ const regEx = {
   lettersOnly: /^[a-zA-Z\s]*$/,
   email:
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-  password: /^[ A-Za-z0-9_@./#&+-]*$/,
+  password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
 };
 
 const isLettersOnly = (text) => regEx.lettersOnly.test(text);
@@ -20,7 +20,7 @@ const isPasswordValid = (password, cpassword) => {
   }
 
   //for password
-  if (password.length > 7 && !regEx.password.test(password)) {
+  if (regEx.password.test(password)) {
     return true;
   }
 
@@ -28,8 +28,6 @@ const isPasswordValid = (password, cpassword) => {
 };
 
 export const formValidator = (valueType, inputValue, dependantValue) => {
-  if (!inputValue) return false;
-
   switch (valueType) {
     case "firstName":
       return isLettersOnly(inputValue);

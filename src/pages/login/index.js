@@ -19,35 +19,33 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setLogin(true);
-    navigate("/", { replace: true });
-    // const formdata = new FormData(event.currentTarget);
 
-    // setApiError(null);
-    // setErrors({});
+    const formdata = new FormData(event.currentTarget);
 
-    // let errors = {};
-    // const data = {};
+    setErrors({});
 
-    // formdata.forEach((formValue, key) => {
-    //   const value = formValue.toString().trim();
-    //   data[key] = value;
+    let errors = {};
+    const data = {};
 
-    //   const isValid = formValidator(key, value);
+    formdata.forEach((formValue, key) => {
+      const value = formValue.toString().trim();
+      data[key] = value;
 
-    //   if (!isValid) {
-    //     errors[key] = formValidationMsgs(key, value);
-    //   }
-    // });
+      const isValid = formValidator(key, value);
 
-    // const isError = Object.keys(errors).length === 0;
+      if (!isValid) {
+        errors[key] = formValidationMsgs(key, value);
+      }
+    });
 
-    // if (!isError) {
-    //   setErrors(errors);
-    // } else {
-    //   console.log({ data });
-    //   navigate("/", { replace: true });
-    // }
+    const isError = Object.keys(errors).length === 0;
+
+    if (!isError) {
+      setErrors(errors);
+    } else {
+      setLogin(true);
+      navigate("/", { replace: true });
+    }
   };
 
   const handleSignup = () => {
@@ -92,13 +90,12 @@ const Login = () => {
             <TextField
               required
               fullWidth
-              name="password"
+              name="pass"
               label="Password"
               type="password"
-              id="password"
-              autoComplete="new-password"
-              error={!!errors.password}
-              helperText={errors.password}
+              id="pass"
+              error={!!errors.pass}
+              helperText={errors.pass}
               sx={{ mb: 2 }}
             />
             <FormControlLabel
