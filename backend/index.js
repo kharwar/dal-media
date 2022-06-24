@@ -1,0 +1,26 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const router = require("./src/routes");
+const mongoose = require("mongoose");
+require("dotenv").config();
+
+const port = process.env.PORT || 8000;
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use("/", router);
+
+mongoose
+  .connect(process.env.MONGOOSE_URL)
+  .then(
+    app.listen(port, () =>
+      console.log(`DalMedia Backend listening on port ${port}!`)
+    )
+  )
+  .catch((e) => {
+    console.log("Mongoose Connection Error");
+    process.exit(1);
+  });
