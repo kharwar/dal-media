@@ -7,12 +7,27 @@
 const { postService } = require("../../services");
 const { responses } = require("../../utils");
 const { errorResponse, successResponse } = require("../../utils/responses");
+
 const getAllPosts = async (req, res) => {
-  res.send("Get all posts");
+  try {
+    const posts = await postService.findAllPosts();
+
+    return successResponse(res, "Posts Fetched", posts);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
 };
 
 const getPostById = async (req, res) => {
-  res.send("Get post by id");
+  const { id } = req.params;
+
+  try {
+    const post = await postService.findPostId(id);
+
+    return successResponse(res, "Post Fetched", post);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
 };
 
 const createPost = async (req, res) => {
@@ -27,11 +42,28 @@ const createPost = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-  res.send("Update");
+  const { body, params } = req;
+  const { id } = params;
+
+  try {
+    const post = await postService.updatePostById(id, body);
+
+    return successResponse(res, "Post Deleted", post);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
 };
 
 const deletePost = async (req, res) => {
-  res.send("Delete");
+  const { id } = req.params;
+
+  try {
+    const post = await postService.deletePostById(id);
+
+    return successResponse(res, "Post Deleted", post);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
 };
 
 module.exports = {

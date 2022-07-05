@@ -8,7 +8,7 @@ const successResponse = (res, message = "", data) => {
   if (res) {
     const response = { message: message, success: true };
     if (data) {
-      response[data] = data;
+      response["data"] = data;
     }
     return res.status(200).send(response);
   }

@@ -35,8 +35,30 @@ const findAllPosts = async () => {
   }
 };
 
+const updatePostById = async (id, postData) => {
+  try {
+    const post = await Post.findByIdAndUpdate(id, postData, {
+      returnDocument: "after",
+    });
+    return post;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
+const deletePostById = async (id) => {
+  try {
+    const post = await Post.findByIdAndDelete(id);
+    return post;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
 module.exports = {
   createPost,
   findPostId,
   findAllPosts,
+  updatePostById,
+  deletePostById,
 };

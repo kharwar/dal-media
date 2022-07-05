@@ -17,13 +17,12 @@ const handleErrors = (error) => {
   if (error.errors) {
     for (const [key, value] of Object.entries(error.errors)) {
       const errorType = value.kind;
-      code = constants[errorType];
+      code = constants[errorType] ?? 500;
       errors.push(value.message);
     }
   } else {
     errors.push("Internal Server Error");
   }
-
   return { errors, code };
 };
 
