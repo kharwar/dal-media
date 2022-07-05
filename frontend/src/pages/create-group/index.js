@@ -10,6 +10,32 @@ import {
 import "./styles.css";
 import { TextInput, snackbar } from "../../components";
 import { useNavigate } from "react-router-dom";
+import { storage } from "../../config/firebase";
+import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
+
+var file;
+
+const uploadFile = (event) => {
+  const file = event.target.files[0];
+
+  // Make the path unique by adding UUID before filename maybe.
+  const filePath = "/img/groupImages/" + file.name;
+  const storageRef = ref(storage, filePath);
+
+  uploadBytes(storageRef, file)
+    .then(() => {
+      getDownloadURL(storageRef)
+        .then((imageUrl) => {
+          console.log(imageUrl);
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    })
+    .catch((error) => {
+      console.error(error.message);
+    });
+};
 
 const CreateGroup = () => {
   const navigate = useNavigate();
@@ -92,6 +118,11 @@ const CreateGroup = () => {
           {loading && <CircularProgress size={24} sx={styling.progress} />}
         </Box>
       </Box>
+
+      <Button variant="contained" component="label" onChange={uploadFile}>
+        Upload
+        <input type="file" hidden value={file} />
+      </Button>
     </Paper>
   );
 };
