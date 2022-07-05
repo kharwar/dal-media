@@ -1,3 +1,42 @@
-const { Post } = require("../../models");
+/*
+ * Created on Tue Jul 05 2022
+ *
+ * Author: Naveed Hussain Khowaja
+ */
 
-const createPost = () => {};
+const mongoose = require("mongoose");
+const { Post } = require("../../models");
+const { validations } = require("../../utils");
+
+const createPost = async (postData) => {
+  try {
+    const post = await Post.create(postData);
+    return post;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
+const findPostId = async (id) => {
+  try {
+    const post = await Post.findById(id).lean();
+    return post;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
+const findAllPosts = async () => {
+  try {
+    const posts = await Post.find();
+    return posts;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
+module.exports = {
+  createPost,
+  findPostId,
+  findAllPosts,
+};
