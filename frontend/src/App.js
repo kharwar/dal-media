@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MaterialSnackbar } from "./components";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
@@ -8,8 +8,13 @@ import { BrowserRouter } from "react-router-dom";
 import AlertDialog, { AlertProvider } from "./components/alert-dialog";
 import { snackbarRef } from "./components/material-snackbar";
 import { AuthContext } from "./context";
+import { ServiceManager, apiRoutes } from "./services";
 function App() {
   const [isLogin, setLogin] = useState(false);
+
+  useEffect(() => {
+    ServiceManager.initialize(apiRoutes.baseURL);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
