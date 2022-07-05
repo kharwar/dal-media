@@ -6,6 +6,7 @@
 
 const mongoose = require("mongoose");
 const isEmpty = require("lodash.isempty");
+const { UserSchema } = require("../user/model.user");
 
 const PostSchema = new mongoose.Schema(
   {
@@ -27,6 +28,7 @@ const PostSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       requred: true,
     },
+    likes: [String],
   },
   { timestamps: true }
 );

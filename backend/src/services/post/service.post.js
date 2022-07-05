@@ -55,10 +55,17 @@ const deletePostById = async (id) => {
   }
 };
 
+const likeOrDislikePost = async (likeData) => {
+  console.log({ likeData });
+  if (likeData.postId && likeData.isLiked != undefined) {
+  }
+};
+
 module.exports = {
   createPost,
   findPostId,
   findAllPosts,
   updatePostById,
   deletePostById,
+  likeOrDislikePost,
 };
