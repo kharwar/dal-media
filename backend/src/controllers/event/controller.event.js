@@ -1,13 +1,63 @@
+const { eventService } = require("../../services");
+
 const getAllEvents = async (req, res) => {
-  res.send("Get all events");
+  try {
+    const events = await eventService.findAllEvents();
+    return res.status(200).send({
+      success: true,
+      events,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: "Internal Server Error",
+      success: false,
+      error,
+    });
+  }
+
 };
 
 const getEventById = async (req, res) => {
-  res.send("Get event by id");
+  try {
+    const { id } = req.params;
+    const event = await eventService.findEventById(id);
+    if (!event) {
+      return res.status(404).send({
+        message: "Event not found",
+        success: false,
+      });
+    }
+    return res.status(200).send({
+      success: true,
+      event,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: "Internal Server Error",
+      success: false,
+      error,
+    });
+  }
+
 };
 
 const createEvent = async (req, res) => {
-  res.send("Create");
+  try {
+    const { body } = req;
+    const event = await eventService.createEvent(body);
+    return res.status(200).send({
+      message: "Event created",
+      success: true,
+      event,
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: "Internal Server Error",
+      success: false,
+      error,
+    });
+  }
+
 };
 
 const updateEvent = async (req, res) => {
