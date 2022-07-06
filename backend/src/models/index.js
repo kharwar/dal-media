@@ -1,6 +1,6 @@
 const User = require("./user/model.user");
-const Post = require("./post/model.post");
-const Event = require("./post/model.event");
+const Post = require("./posts/model.post");
+const Event = require("./events/model.event");
 
 module.exports = {
   User,

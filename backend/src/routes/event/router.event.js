@@ -15,3 +15,17 @@ eventRouter.delete("/delete/:id", eventController.deleteEvent);
 eventRouter.post("/interest", eventController.interestEvent);
 
 module.exports = eventRouter;
+
+
+// URL: http://localhost:8000/api/events/create
+// Body: {
+//   "title":"second event",
+//   "description":"description",
+//   "location":"Brunswick st",
+//   "start_DT":"date st",
+//   "end_DT":"end dt",
+//  "images":["image1","image2"],
+//  "createBy":"new user",
+//  "interested":["user2","user3"]
+ 
+//    }

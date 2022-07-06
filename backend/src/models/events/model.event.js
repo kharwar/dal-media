@@ -5,8 +5,9 @@
  */
 
 const mongoose = require("mongoose");
-const isEmpty = require("lodash.isempty");
-const { UserSchema } = require("../user/model.user");
+const lodash = require("lodash");
+const { isEmpty } = lodash;
+//const { UserSchema } = require("../user/model.user");
 
 const EventSchema = new mongoose.Schema(
   {
@@ -51,7 +52,7 @@ const EventSchema = new mongoose.Schema(
     },
 
     createBy: {
-      type: mongoose.Types.ObjectId,
+      type: String,
       requred: true,
     },
 
