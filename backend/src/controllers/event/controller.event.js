@@ -1,72 +1,96 @@
+/*
+ * Created on Tue Jul 05 2022
+ *
+ * Author: Ridham Kathriya
+ */
+
 const { eventService } = require("../../services");
+const { responses } = require("../../utils");
+const { errorResponse, successResponse } = require("../../utils/responses");
+
+
+
 
 const getAllEvents = async (req, res) => {
+
   try {
+
     const events = await eventService.findAllEvents();
-    return res.status(200).send({
-      success: true,
-      events,
-    });
+
+    return successResponse(res, "Events Fetched", events);
   } catch (error) {
-    return res.status(500).send({
-      message: "Internal Server Error",
-      success: false,
-      error,
-    });
+    return errorResponse(res, error);
   }
 
 };
 
 const getEventById = async (req, res) => {
+
+  const { id } = req.params;
+
   try {
-    const { id } = req.params;
     const event = await eventService.findEventById(id);
-    if (!event) {
-      return res.status(404).send({
-        message: "Event not found",
-        success: false,
-      });
-    }
-    return res.status(200).send({
-      success: true,
-      event,
-    });
+
+    return successResponse(res, "Event Fetched", event);
   } catch (error) {
-    return res.status(500).send({
-      message: "Internal Server Error",
-      success: false,
-      error,
-    });
+    return errorResponse(res, error);
   }
 
 };
 
 const createEvent = async (req, res) => {
+
   try {
     const { body } = req;
     const event = await eventService.createEvent(body);
-    return res.status(200).send({
-      message: "Event created",
-      success: true,
-      event,
-    });
+
+    return successResponse(res, "Event Created", event);
   } catch (error) {
-    return res.status(500).send({
-      message: "Internal Server Error",
-      success: false,
-      error,
-    });
+    return errorResponse(res, error);
   }
 
 };
 
+
 const updateEvent = async (req, res) => {
-  res.send("Update");
+  const { body, params } = req;
+  const { id } = params;
+
+  try {
+    const event = await eventService.updateEventById(id, body);
+
+    return successResponse(res, "Event Updated", event);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+
 };
 
 const deleteEvent = async (req, res) => {
-  res.send("Delete");
+  const { id } = req.params;
+
+  try {
+    const event = await eventService.deleteEventById(id);
+
+    return successResponse(res, "Event Deleted", event);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+
 };
+
+const interestEvent = async (req, res) => {
+  const { body } = req;
+
+  try {
+    const event = await eventService.interestOrDisinterestEvent(body);
+
+    return successResponse(res, "Event interest response", event);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
 
 module.exports = {
   getAllEvents,
@@ -74,4 +98,5 @@ module.exports = {
   updateEvent,
   deleteEvent,
   getEventById,
+  interestEvent,
 };
