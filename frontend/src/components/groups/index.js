@@ -1,5 +1,6 @@
 import { Container, Tabs, Tab, Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { posts } from "../../data";
 import FileList from "../group/file-list";
 import GroupManage from "../group/group-manage";
 import PostList from "../post-list";
@@ -31,7 +32,7 @@ const Groups = () => {
         </Tabs>
       </Box>
       <TabPanel value={tab} index={0}>
-        <PostList />
+        <PostList posts={posts} />
       </TabPanel>
       <TabPanel value={tab} index={1}>
         <FileList />

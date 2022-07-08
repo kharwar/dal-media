@@ -10,6 +10,20 @@ import {
 import "./styles.css";
 import { TextInput, snackbar } from "../../components";
 import { useNavigate } from "react-router-dom";
+import { uploadFile } from "../../utils";
+
+var file;
+
+const onImageChange = async (event) => {
+  const file = event.target.files[0];
+
+  try {
+    const imageUrl = await uploadFile(file);
+    console.log({ imageUrl });
+  } catch (error) {
+    console.error(error.message);
+  }
+};
 
 const CreateGroup = () => {
   const navigate = useNavigate();
@@ -92,6 +106,11 @@ const CreateGroup = () => {
           {loading && <CircularProgress size={24} sx={styling.progress} />}
         </Box>
       </Box>
+
+      <Button variant="contained" component="label" onChange={onImageChange}>
+        Upload
+        <input type="file" hidden value={file} />
+      </Button>
     </Paper>
   );
 };

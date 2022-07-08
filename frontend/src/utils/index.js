@@ -1,5 +1,7 @@
 import moment from "moment";
-
+import { storage } from "../config/firebase";
+import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
+import { v4 as uuid } from "uuid";
 export const dateFormat = (date, format) => moment(date).format(format);
 
 const regEx = {
@@ -74,4 +76,18 @@ export const formValidationMsgs = (valueType, inputValue) => {
     default:
       return "Invalid input";
   }
+};
+
+export const uploadFile = async (file) => {
+  const filePath = "/img/" + uuid() + file.name;
+  const storageRef = ref(storage, filePath);
+  let imageUrl = null;
+  try {
+    await uploadBytes(storageRef, file);
+    imageUrl = await getDownloadURL(storageRef);
+  } catch (error) {
+    throw error;
+  }
+
+  return imageUrl;
 };
