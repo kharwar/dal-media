@@ -35,7 +35,7 @@ deploy_frontend_production:
   tags:
     - ugrad
   only:
-    - production
+    - main
 # deploy_backend_staging:
 #   type: deploy
 #   stage: staging
