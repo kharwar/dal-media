@@ -18,8 +18,11 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { loggedInUser } from "../../data";
-import { dateFormat } from "../../utils";
 import { snackbar } from "../../components";
+import { dateFormat, uploadFile } from "../../utils";
+import { apiRoutes, ServiceManager } from "../../services";
+
+const eventImages = [];
 
 const CreateEvent = () => {
   const { state } = useLocation();
@@ -77,6 +80,7 @@ const CreateEvent = () => {
         const url = URL.createObjectURL(file);
         const id = lastId + 1;
         newImages.push(url);
+        eventImages.push(file);
         lastId = id;
       }
 
@@ -84,6 +88,7 @@ const CreateEvent = () => {
     }
   };
 
+  //may require change here eventImages var need to change 
   const onDeleteImage = (url) => {
     const filteredImages = images.filter((image) => image != url);
     setImages(filteredImages);
@@ -99,18 +104,57 @@ const CreateEvent = () => {
 
   const onPost = () => {
     setLoading(true);
-    //write you store logic here, api call and all
-    // console.log(title + " " + textInput.current + " " + startDTvalue.toString() + " " + location);
-    setTimeout(() => {
-      setLoading(false);
-      textInput.current?.setValue("");
-      setImages([]);
-      setTextFilled(false);
-      setTitle("");
-      setLocation("");
+
+    const imageUrls = [];
+
+    try {
+      for (const file in eventImages) {
+        const imageUrl = await uploadFile(file);
+        imageUrls.push(imageUrl);
+      }
+    } catch (error) {
+      console.error(`File Upload error: ${error}`);
+    }
+
+    const params = {
+      title: title,
+      description: textInput.current?.getValue(),
+      location: location,
+      start_DT: startDTvalue.toString(),
+      end_DT: endDTvalue.toString(),
+      images: imageUrls,
+      createBy: ""  //add user id in form of string
+    };
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.createEvent,
+        params,
+        "post"
+      );
+
+      console.log({ res });
       const key = state?.event ? "updated" : "created";
       snackbar.current.showSnackbar(true, `Event ${key}`);
-    }, 3000);
+      navigate("/");
+    } catch (error) {
+      console.log({ error });
+    }
+
+
+
+    //write you store logic here, api call and all
+    // console.log(title + " " + textInput.current + " " + startDTvalue.toString() + " " + location);
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   textInput.current?.setValue("");
+    //   setImages([]);
+    //   setTextFilled(false);
+    //   setTitle("");
+    //   setLocation("");
+    //   const key = state?.event ? "updated" : "created";
+    //   snackbar.current.showSnackbar(true, `Event ${key}`);
+    // }, 3000);
   };
 
   return (
