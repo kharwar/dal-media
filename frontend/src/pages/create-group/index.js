@@ -10,31 +10,19 @@ import {
 import "./styles.css";
 import { TextInput, snackbar } from "../../components";
 import { useNavigate } from "react-router-dom";
-import { storage } from "../../config/firebase";
-import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
+import { uploadFile } from "../../utils";
 
 var file;
 
-const uploadFile = (event) => {
+const onImageChange = async (event) => {
   const file = event.target.files[0];
 
-  // Make the path unique by adding UUID before filename maybe.
-  const filePath = "/img/groupImages/" + file.name;
-  const storageRef = ref(storage, filePath);
-
-  uploadBytes(storageRef, file)
-    .then(() => {
-      getDownloadURL(storageRef)
-        .then((imageUrl) => {
-          console.log(imageUrl);
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
-    })
-    .catch((error) => {
-      console.error(error.message);
-    });
+  try {
+    const imageUrl = await uploadFile(file);
+    console.log({ imageUrl });
+  } catch (error) {
+    console.error(error.message);
+  }
 };
 
 const CreateGroup = () => {
@@ -119,7 +107,7 @@ const CreateGroup = () => {
         </Box>
       </Box>
 
-      <Button variant="contained" component="label" onChange={uploadFile}>
+      <Button variant="contained" component="label" onChange={onImageChange}>
         Upload
         <input type="file" hidden value={file} />
       </Button>

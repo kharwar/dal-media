@@ -5,6 +5,7 @@ import FileList from "./file-list";
 import GroupManage from "./group-manage";
 import PostList from "../post-list";
 import { DisplayPoll } from "../../pages";
+import { posts } from "../../data";
 
 const Group = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Group = () => {
         </Tabs>
       </Box>
       <TabPanel value={tab} index={0}>
-        <PostList />
+        <PostList posts={posts} />
       </TabPanel>
       <TabPanel value={tab} index={1}>
         <FileList />
