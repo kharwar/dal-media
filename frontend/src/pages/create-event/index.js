@@ -102,7 +102,7 @@ const CreateEvent = () => {
     }
   };
 
-  const onPost = () => {
+  const onPost = async () => {
     setLoading(true);
 
     const imageUrls = [];
@@ -123,7 +123,7 @@ const CreateEvent = () => {
       start_DT: startDTvalue.toString(),
       end_DT: endDTvalue.toString(),
       images: imageUrls,
-      createBy: ""  //add user id in form of string
+      createBy: "Ridham"  //add user id in form of string
     };
 
     try {
@@ -136,7 +136,7 @@ const CreateEvent = () => {
       console.log({ res });
       const key = state?.event ? "updated" : "created";
       snackbar.current.showSnackbar(true, `Event ${key}`);
-      navigate("/");
+      navigate("/event-page");
     } catch (error) {
       console.log({ error });
     }

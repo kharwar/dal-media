@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MaterialSnackbar } from "./components";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
