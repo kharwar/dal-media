@@ -15,7 +15,10 @@ import { PostTextInput, snackbar } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
 import { loggedInUser } from "../../data";
-import { dateFormat } from "../../utils";
+import { dateFormat, uploadFile } from "../../utils";
+import { apiRoutes, ServiceManager } from "../../services";
+
+const postImages = [];
 
 const CreatePost = () => {
   const { state } = useLocation();
@@ -50,6 +53,7 @@ const CreatePost = () => {
         const file = fileList[i];
         const url = URL.createObjectURL(file);
         const id = lastId + 1;
+        postImages.push(file);
         newImages.push(url);
         lastId = id;
       }
@@ -71,19 +75,39 @@ const CreatePost = () => {
     }
   };
 
-  const onPost = () => {
+  const onPost = async () => {
     setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
-      textInput.current?.setValue("");
-      setImages([]);
-      setTextFilled(false);
+    const imageUrls = [];
 
+    try {
+      for (const file in postImages) {
+        const imageUrl = await uploadFile(file);
+        imageUrls.push(imageUrl);
+      }
+    } catch (error) {
+      console.error(`File Upload error: ${error}`);
+    }
+
+    const params = {
+      description: textInput.current?.getValue(),
+      images: imageUrls,
+    };
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.createPost,
+        params,
+        "post"
+      );
+
+      console.log({ res });
       const key = state?.post ? "updated" : "created";
       snackbar.current.showSnackbar(true, `Post ${key}`);
       navigate("/");
-    }, 3000);
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   return (
