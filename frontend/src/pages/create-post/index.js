@@ -18,8 +18,6 @@ import { loggedInUser } from "../../data";
 import { dateFormat, uploadFile } from "../../utils";
 import { apiRoutes, ServiceManager } from "../../services";
 
-const postImages = [];
-
 const CreatePost = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -37,12 +35,6 @@ const CreatePost = () => {
     }
   }, []);
 
-  const onImageChange = (e) => {
-    if (fileInput.current != null) {
-      fileInput.current.click();
-    }
-  };
-
   const onImageSelect = (e) => {
     if (e.target.files) {
       const fileList = e.target.files;
@@ -53,18 +45,17 @@ const CreatePost = () => {
         const file = fileList[i];
         const url = URL.createObjectURL(file);
         const id = lastId + 1;
-
-        postImages.push(file);
-        newImages.push(url);
+        newImages.push({ file, url });
         lastId = id;
       }
-
+      console.log({ newImages });
       setImages((oldImages) => [...oldImages, ...newImages]);
+      e.target.value = "";
     }
   };
 
   const onDeleteImage = (url) => {
-    const filteredImages = images.filter((image) => image != url);
+    const filteredImages = images.filter((image) => image.url != url);
     setImages(filteredImages);
   };
 
@@ -82,10 +73,11 @@ const CreatePost = () => {
     const imageUrls = [];
 
     try {
-      for (let i = 0; i < postImages.length; i++) {
-        console.log({ file: postImages[i] });
-        const imageUrl = await uploadFile(postImages[i]);
-        imageUrls.push(imageUrl);
+      for (let i = 0; i < images.length; i++) {
+        if (images[i].file) {
+          const imageUrl = await uploadFile(images[i].file);
+          imageUrls.push(imageUrl);
+        }
       }
     } catch (error) {
       console.error(`File Upload error: ${error}`);
@@ -95,15 +87,13 @@ const CreatePost = () => {
       description: textInput.current?.getValue(),
       images: imageUrls,
     };
-    console.log({ params });
+
     try {
       const res = await ServiceManager.getInstance().request(
         apiRoutes.createPost,
         params,
         "post"
       );
-
-      console.log({ res });
       const key = state?.post ? "updated" : "created";
       snackbar.current.showSnackbar(true, `Post ${key}`);
       navigate("/");
@@ -144,13 +134,13 @@ const CreatePost = () => {
       />
       {images.length > 0 && (
         <Box className="img-list">
-          {images.map((image, index) => (
+          {images.map(({ url }, index) => (
             <div className="img-container" key={index + ""}>
-              <img className="img" src={image} width="200" height="200" />
+              <img className="img" src={url} width="200" height="200" />
               <IconButton
                 disabled={loading}
                 sx={styling.btnDelete}
-                onClick={() => onDeleteImage(image)}
+                onClick={() => onDeleteImage(url)}
               >
                 <DeleteRounded />
               </IconButton>
@@ -160,16 +150,18 @@ const CreatePost = () => {
       )}
       <Stack direction="row" sx={styling.btnContainer}>
         <input
+          style={{ display: "none" }}
+          id="raised-button-file"
           type="file"
           multiple
           accept="image/*"
-          style={{ display: "none" }}
-          ref={fileInput}
           onChange={onImageSelect}
         />
-        <IconButton onClick={onImageChange} disabled={loading}>
-          <ImageRounded fontSize="medium" />
-        </IconButton>
+        <label htmlFor="raised-button-file">
+          <IconButton component="span" disabled={loading}>
+            <ImageRounded fontSize="medium" />
+          </IconButton>
+        </label>
         <Box sx={{ m: 1, position: "relative" }}>
           <Button
             variant="contained"

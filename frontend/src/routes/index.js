@@ -21,8 +21,6 @@ import {
 } from "../pages";
 
 const AppRoutes = () => {
-  const { isLogin } = useAuth();
-  console.log({ isLogin });
   return (
     <Routes>
       <Route element={<WithoutNavbar />}>
