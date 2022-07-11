@@ -10,7 +10,7 @@ import { snackbarRef } from "./components/material-snackbar";
 import { AuthContext } from "./context";
 import { ServiceManager, apiRoutes } from "./services";
 function App() {
-  const [isLogin, setLogin] = useState(false);
+  const [isLogin, setLogin] = useState(true);
 
   useEffect(() => {
     ServiceManager.initialize(apiRoutes.baseURL);
