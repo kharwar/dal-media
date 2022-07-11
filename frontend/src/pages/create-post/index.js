@@ -53,6 +53,7 @@ const CreatePost = () => {
         const file = fileList[i];
         const url = URL.createObjectURL(file);
         const id = lastId + 1;
+
         postImages.push(file);
         newImages.push(url);
         lastId = id;
@@ -81,8 +82,9 @@ const CreatePost = () => {
     const imageUrls = [];
 
     try {
-      for (const file in postImages) {
-        const imageUrl = await uploadFile(file);
+      for (let i = 0; i < postImages.length; i++) {
+        console.log({ file: postImages[i] });
+        const imageUrl = await uploadFile(postImages[i]);
         imageUrls.push(imageUrl);
       }
     } catch (error) {
@@ -93,7 +95,7 @@ const CreatePost = () => {
       description: textInput.current?.getValue(),
       images: imageUrls,
     };
-
+    console.log({ params });
     try {
       const res = await ServiceManager.getInstance().request(
         apiRoutes.createPost,
