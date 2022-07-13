@@ -13,6 +13,8 @@ import Images from "../../assets";
 import { grey } from "@mui/material/colors";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { AuthContext } from "../../context";
+import Axios from "axios";
+import { sendEmail, verifyCode } from "../../helper";
 
 const Signup = () => {
   const { isLogin, setLogin } = useContext(AuthContext);
@@ -22,6 +24,11 @@ const Signup = () => {
   const [image, setImage] = useState(
     state?.user?.image ?? Images.avatarPlaceholder
   );
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
+  const [password, setPassword] = useState("");
 
   const isEditMode = useMemo(() => {
     return state?.user ? true : false;
@@ -63,12 +70,41 @@ const Signup = () => {
       if (isEditMode) {
         navigate("/profile");
       } else {
-        setLogin(true);
-        navigate("/", { replace: true });
+        const code = Math.floor(100000 + Math.random() * 900000);
+        sendEmail(email, code).then(() => {
+          if(verifyCode(code)){
+            Axios.post("http://localhost:8000/api/users/signup", {
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              bio: bio,
+              password: password,
+            }).then((res) => {
+              if(res.data.success === true){
+                setLogin(true);
+                navigate("/", { replace: true });
+              }else {
+                alert("unsuccesful!");
+              }
+            });
+          }else {
+            alert("unsuccesful attempt");
+          }
+        });
+        // setLogin(true);
+        // navigate("/", { replace: true });
       }
     }
   };
 
+  // const randomString = () => {
+  //   let str = ''
+  //   for(let i=0; i<8; i++){
+  //     const char = Math.floor((Math.random() * 10) +1 )
+  //     str += char
+  //   }
+  //   return str
+  // }
   const login = () => {
     navigate("/login");
   };
@@ -133,6 +169,7 @@ const Signup = () => {
                   fullWidth
                   id="firstName"
                   label="First Name"
+                  onChange={(e) => setFirstName(e.target.value)}
                   error={!!errors.firstName}
                   helperText={errors.firstName}
                 />
@@ -146,6 +183,7 @@ const Signup = () => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={(e) => setLastName(e.target.value)}
                   error={!!errors.lastName}
                   helperText={errors.lastName}
                 />
@@ -159,6 +197,7 @@ const Signup = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={(e) => setEmail(e.target.value)}
                   error={!!errors.email}
                   helperText={errors.email}
                 />
@@ -170,6 +209,7 @@ const Signup = () => {
                   maxRows={3}
                   id="bio"
                   defaultValue={state?.user.bio ?? ""}
+                  onChange={(e) => setBio(e.target.value)}
                   label="Bio"
                   name="bio"
                 />
@@ -185,6 +225,7 @@ const Signup = () => {
                       type="password"
                       id="password"
                       autoComplete="new-password"
+                      onChange={(e) => setPassword(e.target.value)}
                       error={!!errors.password}
                       helperText={errors.password}
                     />
