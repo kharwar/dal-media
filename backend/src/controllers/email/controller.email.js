@@ -2,7 +2,6 @@
 require('dotenv').config();
 const nodemailer = require('nodemailer');
 
-// Authentication for Gmail
 let transporter = nodemailer.createTransport({
     service: 'Outlook365',
     auth: {

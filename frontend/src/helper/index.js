@@ -4,8 +4,8 @@ export async function sendEmail(email, code) {
   try {
     await Axios.post("http://localhost:8000/api/email/email", {
       email: email,
-      subject: "Verification Email",
-      text: "Verification Code:" + code,
+      subject: "Email verification for user signup",
+      text: "To verify your account please enter the code:" + code,
     }).then((res) => {
       console.log("Email sent!");
     });
@@ -15,8 +15,10 @@ export async function sendEmail(email, code) {
 }
 
 export const verifyCode = (code) => {
-  const enteredCode = prompt("Enter the verification code");
-  if (code === enteredCode) {
+  const inputCode = prompt("Enter the verification code");
+  console.log(inputCode)
+  if (code == inputCode) {
+    console.log("verfied")
     return true;
   } else {
     return false;

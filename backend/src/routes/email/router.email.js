@@ -8,11 +8,15 @@ emailRouter.post('/email', (req, res) => {
     console.log(sendMail);
     sendMail(email, subject, text, function(err, data) {
         if (err) {
-            console.log('ERROR: ', err);
-            return res.status(500).json({ message: err.message, success: false });
+            return res.status(500).json({ 
+                message: err.message, 
+                success: false 
+            });
         }
-        console.log('Email sent!!!');
-        return res.status(200).json({ message: 'Email sent successfully', success: true });
+        return res.status(200).json({
+             message: 'Email sent successfully',
+              success: true 
+            });
     });
 });
 

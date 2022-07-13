@@ -72,6 +72,7 @@ const Signup = () => {
       } else {
         const code = Math.floor(100000 + Math.random() * 900000);
         sendEmail(email, code).then(() => {
+          console.log(code)
           if(verifyCode(code)){
             Axios.post("http://localhost:8000/api/users/signup", {
               firstName: firstName,
