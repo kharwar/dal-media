@@ -1,8 +1,8 @@
 const { User } = require("../../models");
 
-const getUserById = (id) => {
+const getUserById = async (id) => {
   try {
-    const user = User.findById(id);
+    const user = await User.findById(id);
     return user;
   } catch (error) {
     throw error;
