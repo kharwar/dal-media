@@ -188,19 +188,6 @@ const CreateEvent = () => {
       }
     }
 
-
-    //write you store logic here, api call and all
-    // console.log(title + " " + textInput.current + " " + startDTvalue.toString() + " " + location);
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   textInput.current?.setValue("");
-    //   setImages([]);
-    //   setTextFilled(false);
-    //   setTitle("");
-    //   setLocation("");
-    //   const key = state?.event ? "updated" : "created";
-    //   snackbar.current.showSnackbar(true, `Event ${key}`);
-    // }, 3000);
   };
 
   return (

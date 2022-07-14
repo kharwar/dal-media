@@ -33,7 +33,7 @@ const EventList = (props) => {
   const handleEdit = () => {
     handleClose();
     const event = eventRef.current;
-    navigate(`edit-event/${event._id}`, { state: { event } });
+    navigate(`edit-event`, { state: { event } });
   };
 
   const onDelete = () => {
