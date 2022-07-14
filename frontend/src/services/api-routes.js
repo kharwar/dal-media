@@ -6,4 +6,7 @@ export default {
   signIn: "/users/signin",
   signUp: "users/signup",
   getLoggedInUser: "/users/current",
+  createBlog: "blogs/create",
+  getBlogs: "blogs/",
+  updateBlog: "blogs",
 };

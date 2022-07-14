@@ -30,11 +30,11 @@ const signUp = async (req, res) => {
     const { body } = req;
     const hash = await bcrypt.hash(body.password, saltRounds);
     const user = await userService.createUser(body);
-    const emailResponse = await sendMail(
-      body.email,
-      "Email Verification",
-      "Verify your mail"
-    );
+    // const emailResponse = await sendMail(
+    //   body.email,
+    //   "Email Verification",
+    //   "Verify your mail"
+    // );
     delete user.password;
     user.token = await userService.generateToken(user);
     return successResponse(res, "User Successfully Registered", user);

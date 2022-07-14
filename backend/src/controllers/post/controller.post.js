@@ -4,20 +4,10 @@
  * Author: Naveed Hussain Khowaja
  */
 
+const isEmpty = require("lodash.isempty");
 const { postService } = require("../../services");
 const { responses } = require("../../utils");
 const { errorResponse, successResponse } = require("../../utils/responses");
-
-const createPost = async (req, res) => {
-  try {
-    const { body } = req;
-    const newPost = await postService.createPost(body);
-
-    return successResponse(res, "Post Created", newPost);
-  } catch (error) {
-    return errorResponse(res, error);
-  }
-};
 
 const getAllPosts = async (req, res) => {
   try {
@@ -41,7 +31,23 @@ const getPostById = async (req, res) => {
   }
 };
 
+const createPost = async (req, res) => {
+  try {
+    const { body } = req;
 
+    if (isEmpty(body.description) && isEmpty(body.images)) {
+      const error = {
+        code: 400,
+        errors: ["Post must have description or atleast one image"],
+      };
+      return errorResponse(res, error);
+    }
+    const newPost = await postService.createPost(body);
+    return successResponse(res, "Post Created", newPost);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
 
 const updatePost = async (req, res) => {
   const { body, params } = req;
