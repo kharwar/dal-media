@@ -16,7 +16,7 @@ const successResponse = (res, message = "", data) => {
 
 const errorResponse = (res, error) => {
   if (res) {
-    return res.status(error.code).send({
+    return res.status(error.code ?? 500).send({
       message: error.message ?? error.errors[0],
       success: false,
     });
