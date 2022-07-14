@@ -1,19 +1,12 @@
 const { blogService } = require("../../services");
-const CustomError = require("../../utils/error");
+const { validations } = require("../../utils");
 const { successResponse, errorResponse } = require("../../utils/responses");
 const getBlogById = async (req, res) => {
   try {
     const { id } = req.params;
     const blog = await blogService.findBlogById(id);
     if (!blog) {
-      // throw new CustomError({
-      //   message: "Not Found.",
-      //   code: 404,
-      // });
-      return res.status(404).send({
-        message: "Not Found",
-        success: false,
-      });
+      throw validations.handleErrors(new Error("Blog not found"));
     }
     return successResponse(res, "Blog Found", blog);
   } catch (error) {
@@ -59,11 +52,8 @@ const updateBlog = async (req, res) => {
     const { body } = req;
     const { id } = req.params;
     const { createdBy } = await blogService.findBlogById(id);
-    if (req.user._id !== createdBy._id.toString()) {
-      throw new CustomError({
-        message: "Unauthenticated",
-        code: 401,
-      });
+    if (req.user._id !== createdBy?._id.toString()) {
+      throw validations.handleErrors(new Error("Unauthorized"), 401);
     }
     blog = await blogService.updateBlog(id, body);
     return successResponse(res, "Blog Updated", blog);
