@@ -5,4 +5,6 @@ export default {
 
   getEvents: "events",
   createEvent: "events/create",
+  deleteEvent: "events/delete",
+  editEvent: "events/update"
 };

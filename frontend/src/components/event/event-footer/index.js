@@ -4,13 +4,13 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { snackbar } from "../../../components";
 
-const EventFooter = ({ event: { total_interests } }) => {
+const EventFooter = ({ event: { interested } }) => {
   return (
     <Box>
       <Stack direction="row" sx={{ justifyContent: "space-between", mb: 1 }}>
         <Stack direction="row" spacing={1}>
           <ThumbUpIcon />
-          <Typography variant="body1">{total_interests}</Typography>
+          <Typography variant="body1">{interested.length}</Typography>
         </Stack>
       </Stack>
       <Divider sx={{ mb: 1 }} />

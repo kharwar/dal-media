@@ -1,14 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import Event from "../event";
-import { events } from "../../data";
+// import { events } from "../../data";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../alert-dialog";
 import { snackbar } from "../../components";
+import { apiRoutes, ServiceManager } from "../../services";
 
-const EventList = () => {
-  console.log("eventList");
-
+const EventList = (props) => {
+  const [events, setEvents] = useState(props.events);
+  //console.log("eventList");
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
   const eventRef = useRef(null);
@@ -16,6 +17,7 @@ const EventList = () => {
   const open = Boolean(anchorEl);
 
   useEffect(() => {
+    setEvents(props.events);
     setOnAgree(onDelete);
   }, []);
 
@@ -31,15 +33,29 @@ const EventList = () => {
   const handleEdit = () => {
     handleClose();
     const event = eventRef.current;
-    navigate(`edit-event/${event.id}`, { state: { event } });
+    navigate(`edit-event/${event._id}`, { state: { event } });
   };
 
   const onDelete = () => {
-    snackbar.current.showSnackbar(true, "Event Deleted");
-    console.log("delete");
+
+    const id = eventRef.current["_id"].toString();
+
+    ServiceManager.getInstance()
+      .request(apiRoutes.deleteEvent + "/" + id, {}, "delete")
+      .then((res) => {
+        //setEvents(events.filter(event => (event["_id"] !== eventRef.current["_id"])));
+        snackbar.current.showSnackbar(true, "Event Deleted");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log({ error });
+      });
+
+
+
   };
 
-  const handleDelete = () => {
+  const handleDelete = (event) => {
     handleClose();
     setAlert(
       true,
@@ -52,7 +68,7 @@ const EventList = () => {
     return (
       <Event
         event={e}
-        key={e.id}
+        key={e._id}
         handleMenu={(event) => handleMenu(event, e)}
       />
     );
@@ -60,7 +76,7 @@ const EventList = () => {
 
   return (
     <>
-      {events.map(renderEvent)}
+      {props.events.map(renderEvent)}
       <Menu
         id="menu"
         anchorEl={anchorEl}

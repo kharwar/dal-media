@@ -41,7 +41,9 @@ const getEventById = async (req, res) => {
 const createEvent = async (req, res) => {
 
   try {
+
     const { body } = req;
+    console.log(req);
     const event = await eventService.createEvent(body);
 
     return successResponse(res, "Event Created", event);

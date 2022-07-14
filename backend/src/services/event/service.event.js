@@ -29,6 +29,7 @@ const findEventById = async (id) => {
 const findAllEvents = async () => {
   try {
     const events = await Event.find();
+    //await events.sort((a, b) => { return new Date(b.UpdatedAt).getTime() - new Date(a.UpdatedAt).getTime(); });
     return events;
   } catch (error) {
     throw validations.handleErrors(error);
