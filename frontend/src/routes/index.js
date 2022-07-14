@@ -21,8 +21,6 @@ import {
 } from "../pages";
 
 const AppRoutes = () => {
-  const { isLogin } = useAuth();
-  console.log({ isLogin });
   return (
     <Routes>
       <Route element={<WithoutNavbar />}>
@@ -70,9 +68,9 @@ const ProtectedRoutes = () => {
 };
 
 const RequireAuth = ({ children }) => {
-  const { isLogin } = useAuth();
-
-  if (!isLogin) {
+  const { loggedInUser } = useAuth();
+  console.log({ route: loggedInUser });
+  if (!loggedInUser) {
     return <Navigate to="/login" replace />;
   }
 
