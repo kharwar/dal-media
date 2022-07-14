@@ -12,19 +12,22 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-        trim: true,
-        lowercase: true,
-        unique: true,
-        required: 'Please Enter Email Address',
-        match: [/^\w+([\.-]?\w+)@dal.ca/, 'Enter the Valid email Address']
+    trim: true,
+    lowercase: true,
+    unique: true,
+    required: "Please Enter Email Address",
+    match: [/^\w+([\.-]?\w+)@dal.ca/, "Enter the Valid email Address"],
   },
   password: {
     type: String,
     required: true,
   },
-  bio:{
+  bio: {
     type: String,
-  }
+  },
+  image: {
+    type: String,
+  },
 });
 
 const User = mongoose.model("User", UserSchema);

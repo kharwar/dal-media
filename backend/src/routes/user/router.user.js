@@ -5,8 +5,8 @@ const {
   signIn,
   getUserProfile,
   updateProfile,
-  resetpassword,
-  forgotpassword,
+  resetPassword,
+  changePassword,
   getCurrentUser,
 } = require("../../controllers/index").userController;
 const isAuthenticated = require("../../middlewares/common/isAuthenticated");
@@ -16,7 +16,8 @@ userRouter.post("/signup", signUp);
 userRouter.post("/signin", signIn);
 userRouter.get("/profile/:id", isAuthenticated, getUserProfile);
 userRouter.post("/editprofile", isAuthenticated, updateProfile);
-userRouter.post("/resetpassword", isAuthenticated, resetpassword);
-userRouter.post("/forgotpassword", isAuthenticated, forgotpassword);
+userRouter.post("/change-password", isAuthenticated, changePassword);
+userRouter.post("/reset-password", resetPassword);
+// userRouter.post("/forgotpassword", isAuthenticated, forgotpassword);
 userRouter.get("/current", isAuthenticated, getCurrentUser);
 module.exports = userRouter;

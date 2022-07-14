@@ -2,9 +2,12 @@ import { Container, InputBase, Paper, Stack } from "@mui/material";
 import { PostList, snackbar } from "../../components";
 import SearchIcon from "@mui/icons-material/Search";
 import { posts } from "../../data";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { apiRoutes, ServiceManager } from "../../services";
+import { AuthContext } from "../../context";
 const Home = () => {
+  const { loggedInUser } = useContext(AuthContext);
+  console.log({ loggedInUser });
   // useEffect(() => {
   //   ServiceManager.getInstance()
   //     .request(apiRoutes.getPosts)

@@ -15,7 +15,7 @@ const getUserById = async (id) => {
 const createUser = async (userData) => {
   try {
     const user = await User.create(userData);
-    return user;
+    return user.toJSON();
   } catch (error) {
     throw validations.handleErrors(error);
   }
@@ -46,6 +46,7 @@ const findUserWhere = async (whereCond) => {
     const user = await User.findOne(whereCond).lean();
     return user;
   } catch (error) {
+    console.log(error);
     throw validations.handleErrors(error);
   }
 };
@@ -85,37 +86,14 @@ const updatePassword = async (id, userData) => {
   }
 };
 
-let transporter = nodemailer.createTransport({
-  service: "Outlook365",
-  auth: {
-    user: "dal-media@outlook.com",
-    pass: "Dalmedia2022",
-  },
-});
-
-const sendMail = (email, subject, text, callback) => {
-  let mailOptions = {
-    from: "dal-media@outlook.com",
-    to: email,
-    subject: subject,
-    text: text,
-  };
-  transporter.sendMail(mailOptions, function (err, data) {
-    if (err) {
-      callback(err, null);
-    }
-    return callback(null, data);
-  });
-};
-
 module.exports = {
   getUserById,
   createUser,
   findUser,
   findUserById,
   updateUserById,
-  sendMail,
   updatePassword,
   forgotPassword,
   generateToken,
+  findUserWhere,
 };

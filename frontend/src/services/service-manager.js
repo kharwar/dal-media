@@ -65,9 +65,15 @@ export default class ServiceManager {
       let errors = null;
       if (error.response.data?.message) {
         const messages = error.response.data?.message;
-        errors = "• " + messages.join("\n• ");
+        const isMsgArray = Array.isArray(messages);
+
+        if (isMsgArray) {
+          errors = "• " + messages.join("\n• ");
+        } else {
+          errors = messages;
+        }
       }
-      snackbar.current.showSnackbar(true, errors);
+      snackbar.current?.showSnackbar(true, errors);
       console.log(
         "--------------------------------------------------------------------------------------",
         "\n- ERROR : ",

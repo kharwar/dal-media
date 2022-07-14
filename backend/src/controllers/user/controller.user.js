@@ -3,7 +3,8 @@ const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { userService } = require("../../services");
+const { userService, otpService } = require("../../services");
+const sendMail = require("../../utils/mailer");
 const saltRounds = 10;
 const { errorResponse, successResponse } = require("../../utils/responses");
 
@@ -26,33 +27,17 @@ const getUsers = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const email = req.body.email;
-    const bio = req.body.bio;
-    const password = req.body.password;
-
-    const hash = await bcrypt.hash(password, saltRounds);
-    const user = await userService.createUser({
-      firstname: firstname,
-      lastname: lastname,
-      bio: bio,
-      email: email,
-      password: hash,
-    });
-    userService.sendMail(
-      "nv201655@dal.ca",
+    const { body } = req;
+    const hash = await bcrypt.hash(body.password, saltRounds);
+    const user = await userService.createUser(body);
+    const emailResponse = await sendMail(
+      body.email,
       "Email Verification",
-      "Verify your mail",
-      function (err, data) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(data);
-        }
-      }
+      "Verify your mail"
     );
-    return successResponse(res, "User Successfully Registered");
+    delete user.password;
+    user.token = await userService.generateToken(user);
+    return successResponse(res, "User Successfully Registered", user);
   } catch (error) {
     return errorResponse(res, error);
   }
@@ -78,33 +63,46 @@ const signIn = async (req, res) => {
   }
 };
 
-const sendOtp = () => {};
-
-const forgotpassword = async (req, res) => {
+const changePassword = async (req, res) => {
   try {
-    const email = req.body.email;
-    const password = req.body.password;
+    const { password, newPassword } = req.body;
+    const user = await userService.findUserById(req.user._id);
+    const isPasswordCorrect = bcrypt.compareSync(password, user.password);
 
-    const hash = await bcrypt.hash(password, saltRounds);
-    const update = { password: hash };
-
-    const user = await userService.updateUserById(email, update);
-    return successResponse(res, "Password reset successful", user);
+    if (!isPasswordCorrect) {
+      return res.status(401).send({
+        message: "Old Password incorrect",
+        success: false,
+      });
+    }
+    const newHashedPassword = await bcrypt.hash(newPassword, saltRounds);
+    userService.updateUserById(user._id, { password: newHashedPassword });
+    return successResponse(res, "Password changed successfully", {
+      success: true,
+    });
   } catch (error) {
     return errorResponse(res, error);
   }
 };
 
-const resetpassword = async (req, res) => {
+const resetPassword = async (req, res) => {
   try {
-    const id = req.body.user_id;
-    const password = req.body.password;
-
-    const hash = await bcrypt.hash(password, saltRounds);
+    const { passcode, password } = req.body;
+    const otp = await otpService.findOtpByPasscode(passcode);
+    if (!otp) {
+      return res.status(404).send({
+        message: "Verification link expired",
+        success: false,
+      });
+    }
+    const [updatedOtp, user, hash] = await Promise.all([
+      otpService.updateOtp(otp._id, { isVerified: true }),
+      userService.findUserById(otp.userId),
+      bcrypt.hash(password, saltRounds),
+    ]);
     const update = { password: hash };
-
-    const user = await userService.updatePassword(id, update);
-    return successResponse(res, "Password changes updated", user);
+    const updatedUser = await userService.updateUserById(user._id, update);
+    return successResponse(res, "Password reset successful", { success: true });
   } catch (error) {
     return errorResponse(res, error);
   }
@@ -157,7 +155,7 @@ module.exports = {
   signIn,
   getUserProfile,
   updateProfile,
-  resetpassword,
-  forgotpassword,
+  resetPassword,
   getCurrentUser,
+  changePassword,
 };

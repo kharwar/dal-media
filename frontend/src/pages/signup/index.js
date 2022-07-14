@@ -7,7 +7,7 @@ import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useLocation, useNavigate } from "react-router-dom";
-import { formValidator, formValidationMsgs } from "../../utils";
+import { formValidator, formValidationMsgs, uploadFile } from "../../utils";
 import { Avatar, ButtonBase, Link, Paper } from "@mui/material";
 import Images from "../../assets";
 import { grey } from "@mui/material/colors";
@@ -15,24 +15,62 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { AuthContext } from "../../context";
 import Axios from "axios";
 import { sendEmail, verifyCode } from "../../helper";
+import { apiRoutes, ServiceManager } from "../../services";
+import { snackbar } from "../../components";
+import { storeLoggedInUser } from "../../local-storage";
+import { async } from "@firebase/util";
 
 const Signup = () => {
-  const { isLogin, setLogin } = useContext(AuthContext);
+  const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const { state } = useLocation();
   const [errors, setErrors] = useState({});
-  const [image, setImage] = useState(
-    state?.user?.image ?? Images.avatarPlaceholder
-  );
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [bio, setBio] = useState("");
-  const [password, setPassword] = useState("");
+  const [image, setImage] = useState({
+    file: null,
+    url: state?.user?.image ?? Images.avatarPlaceholder,
+  });
+  const [imageChanged, setImageChanged] = useState(false);
 
   const isEditMode = useMemo(() => {
     return state?.user ? true : false;
   }, [state]);
+
+  const signup = async (data) => {
+    const params = {
+      firstname: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      bio: data.bio,
+      password: data.password,
+    };
+
+    if (imageChanged) {
+      try {
+        params["image"] = await uploadFile(image.file);
+      } catch (error) {
+        console.log({ error });
+      }
+    }
+
+    console.log({ params });
+    try {
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.signUp,
+        params,
+        "post"
+      );
+
+      if (res.data.token) {
+        ServiceManager.getInstance().userToken = res.data.token;
+        storeLoggedInUser(res.data.token);
+        setLoggedInUser(res.data);
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      console.log({ eeeeeee: error });
+      // snackbar.current.showSnackbar()
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,7 +81,6 @@ const Signup = () => {
     const data = {};
 
     formdata.forEach((formValue, key) => {
-      console.log({ formValue, key });
       const value = formValue.toString().trim();
       let isValid = false;
 
@@ -66,46 +103,14 @@ const Signup = () => {
     if (!isError) {
       setErrors(errors);
     } else {
-      console.log({ data });
       if (isEditMode) {
         navigate("/profile");
       } else {
-        const code = Math.floor(100000 + Math.random() * 900000);
-        sendEmail(email, code).then(() => {
-          console.log(code)
-          if(verifyCode(code)){
-            Axios.post("http://localhost:8000/api/users/signup", {
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-              bio: bio,
-              password: password,
-            }).then((res) => {
-              if(res.data.success === true){
-                setLogin(true);
-                navigate("/", { replace: true });
-              }else {
-                alert("unsuccesful!");
-              }
-            });
-          }else {
-            alert("unsuccesful attempt");
-          }
-        });
-        // setLogin(true);
-        // navigate("/", { replace: true });
+        signup(data);
       }
     }
   };
 
-  // const randomString = () => {
-  //   let str = ''
-  //   for(let i=0; i<8; i++){
-  //     const char = Math.floor((Math.random() * 10) +1 )
-  //     str += char
-  //   }
-  //   return str
-  // }
   const login = () => {
     navigate("/login");
   };
@@ -115,7 +120,8 @@ const Signup = () => {
       const fileList = e.target.files;
       const file = fileList[0];
       const url = URL.createObjectURL(file);
-      setImage(url);
+      setImage({ url, file });
+      setImageChanged(true);
     }
   };
 
@@ -143,7 +149,7 @@ const Signup = () => {
           <label htmlFor="select-avatar">
             <ButtonBase sx={{ borderRadius: 40, my: 2 }} component="span">
               <Avatar
-                src={image}
+                src={image.url}
                 sx={{
                   width: 100,
                   height: 100,
@@ -170,7 +176,6 @@ const Signup = () => {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  onChange={(e) => setFirstName(e.target.value)}
                   error={!!errors.firstName}
                   helperText={errors.firstName}
                 />
@@ -184,7 +189,6 @@ const Signup = () => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
-                  onChange={(e) => setLastName(e.target.value)}
                   error={!!errors.lastName}
                   helperText={errors.lastName}
                 />
@@ -198,7 +202,6 @@ const Signup = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  onChange={(e) => setEmail(e.target.value)}
                   error={!!errors.email}
                   helperText={errors.email}
                 />
@@ -210,7 +213,6 @@ const Signup = () => {
                   maxRows={3}
                   id="bio"
                   defaultValue={state?.user.bio ?? ""}
-                  onChange={(e) => setBio(e.target.value)}
                   label="Bio"
                   name="bio"
                 />
@@ -226,7 +228,6 @@ const Signup = () => {
                       type="password"
                       id="password"
                       autoComplete="new-password"
-                      onChange={(e) => setPassword(e.target.value)}
                       error={!!errors.password}
                       helperText={errors.password}
                     />

@@ -13,9 +13,10 @@ import { formValidationMsgs, formValidator } from "../../utils";
 import { AuthContext } from "../../context";
 import { apiRoutes, ServiceManager } from "../../services";
 import { snackbar } from "../../components";
+import { setLoggedInUser, storeLoggedInUser } from "../../local-storage";
 
 const Login = () => {
-  const { isLogin, setLogin } = useContext(AuthContext);
+  const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
@@ -23,7 +24,7 @@ const Login = () => {
     event.preventDefault();
 
     const formdata = new FormData(event.currentTarget);
-    
+
     setErrors({});
 
     let errors = {};
@@ -45,27 +46,28 @@ const Login = () => {
     if (!isError) {
       setErrors(errors);
       return;
-    } 
+    }
+
     const params = {
-      "email": data.email,
-      "password":data.pass
+      email: data.email,
+      password: data.pass,
     };
-    
-    
-    try{
+
+    try {
       const res = await ServiceManager.getInstance().request(
         apiRoutes.signIn,
         params,
         "post"
-        );
-        if(res.data.user?.token){
-          setLogin(true);
-          localStorage.setItem(user.token)
-          navigate("/", { replace: true });
-        } 
-        
-    }catch(error){
-      snackbar.current.showSnackbar(true, 'Authentication Failed')
+      );
+
+      if (res.data.token) {
+        ServiceManager.getInstance().userToken = res.data.token;
+        storeLoggedInUser(res.data.token);
+        setLoggedInUser(res.data);
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      snackbar.current.showSnackbar(true, "Authentication Failed");
     }
   };
 
