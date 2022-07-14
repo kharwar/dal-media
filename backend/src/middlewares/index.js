@@ -1,5 +1,5 @@
-const userMiddlewares = require("./user/middleware.user");
+const commonMiddlewares = require("./common");
 
 module.exports = {
-  userMiddlewares,
+  commonMiddlewares,
 };

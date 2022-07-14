@@ -16,7 +16,6 @@ const RichTextInput = ({ value, setValue, style }) => {
   const allFormats = ["bold", "italic", "underline"];
   const [formats, setFormats] = useState([]);
 
-  console.log({ value });
   useEffect(() => {
     allFormats.forEach((format) => {
       if (formats.includes(format)) {

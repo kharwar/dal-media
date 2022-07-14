@@ -17,7 +17,7 @@ const successResponse = (res, message = "", data) => {
 const errorResponse = (res, error) => {
   if (res) {
     return res.status(error.code).send({
-      message: error.errors,
+      message: error.message ?? error.errors[0],
       success: false,
     });
   }

@@ -9,12 +9,11 @@ import AlertDialog, { AlertProvider } from "./components/alert-dialog";
 import { snackbarRef } from "./components/material-snackbar";
 import { AuthContext } from "./context";
 import { ServiceManager, apiRoutes } from "./services";
+
+ServiceManager.initialize(apiRoutes.baseURL);
+
 function App() {
   const [isLogin, setLogin] = useState(true);
-
-  useEffect(() => {
-    ServiceManager.initialize(apiRoutes.baseURL);
-  }, []);
 
   return (
     <ThemeProvider theme={theme}>
