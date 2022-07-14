@@ -21,7 +21,6 @@ import { apiRoutes, ServiceManager } from "../../services";
 const CreatePost = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const fileInput = useRef(null);
   const textInput = useRef(null);
   const [textFilled, setTextFilled] = useState(false);
   const [images, setImages] = useState([]);
@@ -86,6 +85,7 @@ const CreatePost = () => {
     const params = {
       description: textInput.current?.getValue(),
       images: imageUrls,
+      createdBy: loggedInUser.id,
     };
 
     try {
@@ -98,6 +98,7 @@ const CreatePost = () => {
       snackbar.current.showSnackbar(true, `Post ${key}`);
       navigate("/");
     } catch (error) {
+      setLoading(false);
       console.log({ error });
     }
   };

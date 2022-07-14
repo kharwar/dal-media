@@ -1,20 +1,27 @@
 import { Container, InputBase, Paper, Stack } from "@mui/material";
 import { PostList, snackbar } from "../../components";
 import SearchIcon from "@mui/icons-material/Search";
-import { posts } from "../../data";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { apiRoutes, ServiceManager } from "../../services";
+
 const Home = () => {
+  const [posts, setPosts] = useState([]);
+
   useEffect(() => {
-    ServiceManager.getInstance()
-      .request(apiRoutes.getPosts)
-      .then((res) => {
-        console.log({ res });
-      })
-      .catch((error) => {
-        console.log({ error });
-      });
+    getAllPosts();
   }, []);
+
+  const getAllPosts = async () => {
+    try {
+      const { data } = await ServiceManager.getInstance().request(
+        apiRoutes.getPosts
+      );
+      console.log({ posts });
+      setPosts(data);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   const handleSearch = (event) => {
     if (!snackbar.current.open) {
@@ -36,7 +43,7 @@ const Home = () => {
         />
         <SearchIcon sx={{ mr: 1 }} />
       </Paper>
-      <PostList posts={posts} />
+      {/* <PostList posts={posts} /> */}
     </Container>
   );
 };

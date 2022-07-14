@@ -45,6 +45,7 @@ const PostList = ({ posts }) => {
     console.log("like");
     snackbar.current.showSnackbar(true, "Post Liked");
   };
+
   const handleComment = () => {
     snackbar.current.showSnackbar(true, "Write Comment");
   };

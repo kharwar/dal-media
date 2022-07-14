@@ -16,7 +16,7 @@ const PostHeader = ({ post: { user, createdAt }, handleMenu }) => {
     <>
       <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
         <Box sx={{ display: "flex", flex: 1, mr: 1 }}>
-          <Avatar src={user.image} />
+          {/* <Avatar src={user.image} />
           <Stack ml={1}>
             <Typography variant="body1" sx={{ lineHeight: 1.4 }}>
               {user.name}
@@ -27,13 +27,16 @@ const PostHeader = ({ post: { user, createdAt }, handleMenu }) => {
             >
               {createdAt}
             </Typography>
-          </Stack>
+          </Stack> */}
         </Box>
-        {user.id === loggedInUser.id && (
-          <IconButton onClick={handleMenu}>
-            <MoreHorizIcon />
-          </IconButton>
-        )}
+        {
+          // user.id === loggedInUser.id
+          true && (
+            <IconButton onClick={handleMenu}>
+              <MoreHorizIcon />
+            </IconButton>
+          )
+        }
       </Box>
       <Divider sx={{ mb: 1 }} />
     </>
