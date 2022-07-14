@@ -11,17 +11,19 @@ import { useNavigate } from "react-router-dom";
 import { Checkbox, FormControlLabel, Link, Paper, Stack } from "@mui/material";
 import { formValidationMsgs, formValidator } from "../../utils";
 import { AuthContext } from "../../context";
+import { apiRoutes, ServiceManager } from "../../services";
+import { snackbar } from "../../components";
 
 const Login = () => {
   const { isLogin, setLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formdata = new FormData(event.currentTarget);
-
+    
     setErrors({});
 
     let errors = {};
@@ -42,9 +44,28 @@ const Login = () => {
 
     if (!isError) {
       setErrors(errors);
-    } else {
-      setLogin(true);
-      navigate("/", { replace: true });
+      return;
+    } 
+    const params = {
+      "email": data.email,
+      "password":data.pass
+    };
+    
+    
+    try{
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.signIn,
+        params,
+        "post"
+        );
+        if(res.data.user?.token){
+          setLogin(true);
+          localStorage.setItem(user.token)
+          navigate("/", { replace: true });
+        } 
+        
+    }catch(error){
+      snackbar.current.showSnackbar(true, 'Authentication Failed')
     }
   };
 

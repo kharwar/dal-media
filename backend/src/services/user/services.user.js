@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
+require('dotenv').config();
+const nodemailer = require('nodemailer');
 const { User } = require("../../models");
+const bcrypt = require('bcrypt')
 const { validations } = require("../../utils");
-
+const jwt = require('jsonwebtoken')
 const getUserById = (id) => {
   try {
     const user = User.findById(id);
@@ -22,21 +25,25 @@ try{
 
 const findUser = async(email) =>  {
 try{
-  const user = await User.findOne({email});
+  const user = await User.findOne({email}).lean();
   return user;
 }catch(error){
+  console.log(error)
   throw validations.handleErrors(error);
 }
 
 }
 
-// const forgotPassword = async(userData) => {
-//   try{
-//     const user = await User.findOneAndUpdate({email:email},{password:password})
-//     return user;
-//   }catch(error){
-//     throw validations.handleErrors(error);
-// }
+const forgotPassword = async(email,userData) => {
+  try{
+    const user = await User.findOneAndUpdate({email:email},userData,{
+      returnDocument: "after",
+    });
+    return user;
+  }catch(error){
+    throw validations.handleErrors(error);
+}
+}
 
 const findUserById = async(id) => {
   try{
@@ -58,12 +65,56 @@ const updateUserById = async (id, userData) => {
   }
 };
 
+const updatePassword = async(id, userData) => {
+  try{
+      const user = await User.findByIdAndUpdate(id, userData,{
+        returnDocument: "after",
+      });
+      return user;
+  }catch(error){
+    throw validations.handleErrors(error);
+  }
+}
+
+let transporter = nodemailer.createTransport({
+  service: 'Outlook365',
+  auth: {
+      user: "dal-media@outlook.com",
+      pass: "Dalmedia2022"
+  }
+});
+
+const sendMail = (email, subject, text, callback) => {
+  let mailOptions = {
+      from: 'dal-media@outlook.com',
+      to: email,
+      subject: subject,
+      text: text
+  }
+  transporter.sendMail(mailOptions, function(err, data) {
+      if(err) {
+          callback(err, null);
+      }
+      return callback(null, data);
+  })
+};
+
+const generateToken = async (user) => {
+  // const hash = await bcrypt.compare(password, user.password)
+  const token = await jwt.sign(user, process.env.JWT_SECRET, {expiresIn: '10h'})
+  return token
+}
+
 module.exports = {
   getUserById,
   createUser,
   findUser,
   findUserById,
-  updateUserById
+  updateUserById,
+  sendMail,
+  updatePassword,
+  forgotPassword,
+  generateToken
 };
 
 

@@ -7,6 +7,8 @@ const { userService } = require("../../services");
 const saltRounds = 10;
 const { errorResponse, successResponse } = require("../../utils/responses");
 
+
+
 const getUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -40,6 +42,14 @@ const signup = async (req, res) => {
       email: email,
       password: hash,
     })
+    userService.sendMail("nv201655@dal.ca","Email Verification","Verify your mail", function(err, data){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(data);
+      }
+    });
     return successResponse(res, "User Successfully Registered");
   } catch (error) {
     return errorResponse(res, error);
@@ -55,39 +65,55 @@ const signin = async (req, res) => {
     
     const user = await userService.findUser(email)
     const hash = await bcrypt.compare(password, user.password)
-    console.log(hash);
-    if(hash){
-
-      const logintoken= jwt.sign({email:email, user_id: user._id}, process.env.JWT_SECRET,{expiresIn: "10hr"});   
-      user.token = logintoken;
-      // hash
-      // .cookie("token", logintoken, {
-      //   httpOnly: true,
-      //   secure: true,
-      //   sameSite: "none",
-      // })
-      // .send();
-      return successResponse(res, "Login Successfull", logintoken);
+    if(!hash){
+      throw 'Unauthenticated'
     }
+    delete user.password
+    const token = await userService.generateToken(user)
+    user.token = token
+    return successResponse(res, "Login Successful",user)
     
   }catch(error){
+    console.log(error)
     return errorResponse(res, error);
   }
 }
 
-// const forgotpassword = async (req, res) => {
-// try{
-//     const email= req.body.email;
-//     const password = req.body.password;
+const forgotpassword = async (req, res) => {
+try{
+    const email= req.body.email;
+    const password = req.body.password;
 
-// }catch(error){
-//   return errorResponse(res, error);
-// }
-// }
+    console.log(req.body);
+    const hash = await bcrypt.hash(password, saltRounds)
+    const update = {password:hash}
+
+    const user = await userService.forgotPassword(email,update)
+    return successResponse(res, "Password reset successful", user);
+
+}catch(error){
+  return errorResponse(res, error);
+}
+}
+
+const resetpassword = async(req, res) => {
+try{
+  const id = req.body.user_id;
+  const password = req.body.password;
+
+  const hash = await bcrypt.hash(password, saltRounds)
+  const update = {password:hash}
+
+  const user = await userService.updatePassword(id,update)
+  return successResponse(res, "Password changes updated", user);
+}catch(error){
+  return errorResponse(res, error);
+}
+}
 
 const getUserProfile = async (req,res) => {
   try{
-  const id = req.body.user_id;
+  const { id } = req.params;
   const user = await userService.findUserById(id);
   return successResponse(res, "User details: ", user);
   }catch(error){
@@ -119,4 +145,4 @@ try{
 }
 }
 
-module.exports = { getUsers, signup, signin, getUserProfile, updateProfile };
+module.exports = { getUsers, signup, signin, getUserProfile, updateProfile,resetpassword,forgotpassword };
