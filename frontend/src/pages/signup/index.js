@@ -59,7 +59,7 @@ const Signup = () => {
         params,
         "post"
       );
-
+      console.log({ res });
       if (res.data.token) {
         ServiceManager.getInstance().userToken = res.data.token;
         storeLoggedInUser(res.data.token);

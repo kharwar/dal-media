@@ -2,7 +2,8 @@ export default {
   baseURL: "http://localhost:8000/api/",
   getPosts: "posts",
   createPost: "posts/create",
-
+  editPost: "posts/update",
+  deletePost: "posts/delete",
   getEvents: "events",
   createEvent: "events/create",
   deleteEvent: "events/delete",

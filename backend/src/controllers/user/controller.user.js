@@ -30,12 +30,16 @@ const signUp = async (req, res) => {
     const hash = await bcrypt.hash(body.password, saltRounds);
     body.password = hash
     delete body.password;
+<<<<<<< HEAD
     const user = await userService.createUser({...body, password: hash});
     // const emailResponse = await sendMail(
     //   body.email,
     //   "Email Verification",
     //   "Verify your mail"
     // );
+=======
+    const user = await userService.createUser({ ...body, password: hash });
+>>>>>>> development
     delete user.password;
     user.token = await userService.generateToken(user);
 
@@ -51,7 +55,7 @@ const signIn = async (req, res) => {
     const password = req.body.password;
 
     const user = await userService.findUser(email);
-    const hash = await bcrypt.compare(password, user.password);
+    const hash = await bcrypt.compareSync(password, user.password);
     if (!hash) {
       return res.status(400).send({
         message: "Unauthenticated",
@@ -61,6 +65,7 @@ const signIn = async (req, res) => {
     user.token = await userService.generateToken(user);
     return successResponse(res, "Login Successful", user);
   } catch (error) {
+    console.log({ eeeee: error });
     return errorResponse(res, error);
   }
 };

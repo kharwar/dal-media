@@ -5,12 +5,30 @@ import FileList from "./file-list";
 import GroupManage from "./group-manage";
 import PostList from "../post-list";
 import { DisplayPoll } from "../../pages";
-import { posts } from "../../data";
+import { apiRoutes, ServiceManager } from "../../services";
 
 const Group = () => {
   const params = useParams();
   const navigate = useNavigate();
   const [tab, setTab] = useState(0);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getGroupPosts();
+  }, []);
+
+  const getGroupPosts = async () => {
+    try {
+      const { data } = await ServiceManager.getInstance().request(
+        apiRoutes.getPosts,
+        { groupId: params.id }
+      );
+      console.log({ data });
+      setPosts(data);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   const onTabChanged = (event, newValue) => {
     setTab(newValue);
@@ -69,7 +87,9 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography component={'span'} variant={'body2'}>{children}</Typography>
+          <Typography component={"span"} variant={"body2"}>
+            {children}
+          </Typography>
         </Box>
       )}
     </div>
