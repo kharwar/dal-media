@@ -1,12 +1,12 @@
 import Blog from "../Blog";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { blogs } from "../../data";
+// import { blogs } from "../../data";
 import { Menu, MenuItem } from "@mui/material";
 import { useAlert } from "../alert-dialog";
 import { useNavigate } from "react-router-dom";
 import { snackbar } from "../../components";
 
-const BlogList = () => {
+const BlogList = ({ blogs }) => {
   const blogRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const { setAlert, setOnAgree } = useAlert();
@@ -29,7 +29,7 @@ const BlogList = () => {
   const handleEdit = () => {
     handleClose();
     const blog = blogRef.current;
-    navigate(`edit/${blog.id}`, { state: { blog } });
+    navigate(`edit/${blog._id}`, { state: { blog } });
   };
 
   const onDelete = () => {
@@ -46,7 +46,7 @@ const BlogList = () => {
     return (
       <Blog
         blog={blog}
-        key={blog.id}
+        key={blog._id}
         handleMenu={(event) => handleMenu(event, blog)}
       />
     );

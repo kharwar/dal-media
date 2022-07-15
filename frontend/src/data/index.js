@@ -1,5 +1,5 @@
 export const loggedInUser = {
-  id: 6,
+  id: "62bd105463769d18e18bc76d",
   name: "Diana Garrett",
   username: "diana.garrett231",
   email: "Diana@yopmail.com",
@@ -368,7 +368,7 @@ export const groups = [
 //EVENTS
 export const events = [
   {
-    id: 1,
+    _id: "1",
     title: "Here We code",
     description:
       "Here We Code Month is a platform to showcase the diverse digital activities and events taking place across Nova Scotia, showcasing the digital education and opportunities available to all. All organizations and institutions involved in providing digital programming and opportunities in Nova Scotia are invited to get involved with Here We Code Month through hosting events and interactive sessions throughout May 2022.",
@@ -377,24 +377,13 @@ export const events = [
       "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
       "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
     ],
-    total_interests: 200,
+    interested: ["a", "b"],
     user: loggedInUser,
-    startDT: "June 1, 2022 11AM",
-    endDT: "June 2, 2022 11AM",
+    createBy: "anyid",
+    start_DT: "June 1, 2022 11AM",
+    end_DT: "June 2, 2022 11AM",
     location: "University Avenue",
-  },
-  {
-    id: 2,
-    title: "Mobile Event",
-    description:
-      "Event Samsung's new variant which goes beyond Galaxy to the Universe",
-    images: ["https://dummyjson.com/image/i/products/3/1.jpg"],
-    total_interests: 300,
-    user: loggedInUser,
-    startDT: "June 1, 2022 11AM",
-    endDT: "June 2, 2022 11AM",
-    location: "Brunswick st",
-  },
+  }
 ];
 
 //BLOGS

@@ -5,12 +5,7 @@ import SeeMoreText from "../../see-more-text";
 const PostContent = ({ post: { description, images } }) => {
   const renderImages = () => {
     return (
-      <ImageList
-        sx={{ width: "100%", m: 0 }}
-        variant="quilted"
-        // cols={3}
-        rowHeight={180}
-      >
+      <ImageList sx={{ width: "100%", m: 0 }} variant="quilted" rowHeight={180}>
         {images.map((image, index) => (
           <Paper
             variant="outlined"

@@ -18,8 +18,13 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { loggedInUser } from "../../data";
-import { dateFormat } from "../../utils";
 import { snackbar } from "../../components";
+import { dateFormat, uploadFile } from "../../utils";
+import { apiRoutes, ServiceManager } from "../../services";
+//import { getLoggedInUser } from "../../local-storage";
+import { useAuth } from "../../context";
+
+//const eventImages = [];
 
 const CreateEvent = () => {
   const { state } = useLocation();
@@ -33,6 +38,7 @@ const CreateEvent = () => {
   const [endDTvalue, setEndDTValue] = useState(new Date());
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
+  const { loggedInUser } = useAuth();
 
   const handleStartDTChange = (newValue) => {
     setStartDTValue(newValue);
@@ -50,11 +56,21 @@ const CreateEvent = () => {
     setLocation(event.target.value);
   };
 
+  const getImageObject = (imageArray) => {
+    let arr = [];
+    for (let a of imageArray) {
+      arr.push({ file: null, url: a });
+      //console.log("For loop: " + a);
+    }
+    return arr;
+  };
+
   useEffect(() => {
     if (state?.event) {
       const { event } = state;
       event.description && textInput.current.setValue(event.description);
-      setImages(event.images);
+      setImages(getImageObject(event.images));
+      //console.log("Use Effect");
       setLocation(event.location);
       setTitle(event.title);
     }
@@ -76,16 +92,19 @@ const CreateEvent = () => {
         const file = fileList[i];
         const url = URL.createObjectURL(file);
         const id = lastId + 1;
-        newImages.push(url);
+        newImages.push({ file, url });
+        //eventImages.push(file);
         lastId = id;
       }
 
       setImages((oldImages) => [...oldImages, ...newImages]);
+      e.target.value = "";
     }
   };
 
+  //may require change here eventImages var need to change 
   const onDeleteImage = (url) => {
-    const filteredImages = images.filter((image) => image != url);
+    const filteredImages = images.filter((image) => image.url != url);
     setImages(filteredImages);
   };
 
@@ -97,20 +116,81 @@ const CreateEvent = () => {
     }
   };
 
-  const onPost = () => {
+  const onPost = async () => {
     setLoading(true);
-    //write you store logic here, api call and all
-    // console.log(title + " " + textInput.current + " " + startDTvalue.toString() + " " + location);
-    setTimeout(() => {
-      setLoading(false);
-      textInput.current?.setValue("");
-      setImages([]);
-      setTextFilled(false);
-      setTitle("");
-      setLocation("");
-      const key = state?.event ? "updated" : "created";
-      snackbar.current.showSnackbar(true, `Event ${key}`);
-    }, 3000);
+
+    const imageUrls = [];
+
+    try {
+
+      for (let i = 0; i < images.length; i++) {
+        if (images[i].file) {
+          const imageUrl = await uploadFile(images[i].file);
+          imageUrls.push(imageUrl);
+        }
+        else {
+          imageUrls.push(images[i].url);
+        }
+      }
+
+
+
+
+      // for (const file in eventImages) {
+      //   const imageUrl = await uploadFile(file);
+      //   imageUrls.push(imageUrl);
+      // }
+    } catch (error) {
+      console.error(`File Upload error: ${error}`);
+    }
+
+    const params = {
+      title: title,
+      description: textInput.current?.getValue(),
+      location: location,
+      start_DT: startDTvalue.toString(),
+      end_DT: endDTvalue.toString(),
+      images: imageUrls,
+      createBy: loggedInUser._id.toString(),  //add user id in form of string
+    };
+
+
+
+    if (state?.event) {
+
+      try {
+        const res = await ServiceManager.getInstance().request(
+          apiRoutes.editEvent + "/" + state.event._id.toString(),
+          params,
+          "put"
+        );
+
+        console.log({ res });
+        const key = state?.event ? "updated" : "created";
+        snackbar.current.showSnackbar(true, `Event ${key}`);
+        navigate("/event-page");
+      } catch (error) {
+        console.log({ error });
+      }
+
+    }
+    else {
+      try {
+        const res = await ServiceManager.getInstance().request(
+          apiRoutes.createEvent,
+          params,
+          "post"
+        );
+
+        console.log({ res });
+        const key = state?.event ? "updated" : "created";
+        snackbar.current.showSnackbar(true, `Event ${key}`);
+        navigate("/event-page");
+      } catch (error) {
+        console.log({ error });
+      }
+    }
+
   };
 
   return (
@@ -188,13 +268,13 @@ const CreateEvent = () => {
 
       {images.length > 0 && (
         <Box className="img-list">
-          {images.map((image, index) => (
+          {images.map(({ url }, index) => (
             <div className="img-container" key={index + ""}>
-              <img className="img" src={image} width="350" height="350" />
+              <img className="img" src={url} width="350" height="350" />
               <IconButton
                 disabled={loading}
                 sx={styling.btnDelete}
-                onClick={() => onDeleteImage(image)}
+                onClick={() => onDeleteImage(url)}
               >
                 <DeleteRounded />
               </IconButton>

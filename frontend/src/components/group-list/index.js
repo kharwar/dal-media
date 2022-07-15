@@ -1,11 +1,23 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, MenuItem, Box, Typography } from "@mui/material";
-import { groups } from "../../data";
 import { useAlert } from "../alert-dialog";
 import GroupItem from "../group-item";
 import { snackbar } from "../../components";
+import { apiRoutes, ServiceManager } from "../../services";
+
+const fetchGroups = async (setGroups) => {
+  ServiceManager.getInstance()
+    .request(apiRoutes.groups)
+    .then((res) => {
+      setGroups(res.data);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
 
 const GroupList = () => {
+  const [groups, setGroups] = useState([]);
   console.log("fileList");
 
   const { setAlert, setOnAgree } = useAlert();
@@ -15,6 +27,7 @@ const GroupList = () => {
 
   useEffect(() => {
     setOnAgree(onDelete);
+    fetchGroups(setGroups);
   }, []);
 
   const handleMenu = (event, file) => {
@@ -39,7 +52,7 @@ const GroupList = () => {
     return (
       <GroupItem
         group={group}
-        key={group.id}
+        key={group._id}
         handleMenu={(event) => handleMenu(event, group)}
       />
     );
