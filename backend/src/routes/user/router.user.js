@@ -1,3 +1,8 @@
+/*
+  Created on July 5th 2022
+  Author: Kavya Kasaraneni
+*/
+
 const userRouter = require("express").Router();
 const {
   signUp,
@@ -10,6 +15,8 @@ const {
   getCurrentUser,
 } = require("../../controllers/index").userController;
 const isAuthenticated = require("../../middlewares/common/isAuthenticated");
+
+//user modules routes to access backend api
 
 userRouter.post("/", isAuthenticated, getUsers);
 userRouter.post("/signup", signUp);

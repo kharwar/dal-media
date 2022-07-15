@@ -1,3 +1,8 @@
+/*
+  Created on June 5th 2022
+  Author: Kavya Kasaraneni
+*/
+
 import {
   Avatar,
   IconButton,
@@ -18,6 +23,8 @@ import { posts } from "../../data";
 import { useAuth } from "../../context";
 import { apiRoutes, ServiceManager } from "../../services";
 
+
+//Code for implementing front end for Profile feature
 const Profile = () => {
   const { loggedInUser } = useAuth();
   const navigate = useNavigate();
@@ -29,6 +36,7 @@ const Profile = () => {
     getUserPosts();
   }, []);
 
+  //code for getting user posts from backend using Api
   const getUserPosts = async () => {
     try {
       const { data } = await ServiceManager.getInstance().request(
@@ -64,6 +72,7 @@ const Profile = () => {
     return posts.filter(({ user }) => user.id == loggedInUser.id);
   };
 
+  //UI for the profile
   return (
     <>
       <Container maxWidth="sm">

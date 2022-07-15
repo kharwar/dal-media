@@ -1,3 +1,8 @@
+/*
+  Created on July 9th 2022
+  Author: Kavya Kasaraneni
+*/
+
 // const axios = require("axios");
 
 //  async function sendEmail(email, code) {

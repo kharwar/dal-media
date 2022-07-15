@@ -1,10 +1,15 @@
+/*
+  Created on July 5th 2022
+  Author: Kavya Kasaraneni
+*/
+
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const { User } = require("../../models");
 const { validations } = require("../../utils");
 const jwt = require("jsonwebtoken");
 
-
+//Services used to query to fetch, create, update the details in database.
 const getUserById = async (id) => {
   try {
     const user = await User.findById(id).lean();

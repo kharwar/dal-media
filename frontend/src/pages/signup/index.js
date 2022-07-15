@@ -1,3 +1,8 @@
+/*
+  Created on June 4th 2022
+  Author: Kavya Kasaraneni
+*/
+
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -20,6 +25,8 @@ import { snackbar } from "../../components";
 import { storeLoggedInUser } from "../../local-storage";
 import { async } from "@firebase/util";
 
+
+//Front end code for implementing user registration into the application and also profile edit of user
 const Signup = () => {
 
   const { loggedInUser, setLoggedInUser } = useAuth();
@@ -36,6 +43,7 @@ const Signup = () => {
     return loggedInUser ? true : false;
   }, [loggedInUser]);
 
+  //Backend API call for implementing the edit-profile and user registration features
   const submit = async (params, url, method, successMsg) => {
     console.log(params);
     if (imageChanged) {
@@ -103,6 +111,7 @@ const Signup = () => {
 
     const isError = Object.keys(errors).length === 0;
 
+    //Checking whether it is in edit-mode or sign up mode and implement backend api
     if (!isError) {
       setErrors(errors);
     } else {
@@ -137,6 +146,7 @@ const Signup = () => {
     }
   };
 
+  //UI for Sign-up
   return (
     <Container maxWidth="sm">
       <Paper sx={{ p: 8, my: 8 }}>
