@@ -12,7 +12,7 @@ import {
 import "./style.css";
 import escapeHTML from "escape-html";
 
-const RichTextInput = ({ value, setValue, style }) => {
+const RichTextInput = ({ value, setValue, style, readOnly }) => {
   const allFormats = ["bold", "italic", "underline"];
   const [formats, setFormats] = useState([]);
 
@@ -37,27 +37,30 @@ const RichTextInput = ({ value, setValue, style }) => {
     <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
       <div className="rich-text-container">
         <Stack style={{ position: "sticky" }}>
-          <ToggleButtonGroup
-            value={formats}
-            onChange={handleFormat}
-            aria-label="Text Formatting"
-          >
-            <ToggleButton value="bold" aria-label="bold">
-              <FormatBold />
-            </ToggleButton>
-            <ToggleButton value="italic" aria-label="italic">
-              <FormatItalic />
-            </ToggleButton>
-            <ToggleButton value="underline" aria-label="underline">
-              <FormatUnderlined />
-            </ToggleButton>
-          </ToggleButtonGroup>
+          {!readOnly && (
+            <ToggleButtonGroup
+              value={formats}
+              onChange={handleFormat}
+              aria-label="Text Formatting"
+            >
+              <ToggleButton value="bold" aria-label="bold">
+                <FormatBold />
+              </ToggleButton>
+              <ToggleButton value="italic" aria-label="italic">
+                <FormatItalic />
+              </ToggleButton>
+              <ToggleButton value="underline" aria-label="underline">
+                <FormatUnderlined />
+              </ToggleButton>
+            </ToggleButtonGroup>
+          )}
 
           <Editable
             renderLeaf={renderLeaf}
             placeholder={"Your rich Blog here"}
             spellCheck
             autoFocus
+            readOnly={readOnly}
             style={style}
           />
         </Stack>

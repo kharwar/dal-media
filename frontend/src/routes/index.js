@@ -13,6 +13,7 @@ import {
   DisplayPoll,
   CreateBlog,
   Blogs,
+  BlogDetail,
   Login,
   Signup,
   ForgotPassword,
@@ -59,6 +60,7 @@ const ProtectedRoutes = () => {
         <Route path="/edit-post/:id" element={<CreatePost />} />
         <Route path="/blogs/create" element={<CreateBlog />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blog-details/:id" element={<BlogDetail />} />
         <Route path="blogs/edit/:id" element={<CreateBlog />} />
         <Route path="/event-page/edit-event" element={<CreateEvent />} />
         <Route path="/profile" element={<Profile />} />
