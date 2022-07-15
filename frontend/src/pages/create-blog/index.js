@@ -13,6 +13,7 @@ import { ImageRounded, DeleteRounded } from "@mui/icons-material";
 import "./style.css";
 import { RichTextInput, snackbar } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { apiRoutes, ServiceManager } from "../../services";
 
 const initialValue = [
   {
@@ -20,11 +21,13 @@ const initialValue = [
     children: [{ text: "" }],
   },
 ];
-
 const CreateBlog = () => {
   const { state } = useLocation();
+
   const { id } = useParams();
-  const [body, setBody] = useState(initialValue);
+  const [body, setBody] = useState(
+    state?.blog ? state.blog.body : initialValue
+  );
   const [title, setTitle] = useState("");
   const [textFilled, setTextFilled] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,21 +42,35 @@ const CreateBlog = () => {
       const { blog } = state;
       blog.title != "" && setTitle(blog.title);
       // setImage(blog.image);
+      console.log(blog.body);
       setBody(blog.body);
     }
   }, [state, id]);
 
-  const onPublish = () => {
+  const onPublish = async () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setTextFilled(false);
-      setTitle("");
-      setBody(initialValue);
-      navigate("/blogs");
+
+    const params = {
+      title,
+      image,
+      body,
+    };
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        state?.blog
+          ? `${apiRoutes.updateBlog}/${state.blog._id}`
+          : apiRoutes.createBlog,
+        params,
+        state?.blog ? "put" : "post"
+      );
+
       const key = state?.blog ? "updated" : "created";
-      snackbar.current.showSnackbar(true, `Blog ${key}`);
-    }, 3000);
+      snackbar.current.showSnackbar(true, `Blog ${key}.`);
+      navigate("/blogs");
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   const onImageSelect = (e) => {

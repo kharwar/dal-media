@@ -10,12 +10,15 @@ import {
 } from "@mui/material";
 import { loggedInUser } from "../../../data";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context";
+import { storeLoggedInUser } from "../../../local-storage";
 
 const settings = ["Profile", "Logout"];
 
 const NavUser = () => {
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { loggedInUser, setLoggedInUser } = useAuth();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -23,6 +26,8 @@ const NavUser = () => {
 
   const handleCloseUserMenu = (setting) => {
     if (setting === "Logout") {
+      storeLoggedInUser(null);
+      setLoggedInUser(null);
       navigate("/login", { replace: true });
     } else if (setting === "Profile") {
       navigate("/profile");

@@ -10,6 +10,7 @@ import {
 import "./styles.css";
 import { TextInput, snackbar } from "../../components";
 import { useNavigate } from "react-router-dom";
+import { apiRoutes, ServiceManager } from "../../services";
 
 const CreateGroup = () => {
   const navigate = useNavigate();
@@ -35,18 +36,27 @@ const CreateGroup = () => {
     }
   };
 
-  const onCreateGroup = () => {
+  const onCreateGroup = async () => {
     setLoading(true);
 
-    setTimeout(() => {
+    const params = {
+      name: nameInput.current.getValue(),
+      description: descriptionInput.current.getValue(),
+    };
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.groups,
+        params,
+        "post"
+      );
+      snackbar.current.showSnackbar(true, res.message);
+      navigate("/groups");
       setLoading(false);
-      nameInput.current?.setValue("");
-      descriptionInput.current?.setValue("");
-      setNameFilled(false);
-      setDescriptionFilled(false);
-      snackbar.current.showSnackbar(true, `Group created!`);
-      navigate("/");
-    }, 2000);
+    } catch (error) {
+      setLoading(false);
+      console.log({ error });
+    }
   };
 
   return (

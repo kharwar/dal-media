@@ -1,5 +1,5 @@
 export const loggedInUser = {
-  id: 6,
+  id: "62bd105463769d18e18bc76d",
   name: "Diana Garrett",
   username: "diana.garrett231",
   email: "Diana@yopmail.com",

@@ -6,5 +6,13 @@ export default {
   getEvents: "events",
   createEvent: "events/create",
   deleteEvent: "events/delete",
-  editEvent: "events/update"
+  editEvent: "events/update",
+  users: "/users",
+  signIn: "/users/signin",
+  signUp: "users/signup",
+  getLoggedInUser: "/users/current",
+  createBlog: "blogs/create",
+  getBlogs: "blogs/",
+  updateBlog: "blogs",
+  groups: "groups",
 };

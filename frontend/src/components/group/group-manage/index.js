@@ -3,13 +3,28 @@ import { useAlert } from "../../alert-dialog";
 import GroupMemberList from "../group-member-list";
 import GroupAddMember from "../group-add-member";
 import { snackbar } from "../../../components";
+import { apiRoutes, ServiceManager } from "../../../services";
+import { useNavigate } from "react-router-dom";
 
-const GroupManage = () => {
+const deleteGroup = (groupId, navigate) => {
+  ServiceManager.getInstance()
+    .request(`${apiRoutes.groups}/${groupId}`, null, "delete")
+    .then((res) => {
+      console.log(res.data);
+      snackbar.current.showSnackbar(true, "Group Deleted");
+      navigate("/groups");
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
+
+const GroupManage = (props) => {
   const { setAlert, setOnAgree } = useAlert();
+  const navigate = useNavigate();
 
   const onDelete = () => {
-    snackbar.current.showSnackbar(true, "Group Deleted");
-    console.log("delete");
+    deleteGroup(props.groupId, navigate);
   };
 
   const deleteGroupHandler = () => {
@@ -46,7 +61,7 @@ const GroupManage = () => {
           <GroupAddMember />
         </Box>
       </Box>
-      <GroupMemberList />
+      <GroupMemberList groupId={props.groupId}/>
     </>
   );
 };
