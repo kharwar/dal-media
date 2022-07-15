@@ -2,7 +2,6 @@ const { User } = require("../../models/user/model.user");
 const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const { userService, otpService } = require("../../services");
 const sendMail = require("../../utils/mailer");
 const saltRounds = 10;
@@ -29,10 +28,12 @@ const signUp = async (req, res) => {
   try {
     const { body } = req;
     const hash = await bcrypt.hash(body.password, saltRounds);
+    body.password = hash
     delete body.password;
     const user = await userService.createUser({ ...body, password: hash });
     delete user.password;
     user.token = await userService.generateToken(user);
+
     return successResponse(res, "User Successfully Registered", user);
   } catch (error) {
     return errorResponse(res, error);
@@ -62,17 +63,17 @@ const signIn = async (req, res) => {
 
 const changePassword = async (req, res) => {
   try {
-    const { password, newPassword } = req.body;
+    const { currentPassword, password } = req.body;
     const user = await userService.findUserById(req.user._id);
-    const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+    const isPasswordCorrect = bcrypt.compareSync(currentPassword, user.password);
 
     if (!isPasswordCorrect) {
-      return res.status(401).send({
+      return res.status(401).send({ 
         message: "Old Password incorrect",
         success: false,
       });
     }
-    const newHashedPassword = await bcrypt.hash(newPassword, saltRounds);
+    const newHashedPassword = await bcrypt.hash(password, saltRounds);
     userService.updateUserById(user._id, { password: newHashedPassword });
     return successResponse(res, "Password changed successfully", {
       success: true,
@@ -117,21 +118,18 @@ const getUserProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const id = req.body.user_id;
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const email = req.body.email;
-    const bio = req.body.bio;
+    // const id = req.body.user_id;
+    // const firstname = req.body.firstname;
+    // const lastname = req.body.lastname;
+    // const bio = req.body.bio;
 
-    const update = {
-      email: email,
-      firstname: firstname,
-      lastname: lastname,
-      bio: bio,
-    };
-
-    const user = await userService.updateUserById(id, update);
-
+    // const update = {
+    //   firstname: firstname,
+    //   lastname: lastname,
+    //   bio: bio,
+    // };
+    const { body } = req;
+    const user = await userService.updateUserById(body)
     return successResponse(res, "User Details updated succesfully", user);
   } catch (error) {
     return errorResponse(res, error);

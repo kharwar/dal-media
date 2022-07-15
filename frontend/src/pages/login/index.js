@@ -121,10 +121,10 @@ const Login = () => {
               helperText={errors.pass}
               sx={{ mb: 2 }}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth

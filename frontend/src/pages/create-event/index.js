@@ -21,6 +21,8 @@ import { loggedInUser } from "../../data";
 import { snackbar } from "../../components";
 import { dateFormat, uploadFile } from "../../utils";
 import { apiRoutes, ServiceManager } from "../../services";
+//import { getLoggedInUser } from "../../local-storage";
+import { useAuth } from "../../context";
 
 //const eventImages = [];
 
@@ -36,6 +38,7 @@ const CreateEvent = () => {
   const [endDTvalue, setEndDTValue] = useState(new Date());
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
+  const { loggedInUser } = useAuth();
 
   const handleStartDTChange = (newValue) => {
     setStartDTValue(newValue);
@@ -148,7 +151,7 @@ const CreateEvent = () => {
       start_DT: startDTvalue.toString(),
       end_DT: endDTvalue.toString(),
       images: imageUrls,
-      createBy: "Ridham"  //add user id in form of string
+      createBy: loggedInUser._id.toString(),  //add user id in form of string
     };
 
 

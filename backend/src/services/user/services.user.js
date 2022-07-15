@@ -3,6 +3,8 @@ const nodemailer = require("nodemailer");
 const { User } = require("../../models");
 const { validations } = require("../../utils");
 const jwt = require("jsonwebtoken");
+
+
 const getUserById = async (id) => {
   try {
     const user = await User.findById(id).lean();
@@ -63,18 +65,20 @@ const generateToken = async (user) => {
 
 const findUserById = async (id) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).lean();
     return user;
   } catch (error) {
     throw validations.handleErrors(error);
   }
 };
 
-const updateUserById = async (id, userData) => {
+const updateUserById = async (userData) => {
+  console.log({ userData });
   try {
-    const user = await User.findByIdAndUpdate(id, userData, {
+    const user = await User.findByIdAndUpdate(userData.id, userData, {
       returnDocument: "after",
     });
+    console.log({ user })
     return user;
   } catch (error) {
     throw validations.handleErrors(error);

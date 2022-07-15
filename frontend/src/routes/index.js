@@ -18,6 +18,7 @@ import {
   ForgotPassword,
   Profile,
   ChangePassword,
+  ResetPassword
 } from "../pages";
 
 const AppRoutes = () => {
@@ -27,6 +28,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:passcode" element={<ResetPassword />} />
       </Route>
       <Route
         path="*"
@@ -64,6 +66,7 @@ const ProtectedRoutes = () => {
         <Route path="/change-password" element={<ChangePassword />} />
       </Route>
     </Routes>
+    
   );
 };
 

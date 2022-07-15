@@ -5,15 +5,17 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { snackbar } from "../../../components";
 import { ServiceManager, apiRoutes } from "../../../services";
 import { async } from "@firebase/util";
+import { useAuth } from "../../../context";
 
 const EventFooter = ({ event: { _id, interested, title } }) => {
 
 
   const [isJoined, setIsJoined] = useState(false);
   const [isClickedNow, setIsClickedNow] = useState(false);
+  const { loggedInUser } = useAuth();
 
   useEffect(() => {
-    const usr = "Ridham_id"; //current loggedIn user id 
+    const usr = loggedInUser._id.toString(); //current loggedIn user id 
     for (let a of interested) {
       if (a === usr) {
         setIsJoined(true);
@@ -23,7 +25,7 @@ const EventFooter = ({ event: { _id, interested, title } }) => {
   }, []);
 
   const clickHandler = async () => {
-    const usrr = "Ridham_id"; //current loggedIn user id 
+    const usrr = loggedInUser._id.toString(); //current loggedIn user id 
     const params = {
       interested: [...interested, usrr]
     };

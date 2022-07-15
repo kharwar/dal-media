@@ -36,28 +36,29 @@ deploy_frontend_production:
     - ugrad
   only:
     - main
-# deploy_backend_staging:
-#   type: deploy
-#   stage: staging
-#   image: ruby:latest
-#   before_script:
-#     - cd backend
-#   script:
-#     - export PATH=$PATH:/home/gitlab-runner/.gem/ruby/2.5.0/bin
-#     # add heroku app
-#     - dpl --provider=heroku --app=$HEROKU_BACKEND_STAGING --api-key=$HEROKU_API_KEY
-#   only:
-#     - staging
 
-# deploy_backend_production:
-#   type: deploy
-#   stage: staging
-#   image: ruby:latest
-#   before_script:
-#     - cd backend
-#   script:
-#     - export PATH=$PATH:/home/gitlab-runner/.gem/ruby/2.5.0/bin
-#     # add heroku app
-#     - dpl --provider=heroku --app=$HEROKU_BACKEND_PRODUCTION --api-key=$HEROKU_API_KEY
-#   only:
-#     - production
+deploy_backend_staging:
+  type: deploy
+  stage: staging
+  image: ruby:latest
+  before_script:
+    - cd backend
+  script:
+    - export PATH=$PATH:/home/gitlab-runner/.gem/ruby/2.5.0/bin
+    # add heroku app
+    - dpl --provider=heroku --app=$HEROKU_BACKEND_STAGING --api-key=$HEROKU_API_KEY
+  only:
+    - staging
+
+deploy_backend_production:
+  type: deploy
+  stage: staging
+  image: ruby:latest
+  before_script:
+    - cd backend
+  script:
+    - export PATH=$PATH:/home/gitlab-runner/.gem/ruby/2.5.0/bin
+    # add heroku app
+    - dpl --provider=heroku --app=$HEROKU_BACKEND_PRODUCTION --api-key=$HEROKU_API_KEY
+  only:
+    - main
