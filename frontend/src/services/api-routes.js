@@ -15,5 +15,10 @@ export default {
   createBlog: "blogs/create",
   getBlogs: "blogs/",
   updateBlog: "blogs",
+  changePassword: "users/change-password",
+  forgotPassword: "otp/send",
+  resetPassword: "users/reset-password",
+  profile: "users/getUserProfile",
+  editProfile : "users/updateProfile",
   groups: "groups",
 };

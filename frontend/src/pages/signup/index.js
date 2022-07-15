@@ -67,7 +67,7 @@ const Signup = () => {
         navigate("/", { replace: true });
       }
     } catch (error) {
-      console.log({ eeeeeee: error });
+      console.log({ error });
       // snackbar.current.showSnackbar()
     }
   };

@@ -11,7 +11,7 @@ import { grey } from "@mui/material/colors";
 import { Box, Container } from "@mui/system";
 import React, { useState } from "react";
 import { PostList } from "../../components";
-import { loggedInUser } from "../../data";
+import { loggedInUser, users } from "../../data";
 import theme from "../../theme";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
@@ -39,10 +39,13 @@ const Profile = () => {
     navigate("/change-password");
   };
 
+
+ 
   const getPosts = () => {
     return posts.filter(({ user }) => user.id == loggedInUser.id);
   };
 
+  
   return (
     <>
       <Container maxWidth="sm">
