@@ -42,8 +42,7 @@ const EventFooter = ({ event: { _id, interested, title } }) => {
       console.log({ error });
     }
 
-    setIsJoined(true);
-    snackbar.current.showSnackbar(true, "You joined this event");
+
   };
 
   return (
