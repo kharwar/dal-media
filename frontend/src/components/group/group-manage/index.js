@@ -61,7 +61,7 @@ const GroupManage = (props) => {
           <GroupAddMember />
         </Box>
       </Box>
-      <GroupMemberList />
+      <GroupMemberList groupId={props.groupId}/>
     </>
   );
 };

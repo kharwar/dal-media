@@ -34,7 +34,7 @@ const createGroup = async (req, res) => {
   try {
     let { body } = req;
     const createdBy = req.user._id;
-    const group = await groupService.createGroup({ ...body, createdBy });
+    const group = await groupService.createGroup({ ...body, members: [createdBy], createdBy });
     return successResponse(res, "Group Created", group);
   } catch (error) {
     return errorResponse(res, error);
@@ -66,10 +66,39 @@ const deleteGroup = async (req, res) => {
   }
 };
 
+// Members 
+
+const getAllMembers = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const groupMembers = await groupService.getAllMembers(id);
+
+    return successResponse(res, "Groups Members Fetched", groupMembers);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
+const addMember = async (req, res) => {
+  const { body, params } = req;
+  const { id } = params;
+
+  try {
+    const group = await groupService.updateGroupById(id, body);
+
+    return successResponse(res, "Group Member Added", group);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
 module.exports = {
   getAllGroups,
   createGroup,
   updateGroup,
   deleteGroup,
   getGroupById,
+  addMember,
+  getAllMembers
 };
