@@ -68,9 +68,9 @@ const ProtectedRoutes = () => {
 };
 
 const RequireAuth = ({ children }) => {
-  const { isLogin } = useAuth();
-
-  if (!isLogin) {
+  const { loggedInUser } = useAuth();
+  console.log({ route: loggedInUser });
+  if (!loggedInUser) {
     return <Navigate to="/login" replace />;
   }
 

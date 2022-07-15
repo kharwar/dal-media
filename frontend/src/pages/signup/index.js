@@ -7,25 +7,70 @@ import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useLocation, useNavigate } from "react-router-dom";
-import { formValidator, formValidationMsgs } from "../../utils";
+import { formValidator, formValidationMsgs, uploadFile } from "../../utils";
 import { Avatar, ButtonBase, Link, Paper } from "@mui/material";
 import Images from "../../assets";
 import { grey } from "@mui/material/colors";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { AuthContext } from "../../context";
+import Axios from "axios";
+import { sendEmail, verifyCode } from "../../helper";
+import { apiRoutes, ServiceManager } from "../../services";
+import { snackbar } from "../../components";
+import { storeLoggedInUser } from "../../local-storage";
+import { async } from "@firebase/util";
 
 const Signup = () => {
-  const { isLogin, setLogin } = useContext(AuthContext);
+  const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const { state } = useLocation();
   const [errors, setErrors] = useState({});
-  const [image, setImage] = useState(
-    state?.user?.image ?? Images.avatarPlaceholder
-  );
+  const [image, setImage] = useState({
+    file: null,
+    url: state?.user?.image ?? Images.avatarPlaceholder,
+  });
+  const [imageChanged, setImageChanged] = useState(false);
 
   const isEditMode = useMemo(() => {
     return state?.user ? true : false;
   }, [state]);
+
+  const signup = async (data) => {
+    const params = {
+      firstname: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      bio: data.bio,
+      password: data.password,
+    };
+
+    if (imageChanged) {
+      try {
+        params["image"] = await uploadFile(image.file);
+      } catch (error) {
+        console.log({ error });
+      }
+    }
+
+    console.log({ params });
+    try {
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.signUp,
+        params,
+        "post"
+      );
+
+      if (res.data.token) {
+        ServiceManager.getInstance().userToken = res.data.token;
+        storeLoggedInUser(res.data.token);
+        setLoggedInUser(res.data);
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      console.log({ eeeeeee: error });
+      // snackbar.current.showSnackbar()
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,7 +81,6 @@ const Signup = () => {
     const data = {};
 
     formdata.forEach((formValue, key) => {
-      console.log({ formValue, key });
       const value = formValue.toString().trim();
       let isValid = false;
 
@@ -59,12 +103,10 @@ const Signup = () => {
     if (!isError) {
       setErrors(errors);
     } else {
-      console.log({ data });
       if (isEditMode) {
         navigate("/profile");
       } else {
-        setLogin(true);
-        navigate("/", { replace: true });
+        signup(data);
       }
     }
   };
@@ -78,7 +120,8 @@ const Signup = () => {
       const fileList = e.target.files;
       const file = fileList[0];
       const url = URL.createObjectURL(file);
-      setImage(url);
+      setImage({ url, file });
+      setImageChanged(true);
     }
   };
 
@@ -106,7 +149,7 @@ const Signup = () => {
           <label htmlFor="select-avatar">
             <ButtonBase sx={{ borderRadius: 40, my: 2 }} component="span">
               <Avatar
-                src={image}
+                src={image.url}
                 sx={{
                   width: 100,
                   height: 100,

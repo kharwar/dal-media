@@ -1,24 +1,30 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../../models/");
 const { userService } = require("../../services");
-const isAuthenticated = (req, res) => {
+const { validations } = require("../../utils");
+const { errorResponse } = require("../../utils/responses");
+const isAuthenticated = async (req, res, next) => {
   try {
     if (!req.headers.authorization) {
-      throw "Missing Authentication Token";
+      throw validations.handleErrors(
+        new Error("Missing Authentication Tokens"),
+        401
+      );
     }
-    const decodedToken = jwt.verify(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
-    const user = userService.getUserById(decodedToken.id);
+    let decodedToken;
+    try {
+      decodedToken = jwt.verify(
+        req.headers.authorization,
+        process.env.JWT_SECRET
+      );
+    } catch (error) {
+      throw validations.handleErrors(new Error("Authentication Error"), 401);
+    }
+    const user = await userService.getUserById(decodedToken._id);
+    delete user.password;
     req.user = user;
     next();
   } catch (error) {
-    return res.status(401).send({
-      message: "Authentication Error",
-      success: false,
-      error,
-    });
+    return errorResponse(res, error);
   }
 };
 
