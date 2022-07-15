@@ -52,7 +52,7 @@ const GroupList = () => {
     return (
       <GroupItem
         group={group}
-        key={group.id}
+        key={group._id}
         handleMenu={(event) => handleMenu(event, group)}
       />
     );
