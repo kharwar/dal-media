@@ -21,6 +21,9 @@ const PostSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "User id is required"],
     },
+    groupId: {
+      type: String,
+    },
     likes: [String],
     comments: [String],
   },

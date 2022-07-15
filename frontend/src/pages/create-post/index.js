@@ -27,6 +27,8 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
   const { loggedInUser } = useAuth();
 
+  console.log({ state });
+
   useEffect(() => {
     if (state?.post) {
       const { post } = state;
@@ -89,10 +91,13 @@ const CreatePost = () => {
       console.error(`File Upload error: ${error}`);
     }
 
+    const groupId = state?.groupId ?? state?.post.groupId ?? null;
+
     const params = {
       description: textInput.current?.getValue(),
       images: imageUrls,
       createdBy: loggedInUser._id,
+      groupId,
     };
 
     let method = "post";
@@ -113,7 +118,7 @@ const CreatePost = () => {
       );
       const key = state?.post ? "updated" : "created";
       snackbar.current.showSnackbar(true, `Post ${key}`);
-      navigate("/");
+      groupId ? navigate(`/groups/${groupId}`) : navigate("/");
     } catch (error) {
       setLoading(false);
       console.log({ error });

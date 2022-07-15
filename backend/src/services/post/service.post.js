@@ -26,9 +26,16 @@ const findPostId = async (id) => {
   }
 };
 
-const findAllPosts = async () => {
+const findAllPosts = async (params) => {
+  console.log({ params });
+  const queryParams = params.groupId
+    ? { groupId: params.groupId }
+    : { groupId: null };
   try {
-    const posts = Post.find().sort("-createdAt").populate("createdBy").exec();
+    const posts = Post.find(queryParams)
+      .sort("-createdAt")
+      .populate("createdBy")
+      .exec();
     return posts;
   } catch (error) {
     throw validations.handleErrors(error);

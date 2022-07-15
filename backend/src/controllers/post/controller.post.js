@@ -11,7 +11,7 @@ const { errorResponse, successResponse } = require("../../utils/responses");
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await postService.findAllPosts();
+    const posts = await postService.findAllPosts(req.query);
 
     return successResponse(res, "Posts Fetched", posts);
   } catch (error) {

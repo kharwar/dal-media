@@ -43,7 +43,7 @@ const createEvent = async (req, res) => {
   try {
 
     const { body } = req;
-    console.log(req);
+    //console.log(req);
     const event = await eventService.createEvent(body);
 
     return successResponse(res, "Event Created", event);
