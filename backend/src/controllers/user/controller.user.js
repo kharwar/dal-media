@@ -46,12 +46,18 @@ const signIn = async (req, res) => {
     const password = req.body.password;
 
     const user = await userService.findUser(email);
-    const hash = await bcrypt.compareSync(password, user.password);
-    if (!hash) {
-      return res.status(400).send({
-        message: "Unauthenticated",
+    if(!user){
+      return res.status(404).send({
+        message: "Invalid credentials",
       });
     }
+    const hash = await bcrypt.compareSync(password, user.password);
+    if (!hash) {
+      return res.status(404).send({
+        message: "Invalid credentials",
+      });
+    }
+    console.log({user});
     delete user.password;
     user.token = await userService.generateToken(user);
     return successResponse(res, "Login Successful", user);

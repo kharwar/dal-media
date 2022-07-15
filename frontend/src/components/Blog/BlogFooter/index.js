@@ -28,19 +28,15 @@ const BlogFooter = ({ blog: { createdBy, createdAt }, handleMenu }) => {
         <Avatar src={createdBy.image} />
         <Stack ml={1}>
           <Typography variant="body1" sx={{ lineHeight: 1.4 }}>
-            {createdBy.firstName} {createdBy.lastName}
+            {createdBy.firstname} {createdBy.lastname}
           </Typography>
           <Typography variant="body2" sx={{ lineHeight: 1, color: grey[600] }}>
             {moment(createdAt).format("YYYY-MM-DD HH:mm")}
           </Typography>
         </Stack>
       </Box>
-<<<<<<< HEAD
       {/* {createdBy._id === loggedInUser.id && ( */}
       { true && (
-=======
-      {createdBy._id === loggedInUser.id && (
->>>>>>> development
         <IconButton onClick={handleMenu}>
           <MoreHorizIcon />
         </IconButton>

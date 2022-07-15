@@ -22,7 +22,7 @@ const isPasswordValid = (password, cpassword) => {
   }
 
   //for password
-  if (regEx.password.test(password)) {
+  if (password.length >= 8) {
     return true;
   }
 
@@ -68,7 +68,7 @@ export const formValidationMsgs = (valueType, inputValue) => {
       return "Email format is invalid";
 
     case "password":
-      return "Password must have atleast eight characters containing one Upper Case, one Lower case, numbers, and special charaters";
+      return "Password must have atleast eight characters";
 
     case "cpassword":
       return "Password and confirm password does not match";

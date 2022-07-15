@@ -183,7 +183,7 @@ const Signup = () => {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
-                  defaultValue={loggedInUser.firstname ?? ""}
+                  defaultValue={loggedInUser?.firstname ?? ""}
                   required
                   fullWidth
                   id="firstName"
@@ -197,7 +197,7 @@ const Signup = () => {
                   required
                   fullWidth
                   id="lastName"
-                  defaultValue={loggedInUser.lastname ?? ""}
+                  defaultValue={loggedInUser?.lastname ?? ""}
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
@@ -211,7 +211,7 @@ const Signup = () => {
                   required
                   fullWidth
                   id="email"
-                  defaultValue={loggedInUser.email ?? ""}
+                  defaultValue={loggedInUser?.email ?? ""}
                   label="Email Address"
                   name="email"
                   autoComplete="email"
@@ -225,7 +225,7 @@ const Signup = () => {
                   fullWidth
                   maxRows={3}
                   id="bio"
-                  defaultValue={loggedInUser.bio ?? ""}
+                  defaultValue={loggedInUser?.bio ?? ""}
                   label="Bio"
                   name="bio"
                 />
