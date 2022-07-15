@@ -1,5 +1,5 @@
 /*
- * Created on Tue Jul 07 2022
+ * Created on Fri Jul 15 2022
  *
  * Author: Tasnim Khan
  */
@@ -7,30 +7,29 @@
 const mongoose = require("mongoose"),
   Schema = mongoose.Schema;
 
-const GroupSchema = new mongoose.Schema(
+const FileSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
     },
-    description: {
+    url: {
       type: String,
       required: true,
     },
-    createdBy: {
+    groupId: {
+      type: String,
+      required: true,
+    },
+    uploadedBy: {
       type: Schema.ObjectId,
       ref: "User",
       required: true,
-    },
-    members: {
-      type: [Schema.ObjectId],
-      ref: "User",
-      default: [],
     },
   },
   { timestamps: true }
 );
 
-const Group = mongoose.model("Group", GroupSchema);
+const File = mongoose.model("File", FileSchema);
 
-module.exports = Group;
+module.exports = File;
