@@ -66,6 +66,7 @@ const ProtectedRoutes = () => {
         <Route path="/change-password" element={<ChangePassword />} />
       </Route>
     </Routes>
+    
   );
 };
 

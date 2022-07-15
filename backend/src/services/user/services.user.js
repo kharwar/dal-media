@@ -72,11 +72,13 @@ const findUserById = async (id) => {
   }
 };
 
-const updateUserById = async (id, userData) => {
+const updateUserById = async (userData) => {
+  console.log({ userData });
   try {
-    const user = await User.findByIdAndUpdate(id, userData, {
+    const user = await User.findByIdAndUpdate(userData.id, userData, {
       returnDocument: "after",
     });
+    console.log({ user })
     return user;
   } catch (error) {
     throw validations.handleErrors(error);

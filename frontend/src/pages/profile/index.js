@@ -11,12 +11,14 @@ import { grey } from "@mui/material/colors";
 import { Box, Container } from "@mui/system";
 import React, { useState } from "react";
 import { PostList } from "../../components";
-import { loggedInUser, users } from "../../data";
 import theme from "../../theme";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
 import { posts } from "../../data";
+import { useAuth } from "../../context";
+
 const Profile = () => {
+  const { loggedInUser } = useAuth();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -66,7 +68,7 @@ const Profile = () => {
                 direction="row"
                 sx={{ justifyContent: "space-between", alignItems: "center" }}
               >
-                <Typography variant="h5">{loggedInUser.name}</Typography>
+                <Typography variant="h5">{`${loggedInUser.firstname} ${loggedInUser.lastname}`}</Typography>
                 <IconButton onClick={handleMenu}>
                   <MoreHorizIcon />
                 </IconButton>

@@ -19,6 +19,6 @@ export default {
   forgotPassword: "otp/send",
   resetPassword: "users/reset-password",
   profile: "users/getUserProfile",
-  editProfile : "users/updateProfile",
+  editProfile: "users/editprofile",
   groups: "groups",
 };

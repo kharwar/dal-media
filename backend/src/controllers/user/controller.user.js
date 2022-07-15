@@ -30,16 +30,7 @@ const signUp = async (req, res) => {
     const hash = await bcrypt.hash(body.password, saltRounds);
     body.password = hash
     delete body.password;
-<<<<<<< HEAD
-    const user = await userService.createUser({...body, password: hash});
-    // const emailResponse = await sendMail(
-    //   body.email,
-    //   "Email Verification",
-    //   "Verify your mail"
-    // );
-=======
     const user = await userService.createUser({ ...body, password: hash });
->>>>>>> development
     delete user.password;
     user.token = await userService.generateToken(user);
 
@@ -127,21 +118,18 @@ const getUserProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const id = req.body.user_id;
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const email = req.body.email;
-    const bio = req.body.bio;
+    // const id = req.body.user_id;
+    // const firstname = req.body.firstname;
+    // const lastname = req.body.lastname;
+    // const bio = req.body.bio;
 
-    const update = {
-      email: email,
-      firstname: firstname,
-      lastname: lastname,
-      bio: bio,
-    };
-
-    const user = await userService.updateUserById(id, update);
-
+    // const update = {
+    //   firstname: firstname,
+    //   lastname: lastname,
+    //   bio: bio,
+    // };
+    const { body } = req;
+    const user = await userService.updateUserById(body)
     return successResponse(res, "User Details updated succesfully", user);
   } catch (error) {
     return errorResponse(res, error);

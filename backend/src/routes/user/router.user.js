@@ -15,7 +15,7 @@ userRouter.post("/", isAuthenticated, getUsers);
 userRouter.post("/signup", signUp);
 userRouter.post("/signin", signIn);
 userRouter.put("/profile/:id", isAuthenticated, getUserProfile);
-userRouter.post("/editprofile", isAuthenticated, updateProfile);
+userRouter.put("/editprofile", isAuthenticated, updateProfile);
 userRouter.post("/change-password", isAuthenticated, changePassword);
 userRouter.post("/reset-password", resetPassword);
 // userRouter.post("/forgotpassword", isAuthenticated, forgotpassword);
