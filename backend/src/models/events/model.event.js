@@ -5,8 +5,8 @@
  */
 
 const mongoose = require("mongoose");
-const lodash = require("lodash");
-const { isEmpty } = lodash;
+const isEmpty = require("lodash.isEmpty");
+//const { isEmpty } = lodash;
 //const { UserSchema } = require("../user/model.user");
 
 const EventSchema = new mongoose.Schema(
