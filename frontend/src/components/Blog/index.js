@@ -24,7 +24,6 @@ const Blog = ({ blog, handleMenu }) => {
       sx={{
         ...styling.blogPaper,
       }}
-      onClick={() => navigate(`/blog-details/${blog._id}`, { state: { blog } })}
     >
       <Stack style={{ minHeight: "250px" }}>
         <img width="100%" height="100%" src={blog.image} />
@@ -65,7 +64,11 @@ const styling = {
   },
   textSpan: {
     color: "white",
+<<<<<<< HEAD
     font: "bold 24px/45px Helvetica, Sans-Serif",
+=======
+    font: "bold 24px/45px Helvetica, Sans-Serif;",
+>>>>>>> development
     letterSpacing: "-1px",
     background: "rgb(0,0,0)",
     background: "rgb(0,0,0, 0.7)",

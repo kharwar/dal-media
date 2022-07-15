@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useState } from "react";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,12 +14,17 @@ import {
   Container,
 } from "@mui/material";
 import { formValidationMsgs, formValidator } from "../../utils";
+import { AuthContext } from "../../context";
+import { apiRoutes, ServiceManager } from "../../services";
+import { snackbar } from "../../components";
+import { storeLoggedInUser } from "../../local-storage";
 
 const ChangePassword = () => {
+  const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formdata = new FormData(event.currentTarget);
 
@@ -51,9 +56,29 @@ const ChangePassword = () => {
 
     if (!isError) {
       setErrors(errors);
-    } else {
-      console.log({ data });
-      navigate("/profile");
+    } 
+    const params = {
+      currentPassword: data.currentpassword,
+      password: data.password
+    };
+
+    try {
+      console.log(params)
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.changePassword,
+        params,
+        "post"
+      );
+
+      if (res.data.success) {
+        ServiceManager.getInstance().userToken = res.data.token;
+        storeLoggedInUser(res.data.token);
+        setLoggedInUser(res.data);
+        snackbar.current.showSnackbar(true, "Password changed succesfully");
+        navigate("/profile", { replace: true });
+      }
+    } catch (error) {
+      snackbar.current.showSnackbar(true, "Invalid Current Password");
     }
   };
 

@@ -35,8 +35,12 @@ const BlogFooter = ({ blog: { createdBy, createdAt }, handleMenu }) => {
           </Typography>
         </Stack>
       </Box>
+<<<<<<< HEAD
       {/* {createdBy._id === loggedInUser.id && ( */}
       { true && (
+=======
+      {createdBy._id === loggedInUser.id && (
+>>>>>>> development
         <IconButton onClick={handleMenu}>
           <MoreHorizIcon />
         </IconButton>

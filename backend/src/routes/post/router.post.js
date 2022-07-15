@@ -6,12 +6,13 @@
 
 const postRouter = require("express").Router();
 const { postController } = require("../../controllers");
+const isAuthenticated = require("../../middlewares/common/isAuthenticated");
 
-postRouter.get("/", postController.getAllPosts);
-postRouter.get("/:id", postController.getPostById);
-postRouter.post("/create", postController.createPost);
-postRouter.put("/update/:id", postController.updatePost);
-postRouter.delete("/delete/:id", postController.deletePost);
-postRouter.post("/like", postController.likePost);
+postRouter.get("/", isAuthenticated, postController.getAllPosts);
+postRouter.get("/:id", isAuthenticated, postController.getPostById);
+postRouter.post("/create", isAuthenticated, postController.createPost);
+postRouter.put("/update", isAuthenticated, postController.updatePost);
+postRouter.delete("/delete", isAuthenticated, postController.deletePost);
+postRouter.post("/like", isAuthenticated, postController.likePost);
 
 module.exports = postRouter;

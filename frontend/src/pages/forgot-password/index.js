@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useState } from "react";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import { useNavigate } from "react-router-dom";
 import {
@@ -11,12 +11,17 @@ import {
 } from "@mui/material";
 import { formValidationMsgs, formValidator } from "../../utils";
 import { grey } from "@mui/material/colors";
+import { AuthContext } from "../../context";
+import { apiRoutes, ServiceManager } from "../../services";
+import { snackbar } from "../../components";
+import { storeLoggedInUser } from "../../local-storage";
 
 const ForgotPassword = () => {
+  const { setLoggedInUser } = useContext(AuthContext);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formdata = new FormData(event.currentTarget);
     setErrors({});
@@ -37,9 +42,24 @@ const ForgotPassword = () => {
 
     if (!isError) {
       setErrors(errors);
-    } else {
-      console.log({ data });
-      navigate("/");
+    } 
+    const params = {
+      email: data.email,
+    };
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.forgotPassword,
+        params,
+        "post"
+      );
+
+      if (res.data) {
+      
+        snackbar.current.showSnackbar(true, "Email sent successfully");
+      }
+    } catch (error) {
+      snackbar.current.showSnackbar(true, "Authentication Failed");
     }
   };
 

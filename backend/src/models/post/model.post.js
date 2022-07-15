@@ -16,11 +16,16 @@ const PostSchema = new mongoose.Schema(
     images: {
       type: [String],
     },
-    createBy: {
-      type: mongoose.Types.ObjectId,
-      requred: true,
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "User id is required"],
+    },
+    groupId: {
+      type: String,
     },
     likes: [String],
+    comments: [String],
   },
   { timestamps: true }
 );
