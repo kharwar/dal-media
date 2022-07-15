@@ -5,8 +5,11 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { grey } from '@mui/material/colors';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { loggedInUser } from '../../../data';
+import { useAuth } from "../../../context";
 
 const EventHeader = ({ event: { createBy, title }, handleMenu }) => {
+
+  const { loggedInUser } = useAuth();
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
       <Box sx={{ display: 'flex', flex: 1, mr: 1 }}>
@@ -18,8 +21,7 @@ const EventHeader = ({ event: { createBy, title }, handleMenu }) => {
         </Stack>
       </Box>
       {
-        // createBy === loggedInUser.id &&
-        true &&
+        createBy === loggedInUser._id.toString() &&
         <IconButton onClick={handleMenu}>
           <MoreHorizIcon />
         </IconButton>
