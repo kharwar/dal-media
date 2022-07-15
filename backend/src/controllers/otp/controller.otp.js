@@ -1,9 +1,14 @@
+/*
+  Created on July 9th 2022
+  Author: Kavya Kasaraneni
+*/
+
 const { errorResponse, successResponse } = require("../../utils/responses");
 const moment = require("moment");
 const { userService, otpService } = require("../../services");
 const sendMail = require("../../utils/mailer");
 
-
+//Function for setting a passcode and sending it to user email address as OTP for resetting password
 const sendOtp = async (req, res) => {
   try {
     const { email } = req.body;

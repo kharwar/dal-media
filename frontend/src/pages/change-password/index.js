@@ -1,4 +1,9 @@
-import React, {useContext, useState } from "react";
+/*
+  Created on June 7th 2022
+  Author: Kavya Kasaraneni
+*/
+
+import React, { useContext, useState } from "react";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import { useNavigate } from "react-router-dom";
 import {
@@ -19,6 +24,7 @@ import { apiRoutes, ServiceManager } from "../../services";
 import { snackbar } from "../../components";
 import { storeLoggedInUser } from "../../local-storage";
 
+//front end for the changing and updating the password for user
 const ChangePassword = () => {
   const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -56,7 +62,10 @@ const ChangePassword = () => {
 
     if (!isError) {
       setErrors(errors);
-    } 
+    }
+
+    //calling backend api for implementing the feature
+
     const params = {
       currentPassword: data.currentpassword,
       password: data.password

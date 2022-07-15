@@ -1,4 +1,9 @@
-import React, {useContext, useState } from "react";
+/*
+  Created on June 4th 2022
+  Author: Kavya Kasaraneni
+*/
+
+import React, { useContext, useState } from "react";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import { useNavigate } from "react-router-dom";
 import {
@@ -16,6 +21,7 @@ import { apiRoutes, ServiceManager } from "../../services";
 import { snackbar } from "../../components";
 import { storeLoggedInUser } from "../../local-storage";
 
+//Code for implementing front end for forgot password
 const ForgotPassword = () => {
   const { setLoggedInUser } = useContext(AuthContext);
   const [errors, setErrors] = useState({});
@@ -42,7 +48,9 @@ const ForgotPassword = () => {
 
     if (!isError) {
       setErrors(errors);
-    } 
+    }
+
+    //Call backend api for sending mail to user to reset the password
     const params = {
       email: data.email,
     };
@@ -55,7 +63,7 @@ const ForgotPassword = () => {
       );
 
       if (res.data) {
-      
+
         snackbar.current.showSnackbar(true, "Email sent successfully");
       }
     } catch (error) {
@@ -63,6 +71,7 @@ const ForgotPassword = () => {
     }
   };
 
+  //UI for forgot password
   return (
     <Container component="main" maxWidth="sm">
       <Paper sx={{ p: 8, mt: 8 }}>

@@ -1,3 +1,8 @@
+/*
+  Created on July 5th 2022
+  Author: Kavya Kasaraneni
+*/
+
 const { User } = require("../../models/user/model.user");
 const express = require("express");
 const app = express();
@@ -6,6 +11,8 @@ const { userService, otpService } = require("../../services");
 const sendMail = require("../../utils/mailer");
 const saltRounds = 10;
 const { errorResponse, successResponse } = require("../../utils/responses");
+
+
 
 const getUsers = async (req, res) => {
   try {
@@ -24,6 +31,7 @@ const getUsers = async (req, res) => {
   }
 };
 
+//Backend logic for storing the registered user details
 const signUp = async (req, res) => {
   try {
     const { body } = req;
@@ -40,13 +48,14 @@ const signUp = async (req, res) => {
   }
 };
 
+//Backend logic for login using the registered credentials
 const signIn = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
 
     const user = await userService.findUser(email);
-    if(!user){
+    if (!user) {
       return res.status(404).send({
         message: "Invalid credentials",
       });
@@ -57,7 +66,7 @@ const signIn = async (req, res) => {
         message: "Invalid credentials",
       });
     }
-    console.log({user});
+    console.log({ user });
     delete user.password;
     user.token = await userService.generateToken(user);
     return successResponse(res, "Login Successful", user);
@@ -67,6 +76,8 @@ const signIn = async (req, res) => {
   }
 };
 
+
+//Update password backend
 const changePassword = async (req, res) => {
   try {
     const { currentPassword, password } = req.body;
@@ -74,7 +85,7 @@ const changePassword = async (req, res) => {
     const isPasswordCorrect = bcrypt.compareSync(currentPassword, user.password);
 
     if (!isPasswordCorrect) {
-      return res.status(401).send({ 
+      return res.status(401).send({
         message: "Old Password incorrect",
         success: false,
       });
@@ -112,6 +123,7 @@ const resetPassword = async (req, res) => {
   }
 };
 
+//Getting user details
 const getUserProfile = async (req, res) => {
   try {
     const { id } = req.params;

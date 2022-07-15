@@ -1,3 +1,8 @@
+/*
+  Created on June 3rd 2022
+  Author: Kavya Kasaraneni
+*/
+
 import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,6 +20,7 @@ import { apiRoutes, ServiceManager } from "../../services";
 import { snackbar } from "../../components";
 import { setLoggedInUser, storeLoggedInUser } from "../../local-storage";
 
+//Front end code for implementing user login into the application
 const Login = () => {
   const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -48,6 +54,7 @@ const Login = () => {
       return;
     }
 
+    //Backend Api call for implementing feature
     const params = {
       email: data.email,
       password: data.pass,
@@ -79,6 +86,7 @@ const Login = () => {
     navigate("/forgot-password");
   };
 
+  //UI for login
   return (
     <Container component="main" maxWidth="sm">
       <Paper sx={{ p: 8, mt: 8 }}>
