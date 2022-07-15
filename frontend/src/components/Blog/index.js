@@ -15,13 +15,16 @@ import { grey } from "@mui/material/colors";
 import react from "react";
 import BlogContent from "./BlogContent";
 import BlogFooter from "./BlogFooter";
+import { useNavigate } from "react-router-dom";
 
 const Blog = ({ blog, handleMenu }) => {
+  const navigate = useNavigate();
   return (
     <Paper
       sx={{
         ...styling.blogPaper,
       }}
+      onClick={() => navigate(`/blog-details/${blog._id}`, { state: { blog } })}
     >
       <Stack style={{ minHeight: "250px" }}>
         <img width="100%" height="100%" src={blog.image} />
