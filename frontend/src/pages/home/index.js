@@ -16,7 +16,7 @@ const Home = () => {
       const { data } = await ServiceManager.getInstance().request(
         apiRoutes.getPosts
       );
-      console.log({ posts });
+      console.log({ data });
       setPosts(data);
     } catch (error) {
       console.log({ error });
@@ -43,7 +43,7 @@ const Home = () => {
         />
         <SearchIcon sx={{ mr: 1 }} />
       </Paper>
-      {/* <PostList posts={posts} /> */}
+      <PostList posts={posts} />
     </Container>
   );
 };

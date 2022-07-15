@@ -50,11 +50,10 @@ const createPost = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-  const { body, params } = req;
-  const { id } = params;
+  const { body } = req;
 
   try {
-    const post = await postService.updatePostById(id, body);
+    const post = await postService.updatePostById(body);
 
     return successResponse(res, "Post Deleted", post);
   } catch (error) {
@@ -63,10 +62,10 @@ const updatePost = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-  const { id } = req.params;
+  const { body } = req;
 
   try {
-    const post = await postService.deletePostById(id);
+    const post = await postService.deletePostById(body.id);
 
     return successResponse(res, "Post Deleted", post);
   } catch (error) {

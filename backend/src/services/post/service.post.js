@@ -28,18 +28,20 @@ const findPostId = async (id) => {
 
 const findAllPosts = async () => {
   try {
-    const posts = await Post.find();
+    const posts = Post.find().sort("-createdAt").populate("createdBy").exec();
     return posts;
   } catch (error) {
     throw validations.handleErrors(error);
   }
 };
 
-const updatePostById = async (id, postData) => {
+const updatePostById = async (postData) => {
   try {
-    const post = await Post.findByIdAndUpdate(id, postData, {
+    const post = await Post.findByIdAndUpdate(postData.id, postData, {
       returnDocument: "after",
-    });
+    })
+      .populate("createdBy")
+      .exec();
     return post;
   } catch (error) {
     throw validations.handleErrors(error);
@@ -47,6 +49,7 @@ const updatePostById = async (id, postData) => {
 };
 
 const deletePostById = async (id) => {
+  console.log({ id });
   try {
     const post = await Post.findByIdAndDelete(id);
     return post;

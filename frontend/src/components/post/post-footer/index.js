@@ -5,7 +5,7 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 
 const PostFooter = ({
-  post: { total_likes, total_comments },
+  post: { likes, comments },
   handleLike,
   handleComment,
 }) => {
@@ -14,9 +14,9 @@ const PostFooter = ({
       <Stack direction="row" sx={{ justifyContent: "space-between", mb: 1 }}>
         <Stack direction="row" spacing={1}>
           <ThumbUpIcon />
-          <Typography variant="body1">{total_likes}</Typography>
+          <Typography variant="body1">{likes.length}</Typography>
         </Stack>
-        <Typography variant="body1">{`${total_comments} comments`}</Typography>
+        <Typography variant="body1">{`${comments.length} comments`}</Typography>
       </Stack>
       <Divider sx={{ mb: 1 }} />
       <Stack direction="row" spacing={1} sx={{ mb: 1 }}>

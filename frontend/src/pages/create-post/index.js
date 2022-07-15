@@ -14,9 +14,9 @@ import "./styles.css";
 import { PostTextInput, snackbar } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
-import { loggedInUser } from "../../data";
 import { dateFormat, uploadFile } from "../../utils";
 import { apiRoutes, ServiceManager } from "../../services";
+import { useAuth } from "../../context";
 
 const CreatePost = () => {
   const { state } = useLocation();
@@ -25,12 +25,17 @@ const CreatePost = () => {
   const [textFilled, setTextFilled] = useState(false);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { loggedInUser } = useAuth();
 
   useEffect(() => {
     if (state?.post) {
       const { post } = state;
       post.description && textInput.current.setValue(post.description);
-      setImages(post.images);
+      const imgs = post.images.map((url) => ({
+        file: null,
+        url,
+      }));
+      setImages(imgs);
     }
   }, []);
 
@@ -76,6 +81,8 @@ const CreatePost = () => {
         if (images[i].file) {
           const imageUrl = await uploadFile(images[i].file);
           imageUrls.push(imageUrl);
+        } else {
+          imageUrls.push(images[i].url);
         }
       }
     } catch (error) {
@@ -85,14 +92,24 @@ const CreatePost = () => {
     const params = {
       description: textInput.current?.getValue(),
       images: imageUrls,
-      createdBy: loggedInUser.id,
+      createdBy: loggedInUser._id,
     };
 
+    let method = "post";
+    let url = apiRoutes.createPost;
+
+    if (state?.post) {
+      url = apiRoutes.editPost;
+      params["id"] = state.post._id;
+      method = "put";
+    }
+
+    console.log({ params });
     try {
       const res = await ServiceManager.getInstance().request(
-        apiRoutes.createPost,
+        url,
         params,
-        "post"
+        method
       );
       const key = state?.post ? "updated" : "created";
       snackbar.current.showSnackbar(true, `Post ${key}`);
@@ -107,13 +124,13 @@ const CreatePost = () => {
     <Paper sx={{ m: "50px", p: "30px" }}>
       <Stack direction="row" spacing={1.5}>
         <Avatar
-          alt={loggedInUser.name}
+          alt={`${loggedInUser.firstname} ${loggedInUser.lastname}`}
           src={loggedInUser.image}
           sx={{ width: 56, height: 56 }}
         />
         <Stack>
           <Typography variant="h6" component="h6" sx={{ lineHeight: 1.2 }}>
-            {loggedInUser.name}
+            {`${loggedInUser.firstname} ${loggedInUser.lastname}`}
           </Typography>
           <Typography
             variant="body2"

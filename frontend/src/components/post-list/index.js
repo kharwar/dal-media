@@ -4,17 +4,23 @@ import Post from "../post";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../alert-dialog";
 import { snackbar } from "../../components";
+import { apiRoutes, ServiceManager } from "../../services";
 
-const PostList = ({ posts }) => {
+const PostList = (props) => {
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
   const postRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [posts, setPosts] = useState(props.posts);
+
+  useEffect(() => {
+    setPosts(props.posts);
+  }, [props.posts]);
 
   useEffect(() => {
     setOnAgree(onDelete);
-  }, []);
+  }, [posts]);
 
   const handleMenu = (event, post) => {
     postRef.current = post;
@@ -28,12 +34,24 @@ const PostList = ({ posts }) => {
   const handleEdit = () => {
     handleClose();
     const post = postRef.current;
-    navigate(`edit-post/${post.id}`, { state: { post } });
+    navigate(`edit-post/${post._id}`, { state: { post } });
   };
 
-  const onDelete = () => {
-    console.log("delete");
-    snackbar.current.showSnackbar(true, "Post Deleted");
+  const onDelete = async () => {
+    const postId = postRef.current._id;
+    try {
+      await ServiceManager.getInstance().request(
+        apiRoutes.deletePost,
+        {
+          id: postId,
+        },
+        "delete"
+      );
+
+      const newPosts = posts.filter((post) => post._id != postId);
+      setPosts(newPosts);
+      snackbar.current.showSnackbar(true, "Post Deleted");
+    } catch (error) {}
   };
 
   const handleDelete = () => {
@@ -54,7 +72,7 @@ const PostList = ({ posts }) => {
     return (
       <Post
         post={post}
-        key={post.id}
+        key={post._id}
         handleMenu={(event) => handleMenu(event, post)}
         handleLike={handleLike}
         handleComment={handleComment}
