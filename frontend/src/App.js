@@ -32,6 +32,10 @@ function App() {
     })();
   }, []);
 
+  useEffect(() => {
+    ServiceManager.initialize(apiRoutes.baseURL);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       {authentication ? (

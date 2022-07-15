@@ -14,9 +14,13 @@ export const getLoggedInUser = async () => {
   }
 
   try {
-    user = await ServiceManager.getInstance().request(
+    const res = await ServiceManager.getInstance().request(
       apiRoutes.getLoggedInUser
     );
+
+    if (res.data) {
+      user = res.data;
+    }
   } catch (error) {
     console.log(error);
   }

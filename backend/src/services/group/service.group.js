@@ -55,10 +55,21 @@ const deleteGroupById = async (id) => {
   }
 };
 
+const getAllMembers = async (groupId) => {
+  try {
+    const group = await Group.findById(groupId).populate("members").lean();
+    console.log(group);
+    return group.members;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
 module.exports = {
   createGroup,
   findGroupId,
   getAllGroups,
   updateGroupById,
   deleteGroupById,
+  getAllMembers
 };

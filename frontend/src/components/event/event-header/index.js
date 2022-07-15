@@ -4,9 +4,12 @@ import Images from '../../../assets';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { grey } from '@mui/material/colors';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { loggedInUser, events } from '../../../data';
+import { loggedInUser } from '../../../data';
+import { useAuth } from "../../../context";
 
-const EventHeader = ({ event: { user, title }, handleMenu }) => {
+const EventHeader = ({ event: { createBy, title }, handleMenu }) => {
+
+  const { loggedInUser } = useAuth();
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
       <Box sx={{ display: 'flex', flex: 1, mr: 1 }}>
@@ -18,7 +21,7 @@ const EventHeader = ({ event: { user, title }, handleMenu }) => {
         </Stack>
       </Box>
       {
-        user.id === loggedInUser.id &&
+        createBy === loggedInUser._id.toString() &&
         <IconButton onClick={handleMenu}>
           <MoreHorizIcon />
         </IconButton>

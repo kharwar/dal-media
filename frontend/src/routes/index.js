@@ -60,7 +60,7 @@ const ProtectedRoutes = () => {
         <Route path="/blogs/create" element={<CreateBlog />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="blogs/edit/:id" element={<CreateBlog />} />
-        <Route path="/event-page/edit-event/:id" element={<CreateEvent />} />
+        <Route path="/event-page/edit-event" element={<CreateEvent />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<Signup />} />
         <Route path="/change-password" element={<ChangePassword />} />

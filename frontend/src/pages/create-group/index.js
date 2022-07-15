@@ -10,20 +10,7 @@ import {
 import "./styles.css";
 import { TextInput, snackbar } from "../../components";
 import { useNavigate } from "react-router-dom";
-import { uploadFile } from "../../utils";
-
-var file;
-
-const onImageChange = async (event) => {
-  const file = event.target.files[0];
-
-  try {
-    const imageUrl = await uploadFile(file);
-    console.log({ imageUrl });
-  } catch (error) {
-    console.error(error.message);
-  }
-};
+import { apiRoutes, ServiceManager } from "../../services";
 
 const CreateGroup = () => {
   const navigate = useNavigate();
@@ -49,18 +36,27 @@ const CreateGroup = () => {
     }
   };
 
-  const onCreateGroup = () => {
+  const onCreateGroup = async () => {
     setLoading(true);
 
-    setTimeout(() => {
+    const params = {
+      name: nameInput.current.getValue(),
+      description: descriptionInput.current.getValue(),
+    };
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.groups,
+        params,
+        "post"
+      );
+      snackbar.current.showSnackbar(true, res.message);
+      navigate("/groups");
       setLoading(false);
-      nameInput.current?.setValue("");
-      descriptionInput.current?.setValue("");
-      setNameFilled(false);
-      setDescriptionFilled(false);
-      snackbar.current.showSnackbar(true, `Group created!`);
-      navigate("/");
-    }, 2000);
+    } catch (error) {
+      setLoading(false);
+      console.log({ error });
+    }
   };
 
   return (
@@ -106,11 +102,6 @@ const CreateGroup = () => {
           {loading && <CircularProgress size={24} sx={styling.progress} />}
         </Box>
       </Box>
-
-      <Button variant="contained" component="label" onChange={onImageChange}>
-        Upload
-        <input type="file" hidden value={file} />
-      </Button>
     </Paper>
   );
 };
