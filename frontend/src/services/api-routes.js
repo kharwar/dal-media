@@ -4,6 +4,10 @@ export default {
   createPost: "posts/create",
   editPost: "posts/update",
   deletePost: "posts/delete",
+  getEvents: "events",
+  createEvent: "events/create",
+  deleteEvent: "events/delete",
+  editEvent: "events/update",
   users: "/users",
   signIn: "/users/signin",
   signUp: "users/signup",
@@ -11,4 +15,5 @@ export default {
   createBlog: "blogs/create",
   getBlogs: "blogs/",
   updateBlog: "blogs",
+  groups: "groups",
 };

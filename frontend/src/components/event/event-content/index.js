@@ -14,7 +14,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const EventContent = ({ event: { description, images, startDT, endDT, location } }) => {
+const EventContent = ({ event: { description, images, start_DT, end_DT, location } }) => {
 
   const renderImages = () => {
     return (
@@ -61,7 +61,7 @@ const EventContent = ({ event: { description, images, startDT, endDT, location }
               Starts On:&nbsp;&nbsp;
             </Typography>
             <Typography variant='subtitle1' sx={{ lineHeight: 2.2, }} >
-              {startDT}
+              {start_DT}
             </Typography>
 
           </Box>
@@ -75,7 +75,7 @@ const EventContent = ({ event: { description, images, startDT, endDT, location }
               Ends On:&nbsp;&nbsp;
             </Typography>
             <Typography variant='subtitle1' sx={{ lineHeight: 2.2, }} >
-              {endDT}
+              {end_DT}
             </Typography>
 
           </Box>

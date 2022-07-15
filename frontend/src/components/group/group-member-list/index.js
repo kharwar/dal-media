@@ -1,19 +1,34 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, MenuItem } from "@mui/material";
-import { users } from "../../../data";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../../alert-dialog";
 import GroupMember from "../group-member";
 import { snackbar } from "../../../components";
+import { apiRoutes, ServiceManager } from "../../../services";
 
-const GroupMemberList = () => {
-  console.log("memberList");
+const fetchGroupMembers = async (groupId, setUsers) => {
+  ServiceManager.getInstance()
+    .request(`${apiRoutes.groups}/${groupId}/members`)
+    .then((res) => {
+      console.log(res.data);
+      // setUsers(res.data);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
 
+const GroupMemberList = (props) => {
+  const [users, setUsers] = useState([]);
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
   const userRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  useEffect(() => {
+    fetchGroupMembers(props.groupId, setUsers);
+  }, []);
 
   const handleMenu = (event, user) => {
     userRef.current = user;
