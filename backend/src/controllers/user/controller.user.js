@@ -30,16 +30,7 @@ const signUp = async (req, res) => {
     const hash = await bcrypt.hash(body.password, saltRounds);
     body.password = hash
     delete body.password;
-<<<<<<< HEAD
-    const user = await userService.createUser({...body, password: hash});
-    // const emailResponse = await sendMail(
-    //   body.email,
-    //   "Email Verification",
-    //   "Verify your mail"
-    // );
-=======
     const user = await userService.createUser({ ...body, password: hash });
->>>>>>> development
     delete user.password;
     user.token = await userService.generateToken(user);
 

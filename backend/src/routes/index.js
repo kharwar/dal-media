@@ -6,6 +6,7 @@ const postRouter = require("./post/router.post");
 const eventRouter = require("./event/router.event");
 const blogRoutes = require("./blog/router.blog");
 const groupRouter = require("./group/router.group");
+const fileRouter = require("./file/router.file");
 const otpRouter = require("./otp/routes.otp");
 
 router.use("/users", userRoutes);
@@ -15,5 +16,6 @@ router.use("/events", eventRouter);
 router.use("/otp", otpRouter);
 // router.use("/email", emailRouter);
 router.use("/groups", groupRouter);
+router.use("/files", fileRouter);
 
 module.exports = router;

@@ -21,4 +21,5 @@ export default {
   profile: "users/getUserProfile",
   editProfile : "users/updateProfile",
   groups: "groups",
+  files: "files"
 };
