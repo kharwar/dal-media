@@ -1,6 +1,6 @@
-import React, {useContext, useState } from "react";
+import React, {useContext, useState ,} from "react";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Checkbox,
   FormControlLabel,
@@ -19,7 +19,8 @@ import { apiRoutes, ServiceManager } from "../../services";
 import { snackbar } from "../../components";
 import { storeLoggedInUser } from "../../local-storage";
 
-const ChangePassword = () => {
+const ResetPassword = () => {
+    const { passcode } = useParams();
   const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -58,27 +59,24 @@ const ChangePassword = () => {
       setErrors(errors);
     } 
     const params = {
-      currentPassword: data.currentpassword,
+      passcode,
       password: data.password
     };
 
     try {
       console.log(params)
       const res = await ServiceManager.getInstance().request(
-        apiRoutes.changePassword,
+        apiRoutes.resetPassword,
         params,
         "post"
       );
 
       if (res.data.success) {
-        ServiceManager.getInstance().userToken = res.data.token;
-        storeLoggedInUser(res.data.token);
-        setLoggedInUser(res.data);
         snackbar.current.showSnackbar(true, "Password changed succesfully");
-        navigate("/profile", { replace: true });
+        navigate("/login", { replace: true });
       }
     } catch (error) {
-      snackbar.current.showSnackbar(true, "Invalid Current Password");
+      snackbar.current.showSnackbar(true, "Invalid Passcode");
     }
   };
 
@@ -94,7 +92,7 @@ const ChangePassword = () => {
         >
           <LockRoundedIcon />
           <Typography component="h1" variant="h5">
-            Change Password
+            Reset Password
           </Typography>
           <Box
             component="form"
@@ -102,17 +100,6 @@ const ChangePassword = () => {
             onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
-            <TextField
-              required
-              fullWidth
-              name="currentpassword"
-              label="Current Password"
-              type="password"
-              id="currentpassword"
-              error={!!errors.currentpassword}
-              helperText={errors.currentpassword}
-              sx={{ mb: 2 }}
-            />
             <TextField
               required
               fullWidth
@@ -152,4 +139,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default ResetPassword;

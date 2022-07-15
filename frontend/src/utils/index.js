@@ -7,8 +7,8 @@ export const dateFormat = (date, format) => moment(date).format(format);
 const regEx = {
   lettersOnly: /^[a-zA-Z\s]*$/,
   email:
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-  password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@dal.ca/,
+  password: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$@^%&? "])[a-zA-Z0-9!#$@^%&?]{8,20}$/,
 };
 
 const isLettersOnly = (text) => regEx.lettersOnly.test(text);
@@ -68,7 +68,7 @@ export const formValidationMsgs = (valueType, inputValue) => {
       return "Email format is invalid";
 
     case "password":
-      return "Password must have atleast eight characters containing letters, numbers, and special charaters";
+      return "Password must have atleast eight characters containing one Upper Case, one Lower case, numbers, and special charaters";
 
     case "cpassword":
       return "Password and confirm password does not match";
