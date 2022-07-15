@@ -9,19 +9,38 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { Box, Container } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PostList } from "../../components";
 import theme from "../../theme";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
 import { posts } from "../../data";
 import { useAuth } from "../../context";
+import { apiRoutes, ServiceManager } from "../../services";
 
 const Profile = () => {
   const { loggedInUser } = useAuth();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getUserPosts();
+  }, []);
+
+  const getUserPosts = async () => {
+    try {
+      const { data } = await ServiceManager.getInstance().request(
+        apiRoutes.getPosts,
+        { userId: loggedInUser._id }
+      );
+      console.log({ data });
+      setPosts(data);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -41,13 +60,10 @@ const Profile = () => {
     navigate("/change-password");
   };
 
-
- 
   const getPosts = () => {
     return posts.filter(({ user }) => user.id == loggedInUser.id);
   };
 
-  
   return (
     <>
       <Container maxWidth="sm">
@@ -79,13 +95,13 @@ const Profile = () => {
               <Stack direction="row" spacing={3} sx={{ mt: 2 }}>
                 <Stack direction="row" spacing={0.5}>
                   <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                    {`${loggedInUser.total_posts}`}
+                    {posts.length}
                   </Typography>
                   <Typography>Posts</Typography>
                 </Stack>
                 <Stack direction="row" spacing={0.5}>
                   <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                    {`${loggedInUser.total_friends}`}
+                    {/* {`${loggedInUser.total_friends}`} */}5
                   </Typography>
                   <Typography>Friends</Typography>
                 </Stack>
@@ -98,7 +114,7 @@ const Profile = () => {
         </Paper>
       </Container>
       <Container maxWidth="sm">
-        <PostList posts={getPosts()} />
+        <PostList posts={posts} />
       </Container>
       <Menu
         id="menu"
