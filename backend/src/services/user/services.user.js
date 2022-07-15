@@ -14,14 +14,15 @@ const getUserById = async (id) => {
 
 const createUser = async (userData) => {
   try {
-    const isUserExist = await User.findOne({email: userData.email})
-    if(isUserExist){
-      throw new Error("This email is already taken")
+    const isUserExist = await User.findOne({ email: userData.email });
+    if (isUserExist) {
+      throw new Error("This email is already taken");
     }
+
     const user = await User.create(userData);
     return user.toJSON();
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw validations.handleErrors(error);
   }
 };

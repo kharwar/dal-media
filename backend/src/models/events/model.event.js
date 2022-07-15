@@ -6,17 +6,13 @@
 
 const mongoose = require("mongoose");
 const isEmpty = require("lodash.isEmpty");
-//const { isEmpty } = lodash;
 //const { UserSchema } = require("../user/model.user");
 
 const EventSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [
-        true,
-        "Event must have some title"
-      ],
+      required: [true, "Event must have some title"],
     },
     description: {
       type: String,
@@ -30,17 +26,11 @@ const EventSchema = new mongoose.Schema(
     },
     start_DT: {
       type: String,
-      required: [
-        true,
-        "Event must have Start date"
-      ],
+      required: [true, "Event must have Start date"],
     },
     end_DT: {
       type: String,
-      required: [
-        true,
-        "Event must have end date"
-      ],
+      required: [true, "Event must have end date"],
     },
 
     images: {
@@ -57,12 +47,9 @@ const EventSchema = new mongoose.Schema(
     },
 
     interested: [String],
-
   },
 
   { timestamps: true }
-
-
 );
 
 const Event = mongoose.model("Event", EventSchema);
