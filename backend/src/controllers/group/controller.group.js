@@ -32,10 +32,10 @@ const getGroupById = async (req, res) => {
 
 const createGroup = async (req, res) => {
   try {
-    const { body } = req;
-    const newGroup = await groupService.createGroup(body);
-
-    return successResponse(res, "Group Created", newGroup);
+    let { body } = req;
+    const createdBy = req.user._id;
+    const group = await groupService.createGroup({ ...body, createdBy });
+    return successResponse(res, "Group Created", group);
   } catch (error) {
     return errorResponse(res, error);
   }

@@ -71,16 +71,6 @@ const CreateBlog = () => {
     } catch (error) {
       console.log({ error });
     }
-
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   setTextFilled(false);
-    //   setTitle("");
-    //   setBody(initialValue);
-    //   navigate("/blogs");
-    //   const key = state?.blog ? "updated" : "created";
-    //   snackbar.current.showSnackbar(true, `Blog ${key}`);
-    // }, 3000);
   };
 
   const onImageSelect = (e) => {

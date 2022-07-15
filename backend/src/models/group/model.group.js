@@ -5,22 +5,22 @@
  */
 
 const mongoose = require("mongoose");
-const isEmpty = require("lodash.isempty");
-const { UserSchema } = require("../user/model.user");
+Schema = mongoose.Schema;
 
 const GroupSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [isEmpty(this.name), "Group must have name"],
+      required: true,
     },
     description: {
       type: String,
-      required: [isEmpty(this.description), "Group must have description"],
+      required: true,
     },
-    createBy: {
-      type: mongoose.Types.ObjectId,
-      requred: true,
+    createdBy: {
+      type: Schema.ObjectId,
+      ref: "User",
+      required: true,
     },
   },
   { timestamps: true }

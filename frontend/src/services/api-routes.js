@@ -9,4 +9,5 @@ export default {
   createBlog: "blogs/create",
   getBlogs: "blogs/",
   updateBlog: "blogs",
+  groups: "groups"
 };
