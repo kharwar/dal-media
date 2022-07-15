@@ -7,12 +7,12 @@ const isAuthenticated = require("../../middlewares/common/isAuthenticated");
 const eventRouter = require("express").Router();
 const { eventController } = require("../../controllers");
 
-eventRouter.get("/", eventController.getAllEvents);
-eventRouter.get("/:id", eventController.getEventById);
-eventRouter.post("/create",  eventController.createEvent);
-eventRouter.put("/update/:id", eventController.updateEvent);
-eventRouter.delete("/delete/:id", eventController.deleteEvent);
-eventRouter.post("/interest", eventController.interestEvent);
+eventRouter.get("/", isAuthenticated, eventController.getAllEvents);
+eventRouter.get("/:id", isAuthenticated, eventController.getEventById);
+eventRouter.post("/create", isAuthenticated,  eventController.createEvent);
+eventRouter.put("/update/:id", isAuthenticated, eventController.updateEvent);
+eventRouter.delete("/delete/:id", isAuthenticated, eventController.deleteEvent);
+eventRouter.post("/interest",isAuthenticated, eventController.interestEvent);
 
 module.exports = eventRouter;
 
