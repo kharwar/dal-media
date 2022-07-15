@@ -13,6 +13,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { loggedInUser } from "../../../data";
 
 const BlogFooter = ({ blog: { createdBy, createdAt }, handleMenu }) => {
+  createdBy = loggedInUser;
   return (
     <Box
       sx={{
@@ -34,7 +35,8 @@ const BlogFooter = ({ blog: { createdBy, createdAt }, handleMenu }) => {
           </Typography>
         </Stack>
       </Box>
-      {createdBy._id === loggedInUser.id && (
+      {/* {createdBy._id === loggedInUser.id && ( */}
+      { true && (
         <IconButton onClick={handleMenu}>
           <MoreHorizIcon />
         </IconButton>

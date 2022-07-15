@@ -62,7 +62,7 @@ const styling = {
   },
   textSpan: {
     color: "white",
-    font: "bold 24px/45px Helvetica, Sans-Serif;",
+    font: "bold 24px/45px Helvetica, Sans-Serif",
     letterSpacing: "-1px",
     background: "rgb(0,0,0)",
     background: "rgb(0,0,0, 0.7)",

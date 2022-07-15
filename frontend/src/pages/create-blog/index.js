@@ -14,6 +14,7 @@ import "./style.css";
 import { RichTextInput, snackbar } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { apiRoutes, ServiceManager } from "../../services";
+import { dateFormat, uploadFile } from "../../utils";
 
 const initialValue = [
   {
@@ -37,22 +38,55 @@ const CreateBlog = () => {
 
   const isPublishDisable = !textFilled || loading;
 
+  const getImageObject = (imageObject) => {
+    return { file: null, url: imageObject };
+  };
+
   useEffect(() => {
     if (state?.blog) {
       const { blog } = state;
       blog.title != "" && setTitle(blog.title);
-      // setImage(blog.image);
+      setImage(getImageObject(blog.image));
       console.log(blog.body);
       setBody(blog.body);
     }
   }, [state, id]);
 
+  const onImageChange = (e) => {
+    if (fileInput.current != null) {
+      fileInput.current.click();
+    }
+  };
+
+  const onImageSelect = (e) => {
+    if (e.target.files) {
+      const fileList = e.target.files;
+      const file = fileList[0];
+      const url = URL.createObjectURL(file);
+
+      setImage({ file, url });
+      e.target.value = "";
+    }
+  };
+
   const onPublish = async () => {
     setLoading(true);
 
+    let imageUrl = "";
+
+    try {
+      if (image.file) {
+        imageUrl = await uploadFile(image.file);
+      } else {
+        imageUrl = image.url;
+      }
+    } catch (error) {
+      console.error(`File Upload error: ${error}`);
+    }
+
     const params = {
       title,
-      image,
+      image: imageUrl,
       body,
     };
 
@@ -70,29 +104,6 @@ const CreateBlog = () => {
       navigate("/blogs");
     } catch (error) {
       console.log({ error });
-    }
-
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   setTextFilled(false);
-    //   setTitle("");
-    //   setBody(initialValue);
-    //   navigate("/blogs");
-    //   const key = state?.blog ? "updated" : "created";
-    //   snackbar.current.showSnackbar(true, `Blog ${key}`);
-    // }, 3000);
-  };
-
-  const onImageSelect = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
-    }
-  };
-
-  const onImageChange = (e) => {
-    if (fileInput.current != null) {
-      fileInput.current.click();
     }
   };
 
@@ -134,11 +145,11 @@ const CreateBlog = () => {
       {image != null && (
         <Box className="img-box">
           <div className="img-container">
-            <img src={image} className="img" width="200" heigh="200" />
+            <img src={image.url} className="img" width="200" heigh="200" />
             <IconButton
               disabled={loading}
               sx={styling.btnDelete}
-              onClick={() => onDeleteImage(image)}
+              onClick={() => onDeleteImage()}
             >
               <DeleteRounded />
             </IconButton>
@@ -153,7 +164,10 @@ const CreateBlog = () => {
           ref={fileInput}
           onChange={onImageSelect}
         />
-        <IconButton onClick={onImageChange} disabled={image != null || loading}>
+        <IconButton
+          onClick={onImageChange}
+          disabled={image != null || loading}
+        >
           <ImageRounded />
         </IconButton>
         <Box className="publish-btn-container">
