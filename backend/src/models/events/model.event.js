@@ -29,10 +29,6 @@ const EventSchema = new mongoose.Schema(
 
     images: {
       type: [String],
-      required: [
-        isEmpty(this.description),
-        "Event must have description or atleast one image",
-      ],
     },
 
     createBy: {
