@@ -1,12 +1,59 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, MenuItem, Box, Button } from "@mui/material";
-import { files } from "../../../data";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "../../alert-dialog";
 import File from "../file";
 import { snackbar } from "../../../components";
+import { uploadFile } from "../../../utils";
+import { apiRoutes, ServiceManager } from "../../../services";
 
-const FileList = () => {
+const createFileToGroup = async (file, url, groupId, setFiles) => {
+  const params = {
+    name: file.name,
+    url,
+    groupId,
+  };
+
+  try {
+    const res = await ServiceManager.getInstance().request(
+      apiRoutes.files,
+      params,
+      "post"
+    );
+    getAllFiles(groupId, setFiles);
+    console.log(res.message);
+  } catch (error) {
+    console.log({ error });
+  }
+};
+
+const getAllFiles = (groupId, setFiles) => {
+  ServiceManager.getInstance()
+    .request(`${apiRoutes.files}/${groupId}`)
+    .then((res) => {
+      console.log("All Files", res.data);
+      setFiles(res.data);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
+
+const deleteFile = (fileId, groupId, setFiles) => {
+  ServiceManager.getInstance()
+    .request(`${apiRoutes.files}/${fileId}`, null, "delete")
+    .then((res) => {
+      console.log(res.data);
+      snackbar.current.showSnackbar(true, "File Deleted");
+      getAllFiles(groupId, setFiles);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
+
+const FileList = (props) => {
+  const [files, setFiles] = useState([]);
   console.log("fileList");
 
   const { setAlert, setOnAgree } = useAlert();
@@ -16,6 +63,7 @@ const FileList = () => {
   const open = Boolean(anchorEl);
 
   useEffect(() => {
+    getAllFiles(props.groupId, setFiles);
     setOnAgree(onDelete);
   }, []);
 
@@ -29,13 +77,12 @@ const FileList = () => {
   };
 
   const handleDownload = () => {
-    snackbar.current.showSnackbar(true, "File Downloaded");
+    window.open(fileRef.current.url, '_blank', 'noopener,noreferrer');
     handleClose();
   };
 
   const onDelete = () => {
-    snackbar.current.showSnackbar(true, "File Deleted");
-    console.log("delete");
+    deleteFile(fileRef.current._id, props.groupId, setFiles);
   };
 
   const handleDelete = () => {
@@ -43,11 +90,18 @@ const FileList = () => {
     setAlert(true, "Delete File", "Are you sure you want to delete this file?");
   };
 
+  const onFileChange = async (event) => {
+    const file = event.target.files[0];
+    const fileUrl = await uploadFile(file);
+    createFileToGroup(file, fileUrl, props.groupId, setFiles);
+    event.target.files[0] = null;
+  };
+
   const renderFile = useCallback((file) => {
     return (
       <File
         file={file}
-        key={file.id}
+        key={file._id}
         handleMenu={(event) => handleMenu(event, file)}
       />
     );
@@ -60,7 +114,7 @@ const FileList = () => {
           style={{ display: "none" }}
           id="raised-button-file"
           type="file"
-          onChange={() => snackbar.current.showSnackbar(true, "File Uploaded")}
+          onChange={onFileChange}
         />
         <label htmlFor="raised-button-file">
           <Button
@@ -92,7 +146,7 @@ const FileList = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleDownload}>Download</MenuItem>
+        <MenuItem onClick={handleDownload}>View</MenuItem>
         <MenuItem onClick={handleDelete}>Delete</MenuItem>
       </Menu>
     </>

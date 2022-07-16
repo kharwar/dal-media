@@ -15,6 +15,7 @@ import Blogs from "./blogs";
 import BlogDetail from "./blog-detail";
 import Profile from "./profile";
 import ChangePassword from "./change-password";
+import ResetPassword from "./reset-password";
 
 export {
   Login,
@@ -34,4 +35,5 @@ export {
   BlogDetail,
   Profile,
   ChangePassword,
+  ResetPassword
 };

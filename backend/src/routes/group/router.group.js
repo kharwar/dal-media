@@ -6,11 +6,17 @@
 
 const groupRouter = require("express").Router();
 const { groupController } = require("../../controllers");
+const { isAuthenticated } = require("../../middlewares/").commonMiddlewares;
 
+// Group
 groupRouter.get("/", groupController.getAllGroups);
-groupRouter.post("/", groupController.createGroup);
+groupRouter.post("/", isAuthenticated, groupController.createGroup);
 groupRouter.put("/:id", groupController.updateGroup);
 groupRouter.delete("/:id", groupController.deleteGroup);
 groupRouter.get("/:id", groupController.getGroupById);
+
+// Members
+groupRouter.get("/:id/members", groupController.getAllMembers);
+groupRouter.put("/:id/members", groupController.addMember);
 
 module.exports = groupRouter;

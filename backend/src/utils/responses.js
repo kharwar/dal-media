@@ -15,9 +15,10 @@ const successResponse = (res, message = "", data) => {
 };
 
 const errorResponse = (res, error) => {
+  console.log(error);
   if (res) {
     return res.status(error.code ?? 500).send({
-      message: error.message ?? error.errors[0],
+      message: error.message ?? "Internal Server Error",
       success: false,
     });
   }

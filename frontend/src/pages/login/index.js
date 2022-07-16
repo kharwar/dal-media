@@ -1,3 +1,8 @@
+/*
+  Created on June 3rd 2022
+  Author: Kavya Kasaraneni
+*/
+
 import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,13 +16,17 @@ import { useNavigate } from "react-router-dom";
 import { Checkbox, FormControlLabel, Link, Paper, Stack } from "@mui/material";
 import { formValidationMsgs, formValidator } from "../../utils";
 import { AuthContext } from "../../context";
+import { apiRoutes, ServiceManager } from "../../services";
+import { snackbar } from "../../components";
+import { setLoggedInUser, storeLoggedInUser } from "../../local-storage";
 
+//Front end code for implementing user login into the application
 const Login = () => {
-  const { isLogin, setLogin } = useContext(AuthContext);
+  const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formdata = new FormData(event.currentTarget);
@@ -42,9 +51,30 @@ const Login = () => {
 
     if (!isError) {
       setErrors(errors);
-    } else {
-      setLogin(true);
-      navigate("/", { replace: true });
+      return;
+    }
+
+    //Backend Api call for implementing feature
+    const params = {
+      email: data.email,
+      password: data.pass,
+    };
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.signIn,
+        params,
+        "post"
+      );
+
+      if (res.data.token) {
+        ServiceManager.getInstance().userToken = res.data.token;
+        storeLoggedInUser(res.data.token);
+        setLoggedInUser(res.data);
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      snackbar.current.showSnackbar(true, "Authentication Failed");
     }
   };
 
@@ -56,6 +86,7 @@ const Login = () => {
     navigate("/forgot-password");
   };
 
+  //UI for login
   return (
     <Container component="main" maxWidth="sm">
       <Paper sx={{ p: 8, mt: 8 }}>
@@ -98,10 +129,10 @@ const Login = () => {
               helperText={errors.pass}
               sx={{ mb: 2 }}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth

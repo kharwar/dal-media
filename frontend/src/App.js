@@ -9,24 +9,45 @@ import AlertDialog, { AlertProvider } from "./components/alert-dialog";
 import { snackbarRef } from "./components/material-snackbar";
 import { AuthContext } from "./context";
 import { ServiceManager, apiRoutes } from "./services";
+import { getLoggedInUser } from "./local-storage";
 
 ServiceManager.initialize(apiRoutes.baseURL);
 
 function App() {
-  const [isLogin, setLogin] = useState(true);
+  // const [isLogin, setLogin] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [authentication, setAuthentication] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const user = await getLoggedInUser();
+        if (user) {
+          setLoggedInUser(user);
+        }
+      } catch (error) {
+        console.log({ error });
+      }
+      setAuthentication(true);
+    })();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <AuthContext.Provider value={{ isLogin, setLogin }}>
-        <BrowserRouter>
-          <AlertProvider>
-            <CssBaseline />
-            <AppRoutes />
-            <AlertDialog />
-            <MaterialSnackbar ref={snackbarRef} />
-          </AlertProvider>
-        </BrowserRouter>
-      </AuthContext.Provider>
+      {authentication ? (
+        <AuthContext.Provider value={{ loggedInUser, setLoggedInUser }}>
+          <BrowserRouter>
+            <AlertProvider>
+              <CssBaseline />
+              <AppRoutes />
+              <AlertDialog />
+              <MaterialSnackbar ref={snackbarRef} />
+            </AlertProvider>
+          </BrowserRouter>
+        </AuthContext.Provider>
+      ) : (
+        <></>
+      )}
     </ThemeProvider>
   );
 }
