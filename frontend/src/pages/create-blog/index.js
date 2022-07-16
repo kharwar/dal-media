@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 import React, { useEffect, useRef, useState } from "react";
 import {
   Paper,
@@ -164,10 +169,7 @@ const CreateBlog = () => {
           ref={fileInput}
           onChange={onImageSelect}
         />
-        <IconButton
-          onClick={onImageChange}
-          disabled={image != null || loading}
-        >
+        <IconButton onClick={onImageChange} disabled={image != null || loading}>
           <ImageRounded />
         </IconButton>
         <Box className="publish-btn-container">

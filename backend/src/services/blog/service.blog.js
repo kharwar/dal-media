@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 const { Blog } = require("../../models");
 const { validations } = require("../../utils");
 const createBlog = async (blogData) => {

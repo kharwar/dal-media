@@ -1,12 +1,11 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 import React from "react";
 import moment from "moment";
-import {
-  Avatar,
-  Box,
-  Stack,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import { Avatar, Box, Stack, Typography, IconButton } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";

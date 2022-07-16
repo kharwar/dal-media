@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 const { blogService } = require("../../services");
 const { validations } = require("../../utils");
 const { successResponse, errorResponse } = require("../../utils/responses");

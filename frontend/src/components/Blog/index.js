@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 import { Typography, Paper, Stack } from "@mui/material";
 import BlogFooter from "./BlogFooter";
 import { useNavigate } from "react-router-dom";
