@@ -68,21 +68,22 @@ const ChangePassword = () => {
 
     const params = {
       currentPassword: data.currentpassword,
-      password: data.password
+      password: data.password,
     };
 
     try {
-      console.log(params)
+      console.log(params);
       const res = await ServiceManager.getInstance().request(
         apiRoutes.changePassword,
         params,
         "post"
       );
 
+      console.log({ res });
       if (res.data.success) {
-        ServiceManager.getInstance().userToken = res.data.token;
-        storeLoggedInUser(res.data.token);
-        setLoggedInUser(res.data);
+        // ServiceManager.getInstance().userToken = res.data.token;
+        // storeLoggedInUser(res.data.token);
+        // setLoggedInUser(res.data);
         snackbar.current.showSnackbar(true, "Password changed succesfully");
         navigate("/profile", { replace: true });
       }

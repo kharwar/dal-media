@@ -75,10 +75,10 @@ const CreateBlog = () => {
     let imageUrl = "";
 
     try {
-      if (image.file) {
+      if (image?.file) {
         imageUrl = await uploadFile(image.file);
       } else {
-        imageUrl = image.url;
+        imageUrl = image?.url ?? "";
       }
     } catch (error) {
       console.error(`File Upload error: ${error}`);
@@ -164,10 +164,7 @@ const CreateBlog = () => {
           ref={fileInput}
           onChange={onImageSelect}
         />
-        <IconButton
-          onClick={onImageChange}
-          disabled={image != null || loading}
-        >
+        <IconButton onClick={onImageChange} disabled={image != null || loading}>
           <ImageRounded />
         </IconButton>
         <Box className="publish-btn-container">
