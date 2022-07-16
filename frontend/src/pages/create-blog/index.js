@@ -80,10 +80,10 @@ const CreateBlog = () => {
     let imageUrl = "";
 
     try {
-      if (image.file) {
+      if (image?.file) {
         imageUrl = await uploadFile(image.file);
       } else {
-        imageUrl = image.url;
+        imageUrl = image?.url ?? "";
       }
     } catch (error) {
       console.error(`File Upload error: ${error}`);

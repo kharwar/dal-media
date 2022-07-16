@@ -23,7 +23,6 @@ import { posts } from "../../data";
 import { useAuth } from "../../context";
 import { apiRoutes, ServiceManager } from "../../services";
 
-
 //Code for implementing front end for Profile feature
 const Profile = () => {
   const { loggedInUser } = useAuth();
@@ -143,7 +142,7 @@ const Profile = () => {
         }}
       >
         <MenuItem onClick={handleEditProfile}>Edit Profile</MenuItem>
-        <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
+        {/* <MenuItem onClick={handleChangePassword}>Change Password</MenuItem> */}
       </Menu>
     </>
   );
