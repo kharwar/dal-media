@@ -4,28 +4,22 @@
  * Author: Ridham Kathriya
  */
 
+const isEmpty = require("lodash.isempty");
 const { eventService } = require("../../services");
 const { responses } = require("../../utils");
 const { errorResponse, successResponse } = require("../../utils/responses");
 
-
-
-
 const getAllEvents = async (req, res) => {
-
   try {
-
     const events = await eventService.findAllEvents();
 
     return successResponse(res, "Events Fetched", events);
   } catch (error) {
     return errorResponse(res, error);
   }
-
 };
 
 const getEventById = async (req, res) => {
-
   const { id } = req.params;
 
   try {
@@ -35,14 +29,19 @@ const getEventById = async (req, res) => {
   } catch (error) {
     return errorResponse(res, error);
   }
-
 };
 
 const createEvent = async (req, res) => {
-
   try {
-
     const { body } = req;
+
+    if (isEmpty(body.description) && isEmpty(body.images)) {
+      const error = {
+        code: 400,
+        errors: ["Event must have description or atleast one image"],
+      };
+      return errorResponse(res, error);
+    }
     //console.log(req);
     const event = await eventService.createEvent(body);
 
@@ -50,9 +49,7 @@ const createEvent = async (req, res) => {
   } catch (error) {
     return errorResponse(res, error);
   }
-
 };
-
 
 const updateEvent = async (req, res) => {
   const { body, params } = req;
@@ -65,7 +62,6 @@ const updateEvent = async (req, res) => {
   } catch (error) {
     return errorResponse(res, error);
   }
-
 };
 
 const deleteEvent = async (req, res) => {
@@ -78,7 +74,6 @@ const deleteEvent = async (req, res) => {
   } catch (error) {
     return errorResponse(res, error);
   }
-
 };
 
 const interestEvent = async (req, res) => {
@@ -92,7 +87,6 @@ const interestEvent = async (req, res) => {
     return errorResponse(res, error);
   }
 };
-
 
 module.exports = {
   getAllEvents,

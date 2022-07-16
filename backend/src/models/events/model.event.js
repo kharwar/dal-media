@@ -12,14 +12,9 @@ const EventSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Event must have some title"],
     },
     description: {
       type: String,
-      required: [
-        isEmpty(this.images),
-        "Event must have description or atleast one image",
-      ],
     },
     location: {
       type: String,
