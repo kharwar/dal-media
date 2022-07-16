@@ -1,4 +1,9 @@
-import React, {useContext, useState ,} from "react";
+/*
+  Created on July 10th 2022
+  Author: Kavya Kasaraneni
+*/
+
+import React, { useContext, useState, } from "react";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -19,8 +24,9 @@ import { apiRoutes, ServiceManager } from "../../services";
 import { snackbar } from "../../components";
 import { storeLoggedInUser } from "../../local-storage";
 
+//Front end code for allowing user to reset password
 const ResetPassword = () => {
-    const { passcode } = useParams();
+  const { passcode } = useParams();
   const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -55,9 +61,10 @@ const ResetPassword = () => {
 
     const isError = Object.keys(errors).length === 0;
 
+    //Backend API implementation for the reset-password
     if (!isError) {
       setErrors(errors);
-    } 
+    }
     const params = {
       passcode,
       password: data.password
@@ -80,6 +87,7 @@ const ResetPassword = () => {
     }
   };
 
+  //UI for the reset-password
   return (
     <Container component="main" maxWidth="sm">
       <Paper sx={{ p: 8, mt: 8 }}>

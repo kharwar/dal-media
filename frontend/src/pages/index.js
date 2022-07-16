@@ -12,6 +12,7 @@ import CreatePoll from "./create-poll";
 import DisplayPoll from "./display-poll";
 import CreateBlog from "./create-blog";
 import Blogs from "./blogs";
+import BlogDetail from "./blog-detail";
 import Profile from "./profile";
 import ChangePassword from "./change-password";
 import ResetPassword from "./reset-password";
@@ -31,6 +32,7 @@ export {
   DisplayPoll,
   CreateBlog,
   Blogs,
+  BlogDetail,
   Profile,
   ChangePassword,
   ResetPassword

@@ -27,15 +27,23 @@ const findPostId = async (id) => {
 };
 
 const findAllPosts = async (params) => {
-  console.log({ params });
-  const queryParams = params.groupId
-    ? { groupId: params.groupId }
-    : { groupId: null };
+  const queryParams = {};
+
+  if (params.groupId) {
+    queryParams["groupId"] = params.groupId;
+  } else if (params.userId) {
+    queryParams["createdBy"] = params.userId;
+    queryParams["groupId"] = null;
+  } else {
+    queryParams["groupId"] = null;
+  }
+
   try {
-    const posts = Post.find(queryParams)
+    const posts = await Post.find(queryParams)
       .sort("-createdAt")
       .populate("createdBy")
       .exec();
+
     return posts;
   } catch (error) {
     throw validations.handleErrors(error);

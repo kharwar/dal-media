@@ -1,22 +1,9 @@
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-  Box,
-  Paper,
-  Grid,
-  Stack,
-  Container,
-} from "@mui/material";
-import { grey } from "@mui/material/colors";
-import react from "react";
-import BlogContent from "./BlogContent";
+import { Typography, Paper, Stack } from "@mui/material";
 import BlogFooter from "./BlogFooter";
+import { useNavigate } from "react-router-dom";
 
 const Blog = ({ blog, handleMenu }) => {
+  const navigate = useNavigate();
   return (
     <Paper
       sx={{
@@ -24,20 +11,24 @@ const Blog = ({ blog, handleMenu }) => {
       }}
     >
       <Stack style={{ minHeight: "250px" }}>
-        <img width="100%" height="100%" src={blog.image} />
-        {/* <Box
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        /> */}
+        <img
+          width="100%"
+          height="100%"
+          src={
+            blog.image ??
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRsbRYnwHo7eSy-5Uc29L1UgYk2kgVhH9qO1A&usqp=CAU"
+          }
+          onClick={() =>
+            navigate(`/blog-details/${blog._id}`, { state: { blog } })
+          }
+        />
         <Typography
           component="h2"
           variant="h5"
+          onClick={() =>
+            navigate(`/blog-details/${blog._id}`, { state: { blog } })
+          }
           style={{
-            // textAlign: "center",
             position: "absolute",
             top: "60%",
             right: 0,
@@ -62,7 +53,7 @@ const styling = {
   },
   textSpan: {
     color: "white",
-    font: "bold 24px/45px Helvetica, Sans-Serif;",
+    font: "bold 24px/45px Helvetica, Sans-Serif",
     letterSpacing: "-1px",
     background: "rgb(0,0,0)",
     background: "rgb(0,0,0, 0.7)",
