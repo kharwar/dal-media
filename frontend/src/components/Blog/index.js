@@ -1,93 +1,62 @@
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-  Box,
-  Paper,
-  Grid,
-} from "@mui/material";
-import { grey } from "@mui/material/colors";
-import react from "react";
-import BlogContent from "./BlogContent";
+import { Typography, Paper, Stack } from "@mui/material";
 import BlogFooter from "./BlogFooter";
+import { useNavigate } from "react-router-dom";
 
 const Blog = ({ blog, handleMenu }) => {
+  const navigate = useNavigate();
   return (
-    <>
-      <Paper
-        sx={{
-          ...styling.blogContainer,
-          // backgroundImage: blog.image,
-        }}
-      >
-        {/* Fix image not showing in bg */}
-        {
-          <img
-            style={{}}
-            height={"100%"}
-            width={"100%"}
-            src={require("../../assets/images/blog-bg.jpg")}
-          />
-        }
-        {/* <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-            // backgroundColor: grey[500],
-          }}
-        /> */}
-        {/* <Grid container>
-          <Grid item md={6}>
-            <Box
-              sx={{
-                position: "relative",
-                p: { xs: 3, md: 6 },
-                pr: { md: 0 },
-              }}
-            >
-              <Typography component="h3" variant="h5" color="#fff" gutterBottom>
-                {blog.title}
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid> */}
+    <Paper
+      sx={{
+        ...styling.blogPaper,
+      }}
+    >
+      <Stack style={{ minHeight: "250px" }}>
+        <img
+          width="100%"
+          height="100%"
+          src={
+            blog.image ??
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRsbRYnwHo7eSy-5Uc29L1UgYk2kgVhH9qO1A&usqp=CAU"
+          }
+          onClick={() =>
+            navigate(`/blog-details/${blog._id}`, { state: { blog } })
+          }
+        />
         <Typography
-          component="h3"
+          component="h2"
           variant="h5"
+          onClick={() =>
+            navigate(`/blog-details/${blog._id}`, { state: { blog } })
+          }
           style={{
-            textAlign: "center",
             position: "absolute",
-            top: 0,
-            bottom: 0,
+            top: "60%",
             right: 0,
-            left: 0,
+            width: "100%",
           }}
         >
-          {blog.title}
+          <span style={{ ...styling.textSpan }}>{blog.title}</span>
         </Typography>
-        <BlogFooter blog={blog} handleMenu={handleMenu} />
-      </Paper>
-    </>
+      </Stack>
+      <BlogFooter blog={blog} handleMenu={handleMenu} />
+    </Paper>
   );
 };
 
 export default Blog;
 
 const styling = {
-  blogContainer: {
+  blogPaper: {
     marginTop: "8px",
     position: "relative",
-    // backgroundColor: "grey.800",
-    // color: '#000000',
-    mb: 4,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
+    marginBottom: "8px",
+  },
+  textSpan: {
+    color: "white",
+    font: "bold 24px/45px Helvetica, Sans-Serif",
+    letterSpacing: "-1px",
+    background: "rgb(0,0,0)",
+    background: "rgb(0,0,0, 0.7)",
+    padding: "10px",
   },
 };

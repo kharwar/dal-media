@@ -13,22 +13,23 @@ import {
   DisplayPoll,
   CreateBlog,
   Blogs,
+  BlogDetail,
   Login,
   Signup,
   ForgotPassword,
   Profile,
   ChangePassword,
+  ResetPassword
 } from "../pages";
 
 const AppRoutes = () => {
-  const { isLogin } = useAuth();
-  console.log({ isLogin });
   return (
     <Routes>
       <Route element={<WithoutNavbar />}>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:passcode" element={<ResetPassword />} />
       </Route>
       <Route
         path="*"
@@ -59,20 +60,22 @@ const ProtectedRoutes = () => {
         <Route path="/edit-post/:id" element={<CreatePost />} />
         <Route path="/blogs/create" element={<CreateBlog />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blog-details/:id" element={<BlogDetail />} />
         <Route path="blogs/edit/:id" element={<CreateBlog />} />
-        <Route path="/event-page/edit-event/:id" element={<CreateEvent />} />
+        <Route path="/event-page/edit-event" element={<CreateEvent />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<Signup />} />
         <Route path="/change-password" element={<ChangePassword />} />
       </Route>
     </Routes>
+    
   );
 };
 
 const RequireAuth = ({ children }) => {
-  const { isLogin } = useAuth();
-
-  if (!isLogin) {
+  const { loggedInUser } = useAuth();
+  console.log({ route: loggedInUser });
+  if (!loggedInUser) {
     return <Navigate to="/login" replace />;
   }
 

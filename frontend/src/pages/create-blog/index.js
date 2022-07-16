@@ -13,6 +13,8 @@ import { ImageRounded, DeleteRounded } from "@mui/icons-material";
 import "./style.css";
 import { RichTextInput, snackbar } from "../../components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { apiRoutes, ServiceManager } from "../../services";
+import { dateFormat, uploadFile } from "../../utils";
 
 const initialValue = [
   {
@@ -20,11 +22,13 @@ const initialValue = [
     children: [{ text: "" }],
   },
 ];
-
 const CreateBlog = () => {
   const { state } = useLocation();
+
   const { id } = useParams();
-  const [body, setBody] = useState(initialValue);
+  const [body, setBody] = useState(
+    state?.blog ? state.blog.body : initialValue
+  );
   const [title, setTitle] = useState("");
   const [textFilled, setTextFilled] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -34,38 +38,72 @@ const CreateBlog = () => {
 
   const isPublishDisable = !textFilled || loading;
 
+  const getImageObject = (imageObject) => {
+    return { file: null, url: imageObject };
+  };
+
   useEffect(() => {
     if (state?.blog) {
       const { blog } = state;
       blog.title != "" && setTitle(blog.title);
-      // setImage(blog.image);
+      setImage(getImageObject(blog.image));
+      console.log(blog.body);
       setBody(blog.body);
     }
   }, [state, id]);
 
-  const onPublish = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setTextFilled(false);
-      setTitle("");
-      setBody(initialValue);
-      navigate("/blogs");
-      const key = state?.blog ? "updated" : "created";
-      snackbar.current.showSnackbar(true, `Blog ${key}`);
-    }, 3000);
-  };
-
-  const onImageSelect = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
-    }
-  };
-
   const onImageChange = (e) => {
     if (fileInput.current != null) {
       fileInput.current.click();
+    }
+  };
+
+  const onImageSelect = (e) => {
+    if (e.target.files) {
+      const fileList = e.target.files;
+      const file = fileList[0];
+      const url = URL.createObjectURL(file);
+
+      setImage({ file, url });
+      e.target.value = "";
+    }
+  };
+
+  const onPublish = async () => {
+    setLoading(true);
+
+    let imageUrl = "";
+
+    try {
+      if (image?.file) {
+        imageUrl = await uploadFile(image.file);
+      } else {
+        imageUrl = image?.url ?? "";
+      }
+    } catch (error) {
+      console.error(`File Upload error: ${error}`);
+    }
+
+    const params = {
+      title,
+      image: imageUrl,
+      body,
+    };
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        state?.blog
+          ? `${apiRoutes.updateBlog}/${state.blog._id}`
+          : apiRoutes.createBlog,
+        params,
+        state?.blog ? "put" : "post"
+      );
+
+      const key = state?.blog ? "updated" : "created";
+      snackbar.current.showSnackbar(true, `Blog ${key}.`);
+      navigate("/blogs");
+    } catch (error) {
+      console.log({ error });
     }
   };
 
@@ -107,11 +145,11 @@ const CreateBlog = () => {
       {image != null && (
         <Box className="img-box">
           <div className="img-container">
-            <img src={image} className="img" width="200" heigh="200" />
+            <img src={image.url} className="img" width="200" heigh="200" />
             <IconButton
               disabled={loading}
               sx={styling.btnDelete}
-              onClick={() => onDeleteImage(image)}
+              onClick={() => onDeleteImage()}
             >
               <DeleteRounded />
             </IconButton>

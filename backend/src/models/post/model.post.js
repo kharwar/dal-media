@@ -12,23 +12,20 @@ const PostSchema = new mongoose.Schema(
   {
     description: {
       type: String,
-      required: [
-        isEmpty(this.images),
-        "Post must have description or atleast one image",
-      ],
     },
     images: {
       type: [String],
-      required: [
-        isEmpty(this.description),
-        "Post must have description or atleast one image",
-      ],
     },
-    createBy: {
-      type: mongoose.Types.ObjectId,
-      requred: true,
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "User id is required"],
+    },
+    groupId: {
+      type: String,
     },
     likes: [String],
+    comments: [String],
   },
   { timestamps: true }
 );

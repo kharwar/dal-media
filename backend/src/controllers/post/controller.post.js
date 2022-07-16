@@ -4,13 +4,14 @@
  * Author: Naveed Hussain Khowaja
  */
 
+const isEmpty = require("lodash.isempty");
 const { postService } = require("../../services");
 const { responses } = require("../../utils");
 const { errorResponse, successResponse } = require("../../utils/responses");
 
 const getAllPosts = async (req, res) => {
   try {
-    const posts = await postService.findAllPosts();
+    const posts = await postService.findAllPosts(req.query);
 
     return successResponse(res, "Posts Fetched", posts);
   } catch (error) {
@@ -33,8 +34,15 @@ const getPostById = async (req, res) => {
 const createPost = async (req, res) => {
   try {
     const { body } = req;
-    const newPost = await postService.createPost(body);
 
+    if (isEmpty(body.description) && isEmpty(body.images)) {
+      const error = {
+        code: 400,
+        errors: ["Post must have description or atleast one image"],
+      };
+      return errorResponse(res, error);
+    }
+    const newPost = await postService.createPost(body);
     return successResponse(res, "Post Created", newPost);
   } catch (error) {
     return errorResponse(res, error);
@@ -42,11 +50,10 @@ const createPost = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-  const { body, params } = req;
-  const { id } = params;
+  const { body } = req;
 
   try {
-    const post = await postService.updatePostById(id, body);
+    const post = await postService.updatePostById(body);
 
     return successResponse(res, "Post Deleted", post);
   } catch (error) {
@@ -55,10 +62,10 @@ const updatePost = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-  const { id } = req.params;
+  const { body } = req;
 
   try {
-    const post = await postService.deletePostById(id);
+    const post = await postService.deletePostById(body.id);
 
     return successResponse(res, "Post Deleted", post);
   } catch (error) {

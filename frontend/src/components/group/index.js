@@ -1,24 +1,34 @@
 import { Container, Tabs, Tab, Box, Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FileList from "./file-list";
 import GroupManage from "./group-manage";
 import PostList from "../post-list";
 import { DisplayPoll } from "../../pages";
-import { posts } from "../../data";
+import { apiRoutes, ServiceManager } from "../../services";
 
 const Group = () => {
+  const params = useParams();
   const navigate = useNavigate();
   const [tab, setTab] = useState(0);
-  console.log("GROUP");
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    console.log("mount");
-
-    return () => {
-      console.log("unmout");
-    };
+    getGroupPosts();
   }, []);
+
+  const getGroupPosts = async () => {
+    try {
+      const { data } = await ServiceManager.getInstance().request(
+        apiRoutes.getPosts,
+        { groupId: params.id }
+      );
+      console.log({ data });
+      setPosts(data);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   const onTabChanged = (event, newValue) => {
     setTab(newValue);
@@ -35,10 +45,10 @@ const Group = () => {
         </Tabs>
       </Box>
       <TabPanel value={tab} index={0}>
-        <PostList posts={posts} />
+        <PostList posts={posts} groupId={params.id} />
       </TabPanel>
       <TabPanel value={tab} index={1}>
-        <FileList />
+        <FileList groupId={params.id} />
       </TabPanel>
       <TabPanel value={tab} index={2}>
         <Box>
@@ -54,11 +64,11 @@ const Group = () => {
               Create
             </Button>
           </Box>
-          <DisplayPoll />
+          <DisplayPoll groupId={params.id} />
         </Box>
       </TabPanel>
       <TabPanel value={tab} index={3}>
-        <GroupManage />
+        <GroupManage groupId={params.id} />
       </TabPanel>
     </Container>
   );
@@ -77,7 +87,9 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component={"span"} variant={"body2"}>
+            {children}
+          </Typography>
         </Box>
       )}
     </div>

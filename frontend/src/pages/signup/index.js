@@ -1,3 +1,8 @@
+/*
+  Created on June 4th 2022
+  Author: Kavya Kasaraneni
+*/
+
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -7,25 +12,76 @@ import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useLocation, useNavigate } from "react-router-dom";
-import { formValidator, formValidationMsgs } from "../../utils";
+import { formValidator, formValidationMsgs, uploadFile } from "../../utils";
 import { Avatar, ButtonBase, Link, Paper } from "@mui/material";
 import Images from "../../assets";
 import { grey } from "@mui/material/colors";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import { AuthContext } from "../../context";
+import { AuthContext, useAuth } from "../../context";
+import Axios from "axios";
+import { sendEmail, verifyCode } from "../../helper";
+import { apiRoutes, ServiceManager } from "../../services";
+import { snackbar } from "../../components";
+import { storeLoggedInUser } from "../../local-storage";
+import { async } from "@firebase/util";
 
+
+//Front end code for implementing user registration into the application and also profile edit of user
 const Signup = () => {
-  const { isLogin, setLogin } = useContext(AuthContext);
+
+  const { loggedInUser, setLoggedInUser } = useAuth();
   const navigate = useNavigate();
   const { state } = useLocation();
   const [errors, setErrors] = useState({});
-  const [image, setImage] = useState(
-    state?.user?.image ?? Images.avatarPlaceholder
-  );
+  const [image, setImage] = useState({
+    file: null,
+    url: loggedInUser?.image ?? Images.avatarPlaceholder,
+  });
+  const [imageChanged, setImageChanged] = useState(false);
 
   const isEditMode = useMemo(() => {
-    return state?.user ? true : false;
-  }, [state]);
+    return loggedInUser ? true : false;
+  }, [loggedInUser]);
+
+  //Backend API call for implementing the edit-profile and user registration features
+  const submit = async (params, url, method, successMsg) => {
+    console.log(params);
+    if (imageChanged) {
+      try {
+        params["image"] = await uploadFile(image.file);
+      } catch (error) {
+        console.log({ error });
+      }
+    } else {
+      params["image"] = image.url;
+    }
+
+    console.log({ params });
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        url,
+        params,
+        method
+      );
+      console.log({ res });
+      if (res.data.token) {
+        ServiceManager.getInstance().userToken = res.data.token;
+        storeLoggedInUser(res.data.token);
+      }
+
+      setLoggedInUser(res.data);
+      if (isEditMode) {
+        navigate("/profile")
+        snackbar.current.showSnackback(successMsg);
+      } else {
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      console.log({ error });
+      // snackbar.current.showSnackbar()
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,7 +92,6 @@ const Signup = () => {
     const data = {};
 
     formdata.forEach((formValue, key) => {
-      console.log({ formValue, key });
       const value = formValue.toString().trim();
       let isValid = false;
 
@@ -56,15 +111,23 @@ const Signup = () => {
 
     const isError = Object.keys(errors).length === 0;
 
+    //Checking whether it is in edit-mode or sign up mode and implement backend api
     if (!isError) {
       setErrors(errors);
     } else {
-      console.log({ data });
+      const params = {
+        firstname: data.firstName,
+        lastname: data.lastName,
+        bio: data.bio,
+      };
       if (isEditMode) {
-        navigate("/profile");
+        params['id'] = loggedInUser._id
+        submit(params, apiRoutes.editProfile, "put", "Profile updated successfully");
       } else {
-        setLogin(true);
-        navigate("/", { replace: true });
+
+        params['email'] = data.email
+        params['password'] = data.password
+        submit(params, apiRoutes.signUp, "post");
       }
     }
   };
@@ -78,10 +141,12 @@ const Signup = () => {
       const fileList = e.target.files;
       const file = fileList[0];
       const url = URL.createObjectURL(file);
-      setImage(url);
+      setImage({ url, file });
+      setImageChanged(true);
     }
   };
 
+  //UI for Sign-up
   return (
     <Container maxWidth="sm">
       <Paper sx={{ p: 8, my: 8 }}>
@@ -106,7 +171,7 @@ const Signup = () => {
           <label htmlFor="select-avatar">
             <ButtonBase sx={{ borderRadius: 40, my: 2 }} component="span">
               <Avatar
-                src={image}
+                src={image.url}
                 sx={{
                   width: 100,
                   height: 100,
@@ -128,7 +193,7 @@ const Signup = () => {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
-                  defaultValue={state?.user.name ?? ""}
+                  defaultValue={loggedInUser?.firstname ?? ""}
                   required
                   fullWidth
                   id="firstName"
@@ -142,7 +207,7 @@ const Signup = () => {
                   required
                   fullWidth
                   id="lastName"
-                  defaultValue={state?.user.name ?? ""}
+                  defaultValue={loggedInUser?.lastname ?? ""}
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
@@ -152,10 +217,11 @@ const Signup = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  disabled={isEditMode}
                   required
                   fullWidth
                   id="email"
-                  defaultValue={state?.user.email ?? ""}
+                  defaultValue={loggedInUser?.email ?? ""}
                   label="Email Address"
                   name="email"
                   autoComplete="email"
@@ -169,7 +235,7 @@ const Signup = () => {
                   fullWidth
                   maxRows={3}
                   id="bio"
-                  defaultValue={state?.user.bio ?? ""}
+                  defaultValue={loggedInUser?.bio ?? ""}
                   label="Bio"
                   name="bio"
                 />

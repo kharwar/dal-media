@@ -2,12 +2,13 @@ import { Avatar, Box, InputBase, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useState, useRef } from "react";
 import { snackbar } from "../../../components";
-import { loggedInUser } from "../../../data";
+import { useAuth } from "../../../context";
 import SeeMoreText from "../../see-more-text";
 
 const PostComment = ({ post }) => {
   const [comments, setComments] = useState(post.comments);
   const inputRef = useRef(null);
+  const { loggedInUser } = useAuth();
 
   const handleAddComment = (e) => {
     if (e.key === "Enter") {

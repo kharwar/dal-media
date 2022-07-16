@@ -4,14 +4,16 @@ import { posts } from "../../data";
 import FileList from "../group/file-list";
 import GroupManage from "../group/group-manage";
 import PostList from "../post-list";
+import { useParams } from "react-router-dom";
 
 const Groups = () => {
+  const params = useParams();
   const [tab, setTab] = useState(0);
-  console.log("GROUP");
+  console.log("Group Params:");
 
   useEffect(() => {
     console.log("mount");
-
+    console.log("Group Params:");
     return () => {
       console.log("unmout");
     };
