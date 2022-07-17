@@ -1,10 +1,11 @@
 export default {
-  // baseURL: "http://localhost:8000/api/",
-  baseURL: "https://grp11-dal-media-backend-stage.herokuapp.com/api/",
+  baseURL: "http://localhost:8000/api/",
+  // baseURL: "https://grp11-dal-media-backend-stage.herokuapp.com/api/",
   getPosts: "posts",
   createPost: "posts/create",
   editPost: "posts/update",
   deletePost: "posts/delete",
+  likeDislikePost: "posts/like-dislike-post",
   getEvents: "events",
   createEvent: "events/create",
   deleteEvent: "events/delete",

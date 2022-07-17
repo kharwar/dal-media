@@ -73,7 +73,8 @@ export default class ServiceManager {
           errors = messages;
         }
       }
-      snackbar.current?.showSnackbar(true, errors);
+
+      if (errors) snackbar.current?.showSnackbar(true, errors);
       console.log(
         "--------------------------------------------------------------------------------------",
         "\n- ERROR : ",

@@ -6,7 +6,7 @@ import PostFooter from "./post-footer";
 import PostHeader from "./post-header";
 import _ from "lodash";
 
-const Post = ({ post, handleMenu, handleLike, handleComment }) => {
+const Post = ({ post, handleMenu, handleLike, handleComment, isPostLiked }) => {
   return (
     <Paper sx={{ p: 1.5, my: 1 }}>
       <PostHeader post={post} handleMenu={handleMenu} />
@@ -14,6 +14,7 @@ const Post = ({ post, handleMenu, handleLike, handleComment }) => {
       <PostFooter
         post={post}
         handleLike={handleLike}
+        isPostLiked={isPostLiked}
         handleComment={handleComment}
       />
       <PostComment post={post} />
