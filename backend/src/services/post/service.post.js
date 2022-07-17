@@ -73,9 +73,29 @@ const deletePostById = async (id) => {
   }
 };
 
-const likeOrDislikePost = async (likeData) => {
-  console.log({ likeData });
-  if (likeData.postId && likeData.isLiked != undefined) {
+const likeDislikePost = async (data, userId) => {
+  console.log({ data });
+  if (data?.postId && data?.isLiked != undefined) {
+    let operation = null;
+    if (data.isLiked) {
+      operation = { $pull: { likes: userId.toString() } };
+    } else {
+      operation = { $push: { likes: userId.toString() } };
+    }
+    try {
+      const post = await Post.updateOne({ _id: data.postId }, operation, {
+        returnDocument: "after",
+      });
+    } catch (error) {
+      throw validations.handleErrors(error);
+    }
+  } else {
+    throw validations.handleErrors(
+      {
+        message: "postId and isLiked are required",
+      },
+      401
+    );
   }
 };
 
@@ -85,5 +105,5 @@ module.exports = {
   findAllPosts,
   updatePostById,
   deletePostById,
-  likeOrDislikePost,
+  likeDislikePost,
 };

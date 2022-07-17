@@ -13,6 +13,10 @@ postRouter.get("/:id", isAuthenticated, postController.getPostById);
 postRouter.post("/create", isAuthenticated, postController.createPost);
 postRouter.put("/update", isAuthenticated, postController.updatePost);
 postRouter.delete("/delete", isAuthenticated, postController.deletePost);
-postRouter.post("/like", isAuthenticated, postController.likePost);
+postRouter.post(
+  "/like-dislike-post",
+  isAuthenticated,
+  postController.likeDislikePost
+);
 
 module.exports = postRouter;

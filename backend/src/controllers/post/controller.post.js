@@ -73,13 +73,13 @@ const deletePost = async (req, res) => {
   }
 };
 
-const likePost = async (req, res) => {
-  const { body } = req;
+const likeDislikePost = async (req, res) => {
+  const { body, user } = req;
 
   try {
-    const post = await postService.likeOrDislikePost(body);
+    const post = await postService.likeDislikePost(body, user._id);
 
-    return successResponse(res, "Post Deleted", post);
+    return successResponse(res, "Success", null);
   } catch (error) {
     return errorResponse(res, error);
   }
@@ -91,5 +91,5 @@ module.exports = {
   updatePost,
   deletePost,
   getPostById,
-  likePost,
+  likeDislikePost,
 };
