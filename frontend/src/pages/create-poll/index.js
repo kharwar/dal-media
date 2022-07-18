@@ -13,13 +13,38 @@ import "./styles.css";
 import { loggedInUser } from "../../data";
 import { dateFormat } from "../../utils";
 import { snackbar } from "../../components";
+import { useAuth } from "../../context";
+import { apiRoutes, ServiceManager } from "../../services";
+import { useParams } from "react-router-dom";
 
 const CreatePoll = () => {
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [question, setQuestion] = useState("");
-  const [optionA, setOptionA] = useState("");
-  const [optionB, setOptionB] = useState("");
+  const [optionList, setOptionList] = useState([""]);
+  const { loggedInUser } = useAuth();
+  const urlParams = useParams();
+
+  // handle option change
+  const handleOptionChange = (e, index) => {
+    const value = e.target.value;
+    const list = [...optionList];
+    list[index] = value;
+    setOptionList(list);
+  };
+
+  // handle click event of the Remove button
+  const handleRemoveClick = index => {
+    const list = [...optionList];
+    list.splice(index, 1);
+    setOptionList(list);
+  };
+
+  // handle click event of the Add button
+  const handleAddClick = () => {
+    setOptionList([...optionList, ""]);
+  };
+
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -29,39 +54,51 @@ const CreatePoll = () => {
     setQuestion(event.target.value);
   };
 
-  const handleOptionAChange = (event) => {
-    setOptionA(event.target.value);
-  };
 
-  const handleOptionBChange = (event) => {
-    setOptionB(event.target.value);
-  };
-
-  const onPost = () => {
+  const onPost = async () => {
     setLoading(true);
-    //write you store logic here, api call and all
-    // console.log(title + " " + textInput.current + " " + startDTvalue.toString() + " " + location);
-    setTimeout(() => {
+    //console.log(optionList);
+
+
+    const params = {
+      title: title,
+      question: question,
+      option: optionList,
+      groupId: urlParams.id.toString(), //get group id
+      createBy: loggedInUser._id.toString(),
+    };
+
+    try {
+      const res = await ServiceManager.getInstance().request(
+        apiRoutes.createPoll,
+        params,
+        "post"
+      );
+      snackbar.current.showSnackbar(true, "Poll Created");
       setLoading(false);
       setTitle("");
       setQuestion("");
-      setOptionA("");
-      setOptionB("");
-      snackbar.current.showSnackbar(true, "Poll Created");
-    }, 3000);
+      setOptionList([""]);
+
+    } catch (error) {
+      console.log({ error });
+      snackbar.current.showSnackbar(true, "Poll Can not be created");
+      setLoading(false);
+    }
+
   };
 
   return (
     <Paper sx={{ m: "50px", p: "30px" }}>
       <Stack direction="row" spacing={1.5}>
         <Avatar
-          alt={loggedInUser.name}
+          alt={loggedInUser.firstname}
           src={loggedInUser.image}
           sx={{ width: 56, height: 56 }}
         />
         <Stack>
           <Typography variant="h5" component="h5">
-            {loggedInUser.name}
+            {loggedInUser.firstname}
           </Typography>
           <Typography variant="body1">
             {dateFormat(Date.now(), "MMM DD, YYYY")}
@@ -96,22 +133,27 @@ const CreatePoll = () => {
           InputLabelProps={{ style: { fontSize: 20 } }}
         />
         <br />
-        <TextField
-          id="optionA"
-          label="Enter your Option:A"
-          variant="outlined"
-          value={optionA}
-          onChange={handleOptionAChange}
-        />
-        <br />
-        <TextField
-          id="optionB"
-          label="Enter your Option:B"
-          variant="outlined"
-          value={optionB}
-          onChange={handleOptionBChange}
-        />
-        <br />
+
+        {optionList.map((x, i) => {
+          return (
+            <div>
+              <TextField
+                id={i.toString()}
+                label="Enter your Option:"
+                variant="outlined"
+                value={x}
+                onChange={e => handleOptionChange(e, i)}
+              />
+              <div>
+                {optionList.length !== 1 && <button
+                  className="mr10"
+                  onClick={() => handleRemoveClick(i)}>Remove</button>}
+                {optionList.length - 1 === i && <button onClick={handleAddClick}>Add</button>}
+              </div>
+              <br />
+            </div>
+          );
+        })}
       </Stack>
 
       <Stack direction="row" sx={styling.btnContainer}>
