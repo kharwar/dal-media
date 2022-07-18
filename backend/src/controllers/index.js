@@ -6,6 +6,7 @@ const otpController = require("./otp/controller.otp");
 const blogController = require("./blog/controller.blog");
 const groupController = require("./group/controller.group");
 const fileController = require("./file/controller.file");
+const friendController = require("./friend/controller.friend");
 
 module.exports = {
   userController,
@@ -16,4 +17,5 @@ module.exports = {
   // emailController,
   groupController,
   fileController,
+  friendController,
 };
