@@ -1,3 +1,9 @@
+/*
+  Created on July 9th 2022
+  Author: Kavya Kasaraneni
+*/
+
+//Code for mailing the users for the email verification during sign up
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "Outlook365",

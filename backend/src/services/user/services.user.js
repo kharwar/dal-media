@@ -1,8 +1,15 @@
+/*
+  Created on July 5th 2022
+  Author: Kavya Kasaraneni
+*/
+
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const { User } = require("../../models");
 const { validations } = require("../../utils");
 const jwt = require("jsonwebtoken");
+
+//Services used to query to fetch, create, update the details in database.
 const getUserById = async (id) => {
   try {
     const user = await User.findById(id).lean();
@@ -14,14 +21,15 @@ const getUserById = async (id) => {
 
 const createUser = async (userData) => {
   try {
-    const isUserExist = await User.findOne({email: userData.email})
-    if(isUserExist){
-      throw new Error("This email is already taken")
+    const isUserExist = await User.findOne({ email: userData.email });
+    if (isUserExist) {
+      throw new Error("This email is already taken");
     }
+
     const user = await User.create(userData);
     return user.toJSON();
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw validations.handleErrors(error);
   }
 };
@@ -62,18 +70,20 @@ const generateToken = async (user) => {
 
 const findUserById = async (id) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).lean();
     return user;
   } catch (error) {
     throw validations.handleErrors(error);
   }
 };
 
-const updateUserById = async (id, userData) => {
+const updateUserById = async (userData) => {
+  console.log({ userData });
   try {
-    const user = await User.findByIdAndUpdate(id, userData, {
+    const user = await User.findByIdAndUpdate(userData.id, userData, {
       returnDocument: "after",
     });
+    console.log({ user })
     return user;
   } catch (error) {
     throw validations.handleErrors(error);

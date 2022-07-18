@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 const { Blog } = require("../../models");
 const { validations } = require("../../utils");
 const createBlog = async (blogData) => {
@@ -29,7 +34,7 @@ const findAllBlogs = async () => {
 
 const deleteBlogById = async (id) => {
   try {
-    const blog = await Blog.findByIdAndDelete();
+    const blog = await Blog.findByIdAndDelete(id);
     return blog;
   } catch (error) {
     throw validations.handleErrors(error);

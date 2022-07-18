@@ -1,23 +1,27 @@
 import { Container, InputBase, Paper, Stack } from "@mui/material";
 import { PostList, snackbar } from "../../components";
 import SearchIcon from "@mui/icons-material/Search";
-import { posts } from "../../data";
-import { useContext, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { apiRoutes, ServiceManager } from "../../services";
-import { AuthContext } from "../../context";
+
 const Home = () => {
-  const { loggedInUser } = useContext(AuthContext);
-  console.log({ loggedInUser });
-  // useEffect(() => {
-  //   ServiceManager.getInstance()
-  //     .request(apiRoutes.getPosts)
-  //     .then((res) => {
-  //       console.log({ res });
-  //     })
-  //     .catch((error) => {
-  //       console.log({ error });
-  //     });
-  // }, []);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getAllPosts();
+  }, []);
+
+  const getAllPosts = async () => {
+    try {
+      const { data } = await ServiceManager.getInstance().request(
+        apiRoutes.getPosts
+      );
+      console.log({ data });
+      setPosts(data);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   const handleSearch = (event) => {
     if (!snackbar.current.open) {

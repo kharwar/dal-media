@@ -1,7 +1,14 @@
+/*
+  Created on July 9th 2022
+  Author: Kavya Kasaraneni
+*/
+
 const { errorResponse, successResponse } = require("../../utils/responses");
 const moment = require("moment");
 const { userService, otpService } = require("../../services");
 const sendMail = require("../../utils/mailer");
+
+//Function for setting a passcode and sending it to user email address as OTP for resetting password
 const sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
@@ -19,7 +26,7 @@ const sendOtp = async (req, res) => {
       expiration,
     });
 
-    const emailText = `A password change request has been generated. Your password reset link is <a><u><b>${process.env.FRONTEND_BASE_URL}/change-password/${passcode}</b></u></a>. This link will expire within 30 minutes.`;
+    const emailText = `A password change request has been generated. Your password reset link is <a><u><b>${process.env.FRONTEND_BASE_URL}/reset-password/${passcode}</b></u></a>. This link will expire within 30 minutes.`;
     sendMail(email, "Password Verification", emailText);
     return successResponse(res, "OTP Sent", { success: true });
   } catch (error) {

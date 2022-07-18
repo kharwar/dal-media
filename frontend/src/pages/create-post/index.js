@@ -14,34 +14,32 @@ import "./styles.css";
 import { PostTextInput, snackbar } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";
-import { loggedInUser } from "../../data";
 import { dateFormat, uploadFile } from "../../utils";
 import { apiRoutes, ServiceManager } from "../../services";
-
-const postImages = [];
+import { useAuth } from "../../context";
 
 const CreatePost = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const fileInput = useRef(null);
   const textInput = useRef(null);
   const [textFilled, setTextFilled] = useState(false);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { loggedInUser } = useAuth();
+
+  console.log({ state });
 
   useEffect(() => {
     if (state?.post) {
       const { post } = state;
       post.description && textInput.current.setValue(post.description);
-      setImages(post.images);
+      const imgs = post.images.map((url) => ({
+        file: null,
+        url,
+      }));
+      setImages(imgs);
     }
   }, []);
-
-  const onImageChange = (e) => {
-    if (fileInput.current != null) {
-      fileInput.current.click();
-    }
-  };
 
   const onImageSelect = (e) => {
     if (e.target.files) {
@@ -53,18 +51,17 @@ const CreatePost = () => {
         const file = fileList[i];
         const url = URL.createObjectURL(file);
         const id = lastId + 1;
-
-        postImages.push(file);
-        newImages.push(url);
+        newImages.push({ file, url });
         lastId = id;
       }
-
+      console.log({ newImages });
       setImages((oldImages) => [...oldImages, ...newImages]);
+      e.target.value = "";
     }
   };
 
   const onDeleteImage = (url) => {
-    const filteredImages = images.filter((image) => image != url);
+    const filteredImages = images.filter((image) => image.url != url);
     setImages(filteredImages);
   };
 
@@ -82,32 +79,48 @@ const CreatePost = () => {
     const imageUrls = [];
 
     try {
-      for (let i = 0; i < postImages.length; i++) {
-        console.log({ file: postImages[i] });
-        const imageUrl = await uploadFile(postImages[i]);
-        imageUrls.push(imageUrl);
+      for (let i = 0; i < images.length; i++) {
+        if (images[i].file) {
+          const imageUrl = await uploadFile(images[i].file);
+          imageUrls.push(imageUrl);
+        } else {
+          imageUrls.push(images[i].url);
+        }
       }
     } catch (error) {
       console.error(`File Upload error: ${error}`);
     }
 
+    const groupId = state?.groupId ?? state?.post.groupId ?? null;
+
     const params = {
       description: textInput.current?.getValue(),
       images: imageUrls,
+      createdBy: loggedInUser._id,
+      groupId,
     };
+
+    let method = "post";
+    let url = apiRoutes.createPost;
+
+    if (state?.post) {
+      url = apiRoutes.editPost;
+      params["id"] = state.post._id;
+      method = "put";
+    }
+
     console.log({ params });
     try {
       const res = await ServiceManager.getInstance().request(
-        apiRoutes.createPost,
+        url,
         params,
-        "post"
+        method
       );
-
-      console.log({ res });
       const key = state?.post ? "updated" : "created";
       snackbar.current.showSnackbar(true, `Post ${key}`);
-      navigate("/");
+      groupId ? navigate(`/groups/${groupId}`) : navigate("/");
     } catch (error) {
+      setLoading(false);
       console.log({ error });
     }
   };
@@ -116,13 +129,13 @@ const CreatePost = () => {
     <Paper sx={{ m: "50px", p: "30px" }}>
       <Stack direction="row" spacing={1.5}>
         <Avatar
-          alt={loggedInUser.name}
+          alt={`${loggedInUser.firstname} ${loggedInUser.lastname}`}
           src={loggedInUser.image}
           sx={{ width: 56, height: 56 }}
         />
         <Stack>
           <Typography variant="h6" component="h6" sx={{ lineHeight: 1.2 }}>
-            {loggedInUser.name}
+            {`${loggedInUser.firstname} ${loggedInUser.lastname}`}
           </Typography>
           <Typography
             variant="body2"
@@ -144,13 +157,13 @@ const CreatePost = () => {
       />
       {images.length > 0 && (
         <Box className="img-list">
-          {images.map((image, index) => (
+          {images.map(({ url }, index) => (
             <div className="img-container" key={index + ""}>
-              <img className="img" src={image} width="200" height="200" />
+              <img className="img" src={url} width="200" height="200" />
               <IconButton
                 disabled={loading}
                 sx={styling.btnDelete}
-                onClick={() => onDeleteImage(image)}
+                onClick={() => onDeleteImage(url)}
               >
                 <DeleteRounded />
               </IconButton>
@@ -160,16 +173,18 @@ const CreatePost = () => {
       )}
       <Stack direction="row" sx={styling.btnContainer}>
         <input
+          style={{ display: "none" }}
+          id="raised-button-file"
           type="file"
           multiple
           accept="image/*"
-          style={{ display: "none" }}
-          ref={fileInput}
           onChange={onImageSelect}
         />
-        <IconButton onClick={onImageChange} disabled={loading}>
-          <ImageRounded fontSize="medium" />
-        </IconButton>
+        <label htmlFor="raised-button-file">
+          <IconButton component="span" disabled={loading}>
+            <ImageRounded fontSize="medium" />
+          </IconButton>
+        </label>
         <Box sx={{ m: 1, position: "relative" }}>
           <Button
             variant="contained"

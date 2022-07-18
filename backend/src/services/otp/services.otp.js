@@ -1,6 +1,13 @@
+/*
+  Created on July 9th 2022
+  Author: Kavya Kasaraneni
+*/
+
 const { Otp } = require("../../models");
 const { validations } = require("../../utils");
 const moment = require("moment");
+
+//Api for the generating passcode to the user for forgot password validation
 const generatePasscode = (length) => {
   const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   passcode = "";
@@ -19,6 +26,7 @@ const createOtp = async (otpData) => {
   }
 };
 
+//Logic for finding the otp using the passcode from frontend
 const findOtpByPasscode = async (passcode) => {
   try {
     const otp = await Otp.findOne({

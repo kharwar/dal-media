@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 const jwt = require("jsonwebtoken");
 const { userService } = require("../../services");
 const { validations } = require("../../utils");
@@ -20,7 +25,8 @@ const isAuthenticated = async (req, res, next) => {
       throw validations.handleErrors(new Error("Authentication Error"), 401);
     }
     const user = await userService.getUserById(decodedToken._id);
-    delete user.password;
+
+    user && delete user.password;
     req.user = user;
     next();
   } catch (error) {

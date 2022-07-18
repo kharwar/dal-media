@@ -13,11 +13,13 @@ import {
   DisplayPoll,
   CreateBlog,
   Blogs,
+  BlogDetail,
   Login,
   Signup,
   ForgotPassword,
   Profile,
   ChangePassword,
+  ResetPassword
 } from "../pages";
 
 const AppRoutes = () => {
@@ -27,6 +29,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:passcode" element={<ResetPassword />} />
       </Route>
       <Route
         path="*"
@@ -57,6 +60,7 @@ const ProtectedRoutes = () => {
         <Route path="/edit-post/:id" element={<CreatePost />} />
         <Route path="/blogs/create" element={<CreateBlog />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blog-details/:id" element={<BlogDetail />} />
         <Route path="blogs/edit/:id" element={<CreateBlog />} />
         <Route path="/event-page/edit-event" element={<CreateEvent />} />
         <Route path="/profile" element={<Profile />} />
@@ -64,6 +68,7 @@ const ProtectedRoutes = () => {
         <Route path="/change-password" element={<ChangePassword />} />
       </Route>
     </Routes>
+    
   );
 };
 

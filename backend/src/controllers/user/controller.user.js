@@ -1,12 +1,18 @@
+/*
+  Created on July 5th 2022
+  Author: Kavya Kasaraneni
+*/
+
 const { User } = require("../../models/user/model.user");
 const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const { userService, otpService } = require("../../services");
 const sendMail = require("../../utils/mailer");
 const saltRounds = 10;
 const { errorResponse, successResponse } = require("../../utils/responses");
+
+
 
 const getUsers = async (req, res) => {
   try {
@@ -25,45 +31,58 @@ const getUsers = async (req, res) => {
   }
 };
 
+//Backend logic for storing the registered user details
 const signUp = async (req, res) => {
   try {
     const { body } = req;
     const hash = await bcrypt.hash(body.password, saltRounds);
+    body.password = hash
     delete body.password;
-    const user = await userService.createUser({...body, password:hash});
+    const user = await userService.createUser({ ...body, password: hash });
     delete user.password;
     user.token = await userService.generateToken(user);
+
     return successResponse(res, "User Successfully Registered", user);
   } catch (error) {
     return errorResponse(res, error);
   }
 };
 
+//Backend logic for login using the registered credentials
 const signIn = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
 
     const user = await userService.findUser(email);
-    const hash = await bcrypt.compare(password, user.password);
-    if (!hash) {
-      return res.status(400).send({
-        message: "Unauthenticated",
+    if (!user) {
+      return res.status(404).send({
+        message: "Invalid credentials",
       });
     }
+    const hash = await bcrypt.compareSync(password, user.password);
+    if (!hash) {
+      return res.status(404).send({
+        message: "Invalid credentials",
+      });
+    }
+    console.log({ user });
     delete user.password;
     user.token = await userService.generateToken(user);
     return successResponse(res, "Login Successful", user);
   } catch (error) {
+    console.log({ eeeee: error });
     return errorResponse(res, error);
   }
 };
 
+
+//Update password backend
 const changePassword = async (req, res) => {
   try {
-    const { password, newPassword } = req.body;
+    const { currentPassword, password } = req.body;
     const user = await userService.findUserById(req.user._id);
-    const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+    const isPasswordCorrect = bcrypt.compareSync(currentPassword, user.password);
 
     if (!isPasswordCorrect) {
       return res.status(401).send({
@@ -71,7 +90,7 @@ const changePassword = async (req, res) => {
         success: false,
       });
     }
-    const newHashedPassword = await bcrypt.hash(newPassword, saltRounds);
+    const newHashedPassword = await bcrypt.hash(password, saltRounds);
     userService.updateUserById(user._id, { password: newHashedPassword });
     return successResponse(res, "Password changed successfully", {
       success: true,
@@ -104,6 +123,7 @@ const resetPassword = async (req, res) => {
   }
 };
 
+//Getting user details
 const getUserProfile = async (req, res) => {
   try {
     const { id } = req.params;
@@ -116,21 +136,18 @@ const getUserProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const id = req.body.user_id;
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const email = req.body.email;
-    const bio = req.body.bio;
+    // const id = req.body.user_id;
+    // const firstname = req.body.firstname;
+    // const lastname = req.body.lastname;
+    // const bio = req.body.bio;
 
-    const update = {
-      email: email,
-      firstname: firstname,
-      lastname: lastname,
-      bio: bio,
-    };
-
-    const user = await userService.updateUserById(id, update);
-
+    // const update = {
+    //   firstname: firstname,
+    //   lastname: lastname,
+    //   bio: bio,
+    // };
+    const { body } = req;
+    const user = await userService.updateUserById(body)
     return successResponse(res, "User Details updated succesfully", user);
   } catch (error) {
     return errorResponse(res, error);

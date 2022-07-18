@@ -71,5 +71,5 @@ module.exports = {
   getAllGroups,
   updateGroupById,
   deleteGroupById,
-  getAllMembers
+  getAllMembers,
 };

@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 import Blog from "../Blog";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 // import { blogs } from "../../data";
@@ -5,8 +10,34 @@ import { Menu, MenuItem } from "@mui/material";
 import { useAlert } from "../alert-dialog";
 import { useNavigate } from "react-router-dom";
 import { snackbar } from "../../components";
+import { apiRoutes, ServiceManager } from "../../services";
 
-const BlogList = ({ blogs }) => {
+const deleteBlog = (blogId, setBlogs) => {
+  ServiceManager.getInstance()
+    .request(`${apiRoutes.getBlogs}/${blogId}`, null, "delete")
+    .then((res) => {
+      console.log(res.data);
+      snackbar.current.showSnackbar(true, "Blog Deleted");
+      fetchBlogs(setBlogs);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
+
+const fetchBlogs = async (setBlogs) => {
+  ServiceManager.getInstance()
+    .request(apiRoutes.getBlogs)
+    .then((res) => {
+      setBlogs(res.data.blogs);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
+
+const BlogList = () => {
+  const [blogs, setBlogs] = useState([]);
   const blogRef = useRef(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const { setAlert, setOnAgree } = useAlert();
@@ -14,6 +45,7 @@ const BlogList = ({ blogs }) => {
   const open = Boolean(anchorEl);
 
   useEffect(() => {
+    fetchBlogs(setBlogs);
     setOnAgree(onDelete);
   }, []);
 
@@ -33,8 +65,7 @@ const BlogList = ({ blogs }) => {
   };
 
   const onDelete = () => {
-    snackbar.current.showSnackbar(true, "Blog Deleted");
-    console.log("delete");
+    deleteBlog(blogRef.current._id, setBlogs);
   };
 
   const handleDelete = () => {
