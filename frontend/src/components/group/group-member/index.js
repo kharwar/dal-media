@@ -4,9 +4,10 @@ import { Box, Stack, Typography, IconButton } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import _ from "lodash";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useAuth } from "../../../context";
 
 const GroupMember = ({ user, handleMenu }) => {
-  console.log("Member");
+  const { loggedInUser } = useAuth();
 
   return (
     <Paper sx={{ p: 1.5, my: 1 }}>
@@ -32,9 +33,12 @@ const GroupMember = ({ user, handleMenu }) => {
             {`Member`}
           </Typography>
         </Box>
-        <IconButton onClick={handleMenu}>
+        {user._id !== loggedInUser._id &&
+          <IconButton onClick={handleMenu}>
           <MoreHorizIcon />
         </IconButton>
+        }
+        
       </Box>
     </Paper>
   );

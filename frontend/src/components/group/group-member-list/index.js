@@ -17,6 +17,25 @@ const fetchGroupMembers = async (groupId, setUsers) => {
     });
 };
 
+const removeMemberFromGroup = async (groupId, userId, setUsers) => {
+  const params = {
+    userId: userId,
+  };
+
+  ServiceManager.getInstance()
+    .request(
+      `${apiRoutes.groups}/${groupId}/${apiRoutes.groupMembers}`,
+      params,
+      "delete"
+    )
+    .then((res) => {
+      fetchGroupMembers(groupId, setUsers);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
+
 const GroupMemberList = (props) => {
   const [users, setUsers] = useState([]);
   const { setAlert, setOnAgree } = useAlert();
@@ -64,6 +83,7 @@ const GroupMemberList = (props) => {
   };
 
   const handleRemoveUser = () => {
+    removeMemberFromGroup(props.groupId, userRef.current._id, setUsers);
     snackbar.current.showSnackbar(true, "User removed from group");
   };
 

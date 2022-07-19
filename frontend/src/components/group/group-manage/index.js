@@ -7,28 +7,6 @@ import { snackbar } from "../../../components";
 import { apiRoutes, ServiceManager } from "../../../services";
 import { useNavigate } from "react-router-dom";
 
-const fetchUsersToAdd = async (groupId, setUsers) => {
-  ServiceManager.getInstance()
-    .request(`${apiRoutes.groups}/${groupId}/${apiRoutes.usersToAdd}`)
-    .then((res) => {
-      setUsers(res.data);
-    })
-    .catch((error) => {
-      console.log({ error });
-    });
-};
-
-const fetchGroupMembers = async (groupId, setMembers) => {
-  ServiceManager.getInstance()
-    .request(`${apiRoutes.groups}/${groupId}/${apiRoutes.groupMembers}`)
-    .then((res) => {
-      setMembers(res.data);
-    })
-    .catch((error) => {
-      console.log({ error });
-    });
-};
-
 const deleteGroup = (groupId, navigate) => {
   ServiceManager.getInstance()
     .request(`${apiRoutes.groups}/${groupId}`, null, "delete")
@@ -47,11 +25,6 @@ const GroupManage = (props) => {
   const [users, setUsers] = useState([]);
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchGroupMembers(props.groupId, setMembers);
-    fetchUsersToAdd(props.groupId, setUsers);
-  }, []);
 
   const onDelete = () => {
     deleteGroup(props.groupId, navigate);
@@ -88,10 +61,10 @@ const GroupManage = (props) => {
           </Button>
         </Box>
         <Box sx={{ display: "flex", mr: 1 }}>
-          <GroupAddMember groupId={props.groupId} users={users} />
+          <GroupAddMember groupId={props.groupId} />
         </Box>
       </Box>
-      <GroupMemberList groupId={props.groupId} members={members} />
+      <GroupMemberList groupId={props.groupId} />
     </>
   );
 };

@@ -27,10 +27,19 @@ const findGroupId = async (id) => {
   }
 };
 
-const getAllGroups = async () => {
+const getAllGroups = async (userId) => {
   try {
+    // const groups = await Group.find({members: {$contains: mongoose.Schema.Types.ObjectId(userId)}});
     const groups = await Group.find();
-    return groups;
+    const userGroups = [];
+    for (let group of groups) {
+      for(let member of group.members) {
+        if (member.toString() === userId) {
+          userGroups.push(group);
+        }
+      }
+    }
+    return userGroups;
   } catch (error) {
     throw validations.handleErrors(error);
   }
@@ -85,7 +94,19 @@ const addUserToGroup = async (groupId, userId) => {
     const group = await Group.findById(groupId);
     group.members.push(userId);
     await group.save();
-    // const updatedGroup = await Group.save(group);
+    return group;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
+const removeMemberFromGroup = async (groupId, userId) => {
+  try {
+    const group = await Group.findById(groupId);
+    group.members = group.members.filter(
+      (member) => member._id.toString() !== userId
+    );
+    await group.save();
     return group;
   } catch (error) {
     throw validations.handleErrors(error);
@@ -101,4 +122,5 @@ module.exports = {
   getAllMembers,
   getUsersToAdd,
   addUserToGroup,
+  removeMemberFromGroup,
 };

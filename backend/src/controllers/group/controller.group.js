@@ -10,7 +10,8 @@ const { errorResponse, successResponse } = require("../../utils/responses");
 
 const getAllGroups = async (req, res) => {
   try {
-    const groups = await groupService.getAllGroups();
+    const { body } = req;
+    const groups = await groupService.getAllGroups(body.userId);
 
     return successResponse(res, "Groups Fetched", groups);
   } catch (error) {
@@ -105,6 +106,17 @@ const addMember = async (req, res) => {
   }
 };
 
+const removeMember = async (req, res) => {
+  const { body, params } = req;
+  const { id } = params;
+  try {
+    const group = await groupService.removeMemberFromGroup(id, body.userId);
+    return successResponse(res, "Group Member Removed", group);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
 module.exports = {
   getAllGroups,
   createGroup,
@@ -114,4 +126,5 @@ module.exports = {
   addMember,
   getUsersToAdd,
   getAllMembers,
+  removeMember,
 };
