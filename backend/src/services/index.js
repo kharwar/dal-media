@@ -5,6 +5,7 @@ const otpService = require("./otp/services.otp");
 const blogService = require("./blog/service.blog");
 const groupService = require("./group/service.group");
 const fileService = require("./file/service.file");
+const pollService = require("./poll/service.poll");
 
 module.exports = {
   userService,
@@ -14,4 +15,5 @@ module.exports = {
   otpService,
   groupService,
   fileService,
+  pollService,
 };

@@ -27,4 +27,6 @@ export default {
   editProfile: "users/editprofile",
   groups: "groups",
   files: "files",
+  createPoll: "polls/create",
+  getPolls: "polls",
 };

@@ -5,6 +5,7 @@ const Blog = require("./blog/model.blog");
 const Group = require("./group/model.group");
 const File = require("./file/model.file");
 const Event = require("./events/model.event");
+const Poll = require("./poll/model.poll");
 
 module.exports = {
   User,
@@ -14,4 +15,5 @@ module.exports = {
   Otp,
   Group,
   File,
+  Poll,
 };
