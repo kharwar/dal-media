@@ -96,7 +96,6 @@ const CreatePost = () => {
     const params = {
       description: textInput.current?.getValue(),
       images: imageUrls,
-      createdBy: loggedInUser._id,
       groupId,
     };
 
@@ -109,7 +108,6 @@ const CreatePost = () => {
       method = "put";
     }
 
-    console.log({ params });
     try {
       const res = await ServiceManager.getInstance().request(
         url,

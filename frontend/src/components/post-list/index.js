@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useAlert } from "../alert-dialog";
 import { snackbar } from "../../components";
 import { apiRoutes, ServiceManager } from "../../services";
+import { async } from "@firebase/util";
+import { useAuth } from "../../context";
 
 const PostList = (props) => {
   const { setAlert, setOnAgree } = useAlert();
@@ -13,6 +15,7 @@ const PostList = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [posts, setPosts] = useState(props.posts);
+  const { loggedInUser } = useAuth();
 
   useEffect(() => {
     setPosts(props.posts);
@@ -59,22 +62,46 @@ const PostList = (props) => {
     setAlert(true, "Delete Post", "Are you sure you want to delete this post?");
   };
 
-  const handleLike = () => {
-    console.log("like");
-    snackbar.current.showSnackbar(true, "Post Liked");
+  const handleLike = (postId, isLiked) => async () => {
+    try {
+      const { data } = await ServiceManager.getInstance().request(
+        apiRoutes.likeDislikePost,
+        {
+          postId,
+          isLiked,
+        },
+        "post"
+      );
+      console.log({ data });
+      // snackbar.current.showSnackbar(true, "Post Liked");
+    } catch (error) {}
   };
 
-  const handleComment = () => {
-    snackbar.current.showSnackbar(true, "Write Comment");
+  const handleComment = async (postId, comment) => {
+    try {
+      const { data } = await ServiceManager.getInstance().request(
+        apiRoutes.commentOnPost,
+        {
+          postId,
+          comment: comment.comment,
+        },
+        "post"
+      );
+      console.log({ data });
+      // snackbar.current.showSnackbar(true, "Post Liked");
+    } catch (error) {}
   };
 
   const renderPost = useCallback((post) => {
+    const isLiked = post.likes.includes(loggedInUser._id);
+
     return (
       <Post
         post={post}
         key={post._id}
         handleMenu={(event) => handleMenu(event, post)}
-        handleLike={handleLike}
+        handleLike={handleLike(post._id, isLiked)}
+        isPostLiked={isLiked}
         handleComment={handleComment}
       />
     );
