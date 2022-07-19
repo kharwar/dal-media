@@ -37,8 +37,11 @@ const addUserToGroup = async (groupId, userId, setUsers) => {
   return user;
 };
 
+let selectedUserId = null;
+
 const GroupAddMember = (props) => {
   const [users, setUsers] = useState([]);
+  const textfieldRef = useRef();
 
   useEffect(() => {
     fetchUsersToAdd(props.groupId, setUsers);
@@ -48,9 +51,13 @@ const GroupAddMember = (props) => {
     if (!event.target?.id) {
       return;
     }
-    // const newUsers = [...users];
-    // newUsers;
-    const user = await addUserToGroup(props.groupId, event.target.id, setUsers);
+    selectedUserId = event.target.id;
+  };
+
+  const onAddMember = async () => {
+    const text = textfieldRef.current;
+
+    const user = await addUserToGroup(props.groupId, selectedUserId, setUsers);
 
     if (users) {
       props.onSelectUser?.(user);
@@ -86,7 +93,7 @@ const GroupAddMember = (props) => {
       <Button
         variant="contained"
         sx={{ alignSelf: "center" }}
-        // onClick={deleteGroupHandler}
+        onClick={onAddMember}
       >
         Add
       </Button>

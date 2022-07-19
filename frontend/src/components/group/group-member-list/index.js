@@ -94,6 +94,7 @@ const GroupMemberList = (props) => {
         user={user}
         key={user._id}
         handleMenu={(event) => handleMenu(event, user)}
+        createdBy={props.createdBy}
       />
     );
   }, []);

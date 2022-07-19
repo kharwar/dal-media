@@ -1,6 +1,6 @@
 import { Container, Tabs, Tab, Box, Typography, Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import FileList from "./file-list";
 import GroupManage from "./group-manage";
 import PostList from "../post-list";
@@ -9,10 +9,12 @@ import { apiRoutes, ServiceManager } from "../../services";
 
 const Group = () => {
   const params = useParams();
+  const { state } = useLocation();
   const navigate = useNavigate();
   const [tab, setTab] = useState(0);
   const [posts, setPosts] = useState([]);
 
+  console.log({ state });
   useEffect(() => {
     getGroupPosts();
   }, []);
@@ -68,7 +70,7 @@ const Group = () => {
         </Box>
       </TabPanel>
       <TabPanel value={tab} index={3}>
-        <GroupManage groupId={params.id} />
+        <GroupManage groupId={params.id} createdBy={state?.createdBy} />
       </TabPanel>
     </Container>
   );
