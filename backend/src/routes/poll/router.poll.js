@@ -8,6 +8,7 @@ const pollRouter = require("express").Router();
 const { pollController } = require("../../controllers");
 
 pollRouter.post("/create", isAuthenticated, pollController.createPoll);
+pollRouter.get("/", pollController.getAllPolls);
 
 module.exports = pollRouter;
 

@@ -24,6 +24,17 @@ const createPoll = async (req, res) => {
   }
 };
 
+const getAllPolls = async (req, res) => {
+  try {
+    const polls = await pollService.findAllPolls();
+
+    return successResponse(res, "Polls Fetched", polls);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
 module.exports = {
   createPoll,
+  getAllPolls,
 };

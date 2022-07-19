@@ -15,7 +15,7 @@ import { dateFormat } from "../../utils";
 import { snackbar } from "../../components";
 import { useAuth } from "../../context";
 import { apiRoutes, ServiceManager } from "../../services";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const CreatePoll = () => {
   const [loading, setLoading] = useState(false);
@@ -24,6 +24,7 @@ const CreatePoll = () => {
   const [optionList, setOptionList] = useState([""]);
   const { loggedInUser } = useAuth();
   const urlParams = useParams();
+  const navigate = useNavigate();
 
   // handle option change
   const handleOptionChange = (e, index) => {
@@ -79,6 +80,7 @@ const CreatePoll = () => {
       setTitle("");
       setQuestion("");
       setOptionList([""]);
+      navigate(-1);
 
     } catch (error) {
       console.log({ error });
@@ -136,7 +138,7 @@ const CreatePoll = () => {
 
         {optionList.map((x, i) => {
           return (
-            <div>
+            <div key={i}>
               <TextField
                 id={i.toString()}
                 label="Enter your Option:"

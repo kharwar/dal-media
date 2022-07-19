@@ -11,6 +11,17 @@ const createPoll = async (pollData) => {
   }
 };
 
+const findAllPolls = async (groupId) => {
+  try {
+    const polls = await Poll.find();
+    //await events.sort((a, b) => { return new Date(b.UpdatedAt).getTime() - new Date(a.UpdatedAt).getTime(); });
+    return polls;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
 module.exports = {
   createPoll,
+  findAllPolls,
 };

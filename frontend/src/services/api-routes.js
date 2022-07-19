@@ -24,4 +24,5 @@ export default {
   groups: "groups",
   files: "files",
   createPoll: "polls/create",
+  getPolls: "polls",
 };
