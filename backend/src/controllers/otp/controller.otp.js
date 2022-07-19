@@ -26,7 +26,10 @@ const sendOtp = async (req, res) => {
       expiration,
     });
 
-    const emailText = `A password change request has been generated. Your password reset link is <a><u><b>${process.env.FRONTEND_BASE_URL}/reset-password/${passcode}</b></u></a>. This link will expire within 30 minutes.`;
+    const link = '${process.env.FRONTEND_BASE_URL}/reset-password/${passcode}'
+    console.log(link)
+    const emailText = `A password change request has been generated. Please click <a href='${process.env.FRONTEND_BASE_URL}/reset-password/${passcode}'>here</a> to reset your password. This link will expire within 30 minutes.`;
+    console.log(emailText)
     sendMail(email, "Password Verification", emailText);
     return successResponse(res, "OTP Sent", { success: true });
   } catch (error) {
