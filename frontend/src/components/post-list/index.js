@@ -77,8 +77,19 @@ const PostList = (props) => {
     } catch (error) {}
   };
 
-  const handleComment = () => {
-    snackbar.current.showSnackbar(true, "Write Comment");
+  const handleComment = async (postId, comment) => {
+    try {
+      const { data } = await ServiceManager.getInstance().request(
+        apiRoutes.commentOnPost,
+        {
+          postId,
+          comment: comment.comment,
+        },
+        "post"
+      );
+      console.log({ data });
+      // snackbar.current.showSnackbar(true, "Post Liked");
+    } catch (error) {}
   };
 
   const renderPost = useCallback((post) => {

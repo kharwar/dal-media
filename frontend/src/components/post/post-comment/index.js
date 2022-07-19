@@ -5,15 +5,23 @@ import { snackbar } from "../../../components";
 import { useAuth } from "../../../context";
 import SeeMoreText from "../../see-more-text";
 
-const PostComment = ({ post }) => {
+const PostComment = ({ post, commentInputRef, handleComment }) => {
   const [comments, setComments] = useState(post.comments);
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
   const { loggedInUser } = useAuth();
 
   const handleAddComment = (e) => {
     if (e.key === "Enter") {
-      inputRef.current.value = "";
-      snackbar.current.showSnackbar(true, "Comment Posted");
+      const comment = {
+        comment: commentInputRef.current.value,
+        createdBy: loggedInUser,
+      };
+      handleComment?.(post._id, comment);
+      const newComments = [comment, ...comments];
+      setComments(newComments);
+      commentInputRef.current.blur();
+      commentInputRef.current.value = "";
+      // snackbar.current.showSnackbar(true, "Comment Posted");
     }
   };
 
@@ -25,7 +33,7 @@ const PostComment = ({ post }) => {
           sx={{ width: "32px", height: "32px" }}
         />
         <InputBase
-          inputRef={inputRef}
+          inputRef={commentInputRef}
           fullWidth
           placeholder="Write a comment..."
           onKeyDown={handleAddComment}
@@ -40,9 +48,9 @@ const PostComment = ({ post }) => {
       </Stack>
 
       {comments.map((item, index) => (
-        <Stack direction="row" spacing={1} sx={{ mt: 1 }} key={item.id}>
+        <Stack direction="row" spacing={1} sx={{ mt: 1 }} key={index + ""}>
           <Avatar
-            src={item.user.image}
+            src={item.createdBy.image}
             sx={{ width: "32px", height: "32px" }}
           />
           <Stack
@@ -53,10 +61,10 @@ const PostComment = ({ post }) => {
               variant="subtitle2"
               sx={{ fontWeight: "600", lineHeight: 1 }}
             >
-              {item.user.name}
+              {`${item.createdBy.firstname} ${item.createdBy.lastname}`}
             </Typography>
             <SeeMoreText variant="body2" sx={{ lineHeight: 1.2 }}>
-              {item.body}
+              {item.comment}
             </SeeMoreText>
           </Stack>
         </Stack>

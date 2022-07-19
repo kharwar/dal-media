@@ -9,8 +9,8 @@ import { useAuth } from "../../../context";
 const PostFooter = ({
   post: { _id, likes: postLikes, comments },
   handleLike,
-  handleComment,
   isPostLiked,
+  commentInputRef,
 }) => {
   const [likes, setLikes] = useState(postLikes);
   const [isLiked, setIsLiked] = useState(isPostLiked);
@@ -32,6 +32,10 @@ const PostFooter = ({
     handleLike?.();
   };
 
+  const handleOnComment = () => {
+    commentInputRef?.current?.focus();
+  };
+
   return (
     <Box>
       <Stack direction="row" sx={{ justifyContent: "space-between", mb: 1 }}>
@@ -48,7 +52,7 @@ const PostFooter = ({
           <Typography variant="body1">Like</Typography>
         </Button>
         <Divider />
-        <Button variant="outlined" fullWidth onClick={handleComment}>
+        <Button variant="outlined" fullWidth onClick={handleOnComment}>
           <ChatBubbleOutlineOutlinedIcon sx={{ mr: 1 }} />
           <Typography variant="body1">Comment</Typography>
         </Button>
