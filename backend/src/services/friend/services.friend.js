@@ -10,10 +10,23 @@ const createFriend = async (friendData) => {
   }
 };
 
-// const updateFriend = async (id, friendData) => {
+const deleteOneFriendWhere = async (where) => {
+  try {
+    const friend = await Friend.deleteOne(where);
+    return friend;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
 
-// }
-
+const deleteManyFriendWhere = async (where) => {
+  try {
+    const friend = await Friend.deleteMany(where);
+    return friend;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
 const findFriend = async (sourceUserId, targetUserId) => {
   try {
     const friend = await Friend.findOne({
@@ -26,12 +39,11 @@ const findFriend = async (sourceUserId, targetUserId) => {
   }
 };
 
-const findFriendsById = async (userId, status) => {
+const findFriendsWhere = async (where) => {
   try {
-    const friends = await Friend.find({
-      sourceUser: userId,
-      status,
-    });
+    const friends = await Friend.find(where)
+      .populate("targetUser")
+      .populate("sourceUser");
     return friends;
   } catch (error) {
     throw validations.handleErrors(error);
@@ -40,5 +52,7 @@ const findFriendsById = async (userId, status) => {
 module.exports = {
   createFriend,
   findFriend,
-  findFriendsById,
+  findFriendsWhere,
+  deleteOneFriendWhere,
+  deleteManyFriendWhere,
 };
