@@ -31,4 +31,5 @@ export default {
   files: "files",
   createPoll: "polls/create",
   getPolls: "polls",
+  getRequests: "friends/request"
 };

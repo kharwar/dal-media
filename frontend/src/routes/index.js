@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet, useNavigate, Navigate } from "react-router-dom";
-import { Navbar } from "../components";
+import { Navbar, Friends } from "../components";
 import { useAuth } from "../context";
 import {
   Home,
@@ -63,6 +63,7 @@ const ProtectedRoutes = () => {
         <Route path="/blog-details/:id" element={<BlogDetail />} />
         <Route path="blogs/edit/:id" element={<CreateBlog />} />
         <Route path="/event-page/edit-event" element={<CreateEvent />} />
+        <Route path="/friends" element={<Friends />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<Signup />} />
         <Route path="/change-password" element={<ChangePassword />} />
