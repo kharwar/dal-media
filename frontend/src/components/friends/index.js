@@ -47,7 +47,8 @@ const Friends = () => {
   useEffect(() => {
     // fetchRequests(setRequests);
     // fetchFriends(setFriends);
-    setFriends(users);
+    const reverseUsers = [...users].reverse();
+    setFriends(reverseUsers);
     setRequests(users);
   }, []);
 
