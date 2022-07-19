@@ -19,7 +19,6 @@ import { PostList } from "../../components";
 import theme from "../../theme";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useNavigate } from "react-router-dom";
-import { posts } from "../../data";
 import { useAuth } from "../../context";
 import { apiRoutes, ServiceManager } from "../../services";
 
