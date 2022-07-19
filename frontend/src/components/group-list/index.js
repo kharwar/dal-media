@@ -4,10 +4,14 @@ import { useAlert } from "../alert-dialog";
 import GroupItem from "../group-item";
 import { snackbar } from "../../components";
 import { apiRoutes, ServiceManager } from "../../services";
+import { useAuth } from "../../context";
 
-const fetchGroups = async (setGroups) => {
+const fetchGroups = async (userId, setGroups) => {
+  const params = {
+    userId: userId,
+  };
   ServiceManager.getInstance()
-    .request(apiRoutes.groups)
+    .request(apiRoutes.groups + "/all", params, "post")
     .then((res) => {
       setGroups(res.data);
     })
@@ -16,7 +20,29 @@ const fetchGroups = async (setGroups) => {
     });
 };
 
+const removeMemberFromGroup = async (groupId, userId, setGroups) => {
+  console.log("UserId", userId);
+  console.log("GroupId", groupId);
+  const params = {
+    userId: userId,
+  };
+
+  ServiceManager.getInstance()
+    .request(
+      `${apiRoutes.groups}/${groupId}/${apiRoutes.groupMembers}`,
+      params,
+      "delete"
+    )
+    .then((res) => {
+      fetchGroups(userId, setGroups);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
+
 const GroupList = () => {
+  const { loggedInUser } = useAuth();
   const [groups, setGroups] = useState([]);
   console.log("fileList");
 
@@ -27,7 +53,7 @@ const GroupList = () => {
 
   useEffect(() => {
     setOnAgree(onDelete);
-    fetchGroups(setGroups);
+    fetchGroups(loggedInUser._id, setGroups);
   }, []);
 
   const handleMenu = (event, file) => {
@@ -40,6 +66,7 @@ const GroupList = () => {
   };
 
   const onDelete = () => {
+    removeMemberFromGroup(fileRef.current._id, loggedInUser._id, setGroups);
     snackbar.current.showSnackbar(true, "You left the group");
   };
 

@@ -45,7 +45,7 @@ const EventList = (props) => {
       .then((res) => {
         //setEvents(events.filter(event => (event["_id"] !== eventRef.current["_id"])));
         snackbar.current.showSnackbar(true, "Event Deleted");
-        navigate("/");
+        navigate(0);
       })
       .catch((error) => {
         console.log({ error });

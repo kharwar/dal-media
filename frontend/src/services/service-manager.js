@@ -33,11 +33,12 @@ export default class ServiceManager {
 
   request = (url, params, method = "get") => {
     const data = method === "get" ? null : params;
+    const PARAMS = method === "post" ? null : params;
     const reqParams = {
       method,
       url,
       data,
-      params,
+      params: PARAMS,
     };
     if (ServiceManager.getInstance().axiosInstance !== null) {
       return new Promise((resolve, reject) => {
@@ -73,7 +74,8 @@ export default class ServiceManager {
           errors = messages;
         }
       }
-      snackbar.current?.showSnackbar(true, errors);
+
+      if (errors) snackbar.current?.showSnackbar(true, errors);
       console.log(
         "--------------------------------------------------------------------------------------",
         "\n- ERROR : ",

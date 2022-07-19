@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import { useAlert } from "../../alert-dialog";
 import GroupMemberList from "../group-member-list";
@@ -20,6 +21,8 @@ const deleteGroup = (groupId, navigate) => {
 };
 
 const GroupManage = (props) => {
+  const [members, setMembers] = useState([]);
+  const [users, setUsers] = useState([]);
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
 
@@ -38,15 +41,9 @@ const GroupManage = (props) => {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          mb: 1,
-        }}
-      >
-        <Box sx={{ display: "flex", mr: 1 }}>
+      <Box sx={{ mb: 1 }}>
+        <GroupMemberList groupId={props.groupId} createdBy={props.createdBy} />
+        <Box sx={{ display: "flex", mr: 1, justifyContent: "flex-end" }}>
           <Button
             variant="contained"
             onClick={deleteGroupHandler}
@@ -57,11 +54,7 @@ const GroupManage = (props) => {
             Delete Group
           </Button>
         </Box>
-        <Box sx={{ display: "flex", mr: 1 }}>
-          <GroupAddMember />
-        </Box>
       </Box>
-      <GroupMemberList groupId={props.groupId}/>
     </>
   );
 };

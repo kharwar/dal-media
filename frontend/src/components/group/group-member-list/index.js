@@ -5,13 +5,32 @@ import { useAlert } from "../../alert-dialog";
 import GroupMember from "../group-member";
 import { snackbar } from "../../../components";
 import { apiRoutes, ServiceManager } from "../../../services";
+import GroupAddMember from "../group-add-member";
 
 const fetchGroupMembers = async (groupId, setUsers) => {
   ServiceManager.getInstance()
-    .request(`${apiRoutes.groups}/${groupId}/members`)
+    .request(`${apiRoutes.groups}/${groupId}/${apiRoutes.groupMembers}`)
     .then((res) => {
-      console.log(res.data);
-      // setUsers(res.data);
+      setUsers(res.data);
+    })
+    .catch((error) => {
+      console.log({ error });
+    });
+};
+
+const removeMemberFromGroup = async (groupId, userId, setUsers) => {
+  const params = {
+    userId: userId,
+  };
+
+  ServiceManager.getInstance()
+    .request(
+      `${apiRoutes.groups}/${groupId}/${apiRoutes.groupMembers}`,
+      params,
+      "delete"
+    )
+    .then((res) => {
+      fetchGroupMembers(groupId, setUsers);
     })
     .catch((error) => {
       console.log({ error });
@@ -65,6 +84,7 @@ const GroupMemberList = (props) => {
   };
 
   const handleRemoveUser = () => {
+    removeMemberFromGroup(props.groupId, userRef.current._id, setUsers);
     snackbar.current.showSnackbar(true, "User removed from group");
   };
 
@@ -72,14 +92,20 @@ const GroupMemberList = (props) => {
     return (
       <GroupMember
         user={user}
-        key={user.id}
+        key={user._id}
         handleMenu={(event) => handleMenu(event, user)}
+        createdBy={props.createdBy}
       />
     );
   }, []);
 
+  const onSelectUser = (group) => {
+    setUsers(group.members);
+  };
+
   return (
     <>
+      <GroupAddMember groupId={props.groupId} onSelectUser={onSelectUser} />
       {users.map(renderMember)}
       <Menu
         id="menu"
@@ -98,7 +124,6 @@ const GroupMemberList = (props) => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleAdmin}>Make Admin</MenuItem>
         <MenuItem onClick={handleRemove}>Remove</MenuItem>
       </Menu>
     </>

@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 import { useMemo } from "react";
 import { createEditor, Descendant } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
@@ -43,7 +48,7 @@ const BlogDetail = () => {
           backgroundImage: `url(${blog.image})`,
           marginTop: "10px",
           borderRadius: "10px",
-          display: "table"
+          display: "table",
         }}
       >
         <Typography

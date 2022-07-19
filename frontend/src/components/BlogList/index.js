@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 import Blog from "../Blog";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 // import { blogs } from "../../data";

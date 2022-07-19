@@ -48,7 +48,7 @@ const NavUser = () => {
               ...styling.title,
             }}
           >
-            {loggedInUser.name}
+            {loggedInUser.firstname} {loggedInUser.lastname}
           </Typography>
         </IconButton>
       </Tooltip>

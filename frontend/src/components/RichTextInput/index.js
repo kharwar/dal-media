@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Editable, withReact, Slate } from "slate-react";
 import { withHistory } from "slate-history";

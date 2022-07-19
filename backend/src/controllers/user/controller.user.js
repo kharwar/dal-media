@@ -91,7 +91,7 @@ const changePassword = async (req, res) => {
       });
     }
     const newHashedPassword = await bcrypt.hash(password, saltRounds);
-    userService.updateUserById(user._id, { password: newHashedPassword });
+    userService.updatePassword(user._id, { password: newHashedPassword });
     return successResponse(res, "Password changed successfully", {
       success: true,
     });
@@ -116,7 +116,7 @@ const resetPassword = async (req, res) => {
       bcrypt.hash(password, saltRounds),
     ]);
     const update = { password: hash };
-    const updatedUser = await userService.updateUserById(user._id, update);
+    const updatedUser = await userService.updatePassword(user._id, update);
     return successResponse(res, "Password reset successful", { success: true });
   } catch (error) {
     return errorResponse(res, error);

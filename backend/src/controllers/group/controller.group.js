@@ -10,7 +10,8 @@ const { errorResponse, successResponse } = require("../../utils/responses");
 
 const getAllGroups = async (req, res) => {
   try {
-    const groups = await groupService.getAllGroups();
+    const { body } = req;
+    const groups = await groupService.getAllGroups(body.userId);
 
     return successResponse(res, "Groups Fetched", groups);
   } catch (error) {
@@ -34,7 +35,11 @@ const createGroup = async (req, res) => {
   try {
     let { body } = req;
     const createdBy = req.user._id;
-    const group = await groupService.createGroup({ ...body, members: [createdBy], createdBy });
+    const group = await groupService.createGroup({
+      ...body,
+      members: [createdBy],
+      createdBy,
+    });
     return successResponse(res, "Group Created", group);
   } catch (error) {
     return errorResponse(res, error);
@@ -66,7 +71,7 @@ const deleteGroup = async (req, res) => {
   }
 };
 
-// Members 
+// Members
 
 const getAllMembers = async (req, res) => {
   const { id } = req.params;
@@ -80,14 +85,33 @@ const getAllMembers = async (req, res) => {
   }
 };
 
+const getUsersToAdd = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const usersToAdd = await groupService.getUsersToAdd(id);
+    return successResponse(res, "Users to Add Fetched", usersToAdd);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
 const addMember = async (req, res) => {
   const { body, params } = req;
   const { id } = params;
-
   try {
-    const group = await groupService.updateGroupById(id, body);
-
+    const group = await groupService.addUserToGroup(id, body.userId);
     return successResponse(res, "Group Member Added", group);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
+const removeMember = async (req, res) => {
+  const { body, params } = req;
+  const { id } = params;
+  try {
+    const group = await groupService.removeMemberFromGroup(id, body.userId);
+    return successResponse(res, "Group Member Removed", group);
   } catch (error) {
     return errorResponse(res, error);
   }
@@ -100,5 +124,7 @@ module.exports = {
   deleteGroup,
   getGroupById,
   addMember,
-  getAllMembers
+  getUsersToAdd,
+  getAllMembers,
+  removeMember,
 };

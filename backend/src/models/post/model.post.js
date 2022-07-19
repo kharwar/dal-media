@@ -5,8 +5,23 @@
  */
 
 const mongoose = require("mongoose");
-const isEmpty = require("lodash.isempty");
+const { CommentSchema } = require("./model.comment");
 const { UserSchema } = require("../user/model.user");
+
+const createdBySchema = new mongoose.Schema({
+  _id: mongoose.Schema.Types.ObjectId,
+  firstname: {
+    type: String,
+    required: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+  },
+});
 
 const PostSchema = new mongoose.Schema(
   {
@@ -16,19 +31,26 @@ const PostSchema = new mongoose.Schema(
     images: {
       type: [String],
     },
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: [true, "User id is required"],
-    },
+    createdBy: createdBySchema,
+    // createdBy: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    //   required: [true, "User id is required"],
+    // },
     groupId: {
       type: String,
     },
     likes: [String],
-    comments: [String],
+    comments: [CommentSchema],
   },
   { timestamps: true }
 );
+
+PostSchema.index({
+  "description": "text",
+  "createdBy.firstname": "text",
+  "createdBy.lastname": "text",
+});
 
 const Post = mongoose.model("Post", PostSchema);
 

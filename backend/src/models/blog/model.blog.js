@@ -1,3 +1,8 @@
+/*
+ * Created on Tue Jul 8 2022
+ *
+ * Author: Siddharth Kharwar
+ */
 const mongoose = require("mongoose"),
   Schema = mongoose.Schema;
 

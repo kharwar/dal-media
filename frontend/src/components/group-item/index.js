@@ -17,7 +17,11 @@ const GroupItem = ({ group, handleMenu }) => {
         <Stack
           sx={{ display: "flex", flex: 1, cursor: "pointer" }}
           direction="row"
-          onClick={() => navigate(`./${group._id}`)}
+          onClick={() =>
+            navigate(`./${group._id}`, {
+              state: { createdBy: group.createdBy },
+            })
+          }
         >
           <Avatar sx={{ bgcolor: "#2c3e50" }}>
             <GroupsIcon />
