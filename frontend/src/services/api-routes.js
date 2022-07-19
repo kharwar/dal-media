@@ -5,6 +5,10 @@ export default {
   createPost: "posts/create",
   editPost: "posts/update",
   deletePost: "posts/delete",
+  likeDislikePost: "posts/like-dislike-post",
+  commentOnPost: "posts/comment-post",
+  getComments: "posts/comments",
+  searchPost: "posts/search",
   getEvents: "events",
   createEvent: "events/create",
   deleteEvent: "events/delete",
@@ -25,4 +29,6 @@ export default {
   groupMembers: "members",
   usersToAdd: "usersToAdd",
   files: "files",
+  createPoll: "polls/create",
+  getPolls: "polls",
 };

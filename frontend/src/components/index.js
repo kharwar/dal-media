@@ -10,6 +10,7 @@ import EventList from "./event-list";
 import Event from "./event";
 import RichTextInput from "./RichTextInput";
 import BlogList from "./BlogList";
+import Poll from "./poll";
 export {
   PostTextInput,
   TextInput,
@@ -24,4 +25,5 @@ export {
   snackbar, //this is just a snackbar reference
   RichTextInput,
   BlogList,
+  Poll,
 };

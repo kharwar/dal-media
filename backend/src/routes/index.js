@@ -8,6 +8,7 @@ const blogRoutes = require("./blog/router.blog");
 const groupRouter = require("./group/router.group");
 const fileRouter = require("./file/router.file");
 const otpRouter = require("./otp/routes.otp");
+const pollRouter = require("./poll/router.poll");
 
 router.use("/users", userRoutes);
 router.use("/blogs", blogRoutes);
@@ -17,5 +18,6 @@ router.use("/otp", otpRouter);
 // router.use("/email", emailRouter);
 router.use("/groups", groupRouter);
 router.use("/files", fileRouter);
+router.use("/polls", pollRouter);
 
 module.exports = router;
