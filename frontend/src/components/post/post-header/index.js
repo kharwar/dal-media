@@ -32,7 +32,7 @@ const PostHeader = ({ post: { createdBy, createdAt }, handleMenu }) => {
             </Typography>
           </Stack>
         </Box>
-        {createdBy.id === loggedInUser.id && (
+        {createdBy._id === loggedInUser._id && (
           <IconButton onClick={handleMenu}>
             <MoreHorizIcon />
           </IconButton>
