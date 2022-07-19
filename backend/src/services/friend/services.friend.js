@@ -1,5 +1,5 @@
-import Friend from "../../models/friend/model.friend";
-import { validations } from "../../utils";
+const { Friend } = require("../../models");
+const { validations } = require("../../utils");
 
 const createFriend = async (friendData) => {
   try {

@@ -1,7 +1,7 @@
-import { friendService } from "../../services";
-import { errorResponse, successResponse } from "../../utils/responses";
-import constants from "../../utils/constants";
-import { validations } from "../../utils";
+const { friendService } = require("../../services");
+const { errorResponse, successResponse } = require("../../utils/responses");
+const constants = require("../../utils/constants");
+const { validations } = require("../../utils");
 
 const sendFriendRequest = async (req, res) => {
   try {

@@ -13,12 +13,9 @@ import { useAuth } from "../../context";
 import { users } from "../../data";
 import { Cancel, CheckCircle } from "@mui/icons-material";
 
-const fetchFriends = async (userId, setFriends) => {
-  const params = {
-    userId: userId,
-  };
+const fetchFriends = async (setFriends) => {
   ServiceManager.getInstance()
-    .request(apiRoutes.groups + "/all", params, "post")
+    .request(apiRoutes.getFriends)
     .then((res) => {
       setFriends(res.data);
     })
@@ -27,14 +24,11 @@ const fetchFriends = async (userId, setFriends) => {
     });
 };
 
-const fetchRequests = async (userId, setFriends) => {
-  const params = {
-    userId: userId,
-  };
+const fetchRequests = async (setRequests) => {
   ServiceManager.getInstance()
-    .request(apiRoutes.groups + "/all", params, "post")
+    .request(apiRoutes.getRequests)
     .then((res) => {
-      setFriends(res.data);
+      setRequests(res.data);
     })
     .catch((error) => {
       console.log({ error });
@@ -48,21 +42,20 @@ const Friends = () => {
   console.log("fileList");
 
   useEffect(() => {
-    // fetchGroups(loggedInUser._id, setGroups);
-    setRequests(users);
-    setFriends(users);
+    fetchRequests(setRequests);
+    fetchFriends(setFriends);
   }, []);
 
   const renderUserItem = useCallback((isRequest, user) => {
     return (
-      <Paper sx={{ p: 1.5, my: 1 }}>
+      <Paper sx={{ p: 1.5, my: 1 }} key={user._id}>
         <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-          <Box sx={{ display: "flex", flex: 1, mr: 1 }}>
-            <Avatar alt={user.name} src={user.image} />
+          <Box sx={{ display: "flex", mr: 2 }}>
+            <Avatar alt={user.firstname} src={user.image} />
           </Box>
           <Box sx={{ display: "flex", flex: 1, mr: 1 }}>
             <Typography variant="body1" sx={{ lineHeight: 1.4 }}>
-              {user.name}
+              {user.firstname} {user.lastname}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", flex: 1, mr: 1, justifyContent: "end" }}>
