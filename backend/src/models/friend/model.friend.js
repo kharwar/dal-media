@@ -1,14 +1,16 @@
 const mongoose = require("mongoose");
-const { FRIENDS } = required("../../utils/constants.js");
+const { FRIENDS } = require("../../utils/constants.js");
 
 const FriendSchema = new mongoose.Schema(
   {
     sourceUser: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     targetUser: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     status: {

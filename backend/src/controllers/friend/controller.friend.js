@@ -2,12 +2,13 @@ const { friendService } = require("../../services");
 const { errorResponse, successResponse } = require("../../utils/responses");
 const constants = require("../../utils/constants");
 const { validations } = require("../../utils");
+const { FRIENDS } = require("../../utils/constants");
 
 const sendFriendRequest = async (req, res) => {
   try {
     const { body } = req;
     const friendData = {
-      targetUser: body.targetUserId,
+      targetUser: body.userId,
       sourceUser: req.user._id,
       status: constants.FRIENDS.PENDING,
     };
@@ -21,10 +22,7 @@ const sendFriendRequest = async (req, res) => {
 const acceptFriendRequest = async (req, res) => {
   try {
     const { body } = req;
-    const friend = await friendService.findFriend(
-      req.user._id,
-      body.targetUserId
-    );
+    const friend = await friendService.findFriend(body.userId, req.user._id);
 
     if (!friend) {
       throw validations.handleErrors(
@@ -34,8 +32,16 @@ const acceptFriendRequest = async (req, res) => {
     }
     friend.status = constants.FRIENDS.ACCEPTED;
 
-    await friend.save();
-    return successResponse(res, "Friend Request Accepted", friend);
+    const [_, __] = await Promise.all([
+      friend.save(),
+      friendService.createFriend({
+        sourceUser: req.user._id,
+        targetUser: body.userId,
+        status: FRIENDS.ACCEPTED,
+      }),
+    ]);
+
+    return successResponse(res, "Friend Request Accepted", { success: true });
   } catch (error) {
     return errorResponse(res, error);
   }
@@ -43,11 +49,12 @@ const acceptFriendRequest = async (req, res) => {
 
 const getMyFriends = async (req, res) => {
   try {
-    const friends = await friendService.findFriendsById(
-      req.user._id,
-      constants.FRIENDS.ACCEPTED
-    );
-    return successResponse(res, "Friends Fetched", friends);
+    const friends = await friendService.findFriendsWhere({
+      sourceUser: req.user._id,
+      status: constants.FRIENDS.ACCEPTED,
+    });
+    const myFriends = friends.map((friend) => friend.targetUser);
+    return successResponse(res, "Friends Fetched", myFriends);
   } catch (error) {
     return errorResponse(res, error);
   }
@@ -55,13 +62,44 @@ const getMyFriends = async (req, res) => {
 
 const getFriendRequests = async (req, res) => {
   try {
-    const friendRequests = await friendService.findFriendsById(
-      req.user._id,
-      constants.FRIENDS.PENDING
-    );
-    return successResponse(res, "Friend Requests Fetched", friendRequests);
+    const friendRequests = await friendService.findFriendsWhere({
+      targetUser: req.user._id,
+      status: constants.FRIENDS.PENDING,
+    });
+
+    const myFriendRequests = friendRequests.map((friend) => friend.sourceUser);
+    return successResponse(res, "Friend Requests Fetched", myFriendRequests);
   } catch (error) {
     return errorResponse(res, error);
+  }
+};
+
+const denyFriendRequest = async (req, res) => {
+  try {
+    const { body } = req;
+    const friend = await friendService.deleteOneFriendWhere({
+      sourceUser: body.userId,
+      targetUser: req.user._id,
+      status: constants.FRIENDS.PENDING,
+    });
+    return successResponse(res, "Friend Request denied", { success: true });
+  } catch (err) {
+    return errorResponse(res, err);
+  }
+};
+
+const unfriend = async (req, res) => {
+  try {
+    const { body } = req;
+    await friendService.deleteManyFriendWhere({
+      $or: [
+        { $and: [{ sourceUser: body.userId }, { targetUser: req.user._id }] },
+        { $and: [{ sourceUser: req.user._id }, { targetUser: body.userId }] },
+      ],
+    });
+    return successResponse(res, "Unfriended", { success: true });
+  } catch (error) {
+    return errorResponse(res, err);
   }
 };
 
@@ -70,4 +108,6 @@ module.exports = {
   acceptFriendRequest,
   getMyFriends,
   getFriendRequests,
+  denyFriendRequest,
+  unfriend,
 };

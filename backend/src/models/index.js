@@ -6,6 +6,7 @@ const Group = require("./group/model.group");
 const File = require("./file/model.file");
 const Event = require("./events/model.event");
 const Poll = require("./poll/model.poll");
+const Friend = require("./friend/model.friend");
 
 module.exports = {
   User,
@@ -16,4 +17,5 @@ module.exports = {
   Group,
   File,
   Poll,
+  Friend,
 };
