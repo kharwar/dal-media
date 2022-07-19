@@ -7,6 +7,7 @@ const blogController = require("./blog/controller.blog");
 const groupController = require("./group/controller.group");
 const fileController = require("./file/controller.file");
 const pollController = require("./poll/controller.poll");
+const friendController = require("./friend/controller.friend");
 
 module.exports = {
   userController,
@@ -18,4 +19,5 @@ module.exports = {
   groupController,
   fileController,
   pollController,
+  friendController,
 };
