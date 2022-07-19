@@ -142,7 +142,7 @@ const Profile = () => {
         }}
       >
         <MenuItem onClick={handleEditProfile}>Edit Profile</MenuItem>
-        {/* <MenuItem onClick={handleChangePassword}>Change Password</MenuItem> */}
+        <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
       </Menu>
     </>
   );

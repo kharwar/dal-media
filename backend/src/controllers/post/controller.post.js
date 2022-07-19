@@ -33,7 +33,7 @@ const getPostById = async (req, res) => {
 
 const createPost = async (req, res) => {
   try {
-    const { body } = req;
+    const { body, user } = req;
 
     if (isEmpty(body.description) && isEmpty(body.images)) {
       const error = {
@@ -42,7 +42,7 @@ const createPost = async (req, res) => {
       };
       return errorResponse(res, error);
     }
-    const newPost = await postService.createPost(body);
+    const newPost = await postService.createPost(body, user);
     return successResponse(res, "Post Created", newPost);
   } catch (error) {
     return errorResponse(res, error);
@@ -73,13 +73,47 @@ const deletePost = async (req, res) => {
   }
 };
 
-const likePost = async (req, res) => {
-  const { body } = req;
+const likeDislikePost = async (req, res) => {
+  const { body, user } = req;
 
   try {
-    const post = await postService.likeOrDislikePost(body);
+    const post = await postService.likeDislikePost(body, user._id);
 
-    return successResponse(res, "Post Deleted", post);
+    return successResponse(res, "Success", post);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
+const commentOnPost = async (req, res) => {
+  const { body, user } = req;
+
+  try {
+    const post = await postService.commentOnPost(body, user._id);
+
+    return successResponse(res, "Success", post);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
+const getComments = async (req, res) => {
+  const { postId } = req.query;
+  try {
+    const comments = await postService.getComments(postId);
+
+    return successResponse(res, "Success", comments);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
+const searchPost = async (req, res) => {
+  const { keyword } = req.query;
+  try {
+    const posts = await postService.searchPost(keyword);
+
+    return successResponse(res, "Success", posts);
   } catch (error) {
     return errorResponse(res, error);
   }
@@ -91,5 +125,8 @@ module.exports = {
   updatePost,
   deletePost,
   getPostById,
-  likePost,
+  likeDislikePost,
+  commentOnPost,
+  getComments,
+  searchPost,
 };
