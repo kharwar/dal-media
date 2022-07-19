@@ -7,6 +7,7 @@
 const mongoose = require("mongoose");
 const { Group } = require("../../models");
 const { User } = require("../../models");
+const { findById } = require("../../models/group/model.group");
 const { validations } = require("../../utils");
 
 const createGroup = async (groupData) => {
@@ -30,10 +31,13 @@ const findGroupId = async (id) => {
 const getAllGroups = async (userId) => {
   try {
     // const groups = await Group.find({members: {$contains: mongoose.Schema.Types.ObjectId(userId)}});
-    const groups = await Group.find();
+    const groups = await Group.find().populate({
+      path: "createdBy",
+      select: "-password",
+    });
     const userGroups = [];
     for (let group of groups) {
-      for(let member of group.members) {
+      for (let member of group.members) {
         if (member.toString() === userId) {
           userGroups.push(group);
         }
@@ -93,7 +97,8 @@ const addUserToGroup = async (groupId, userId) => {
   try {
     const group = await Group.findById(groupId);
     group.members.push(userId);
-    await group.save();
+    await (await group.save()).populate("members");
+
     return group;
   } catch (error) {
     throw validations.handleErrors(error);

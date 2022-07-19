@@ -7,6 +7,9 @@ import {
   Paper,
   Avatar,
   IconButton,
+  Autocomplete,
+  TextField,
+  InputBase,
 } from "@mui/material";
 import { apiRoutes, ServiceManager } from "../../services";
 import { useAuth } from "../../context";
@@ -42,20 +45,23 @@ const Friends = () => {
   console.log("fileList");
 
   useEffect(() => {
-    fetchRequests(setRequests);
-    fetchFriends(setFriends);
+    // fetchRequests(setRequests);
+    // fetchFriends(setFriends);
+    setFriends(users);
+    setRequests(users);
   }, []);
 
   const renderUserItem = useCallback((isRequest, user) => {
     return (
-      <Paper sx={{ p: 1.5, my: 1 }} key={user._id}>
+      <Box sx={{ py: 0.5, my: 1 }} key={user._id}>
         <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
           <Box sx={{ display: "flex", mr: 2 }}>
-            <Avatar alt={user.firstname} src={user.image} />
+            <Avatar alt={user.name} src={user.image} />
           </Box>
-          <Box sx={{ display: "flex", flex: 1, mr: 1 }}>
+          <Box sx={{ display: "flex", flex: 2, mr: 1 }}>
             <Typography variant="body1" sx={{ lineHeight: 1.4 }}>
-              {user.firstname} {user.lastname}
+              {/* {user.firstname} {user.lastname} */}
+              {user.name}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", flex: 1, mr: 1, justifyContent: "end" }}>
@@ -78,21 +84,40 @@ const Friends = () => {
             )}
           </Box>
         </Box>
-      </Paper>
+      </Box>
     );
   }, []);
 
   return (
     <Container maxWidth="sm">
+      <Autocomplete
+        id="group-add-member"
+        options={friends}
+        getOptionLabel={(option) => option.name}
+        renderOption={(props, option) => (
+          <Box component="li" {...props} key={option.id} id={option.id}>
+            {option.name}
+          </Box>
+        )}
+        renderInput={(params) => (
+          <TextField {...params} label="Search Friend" />
+        )}
+      />
       <Typography variant="h6" sx={{ lineHeight: 1.4, mt: 2 }}>
         Friend Requets
       </Typography>
-      {requests.map((user) => renderUserItem(true, user))}
+      <Divider sx={{ my: 2 }} />
+      <Box sx={{ height: "30vh", overflowY: "scroll" }}>
+        {requests.map((user) => renderUserItem(true, user))}
+      </Box>
       <Divider sx={{ my: 2 }}></Divider>
       <Typography variant="h6" sx={{ lineHeight: 1.4 }}>
         Friends
       </Typography>
-      {friends.map((user) => renderUserItem(false, user))}
+      <Divider sx={{ my: 2 }} />
+      <Box sx={{ height: "70vh", overflowY: "scroll" }}>
+        {friends.map((user) => renderUserItem(false, user))}
+      </Box>
     </Container>
   );
 };

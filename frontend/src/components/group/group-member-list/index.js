@@ -5,6 +5,7 @@ import { useAlert } from "../../alert-dialog";
 import GroupMember from "../group-member";
 import { snackbar } from "../../../components";
 import { apiRoutes, ServiceManager } from "../../../services";
+import GroupAddMember from "../group-add-member";
 
 const fetchGroupMembers = async (groupId, setUsers) => {
   ServiceManager.getInstance()
@@ -93,12 +94,18 @@ const GroupMemberList = (props) => {
         user={user}
         key={user._id}
         handleMenu={(event) => handleMenu(event, user)}
+        createdBy={props.createdBy}
       />
     );
   }, []);
 
+  const onSelectUser = (group) => {
+    setUsers(group.members);
+  };
+
   return (
     <>
+      <GroupAddMember groupId={props.groupId} onSelectUser={onSelectUser} />
       {users.map(renderMember)}
       <Menu
         id="menu"

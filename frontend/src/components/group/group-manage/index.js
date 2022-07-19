@@ -41,15 +41,9 @@ const GroupManage = (props) => {
 
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          mb: 1,
-        }}
-      >
-        <Box sx={{ display: "flex", mr: 1 }}>
+      <Box sx={{ mb: 1 }}>
+        <GroupMemberList groupId={props.groupId} createdBy={props.createdBy} />
+        <Box sx={{ display: "flex", mr: 1, justifyContent: "flex-end" }}>
           <Button
             variant="contained"
             onClick={deleteGroupHandler}
@@ -60,11 +54,7 @@ const GroupManage = (props) => {
             Delete Group
           </Button>
         </Box>
-        <Box sx={{ display: "flex", mr: 1 }}>
-          <GroupAddMember groupId={props.groupId} />
-        </Box>
       </Box>
-      <GroupMemberList groupId={props.groupId} />
     </>
   );
 };

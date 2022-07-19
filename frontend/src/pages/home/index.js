@@ -1,5 +1,5 @@
-import { Container, InputBase, Paper, Stack } from "@mui/material";
-import { PostList, snackbar } from "../../components";
+import { Container, Grid, InputBase, Paper, Stack } from "@mui/material";
+import { Friends, PostList, snackbar } from "../../components";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useRef, useState } from "react";
 import { apiRoutes, ServiceManager } from "../../services";
@@ -49,21 +49,32 @@ const Home = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper
-        variant="outlined"
-        sx={{ display: "flex", alignItems: "center", mt: 2 }}
-      >
-        <InputBase
-          sx={{ mx: 1, flex: 1, py: 0.75 }}
-          placeholder="Search..."
-          inputProps={{ "aria-label": "search" }}
-          onChange={handleSearch}
-        />
-        <SearchIcon sx={{ mr: 1 }} />
-      </Paper>
-      <PostList posts={posts} />
-    </Container>
+    <Grid container spacing={2}>
+      <Grid item xs={8.5}>
+        <Container maxWidth="sm">
+          <Paper
+            variant="outlined"
+            sx={{ display: "flex", alignItems: "center", mt: 2 }}
+          >
+            <InputBase
+              sx={{ mx: 1, flex: 1, py: 0.75 }}
+              placeholder="Search..."
+              inputProps={{ "aria-label": "search" }}
+              onChange={handleSearch}
+            />
+            <SearchIcon sx={{ mr: 1 }} />
+          </Paper>
+          <PostList posts={posts} />
+        </Container>
+      </Grid>
+      <Grid item xs={3.5}>
+        <Container maxWidth="sm">
+          <Paper varaint="outlined" sx={{ py: 2 }}>
+            <Friends />
+          </Paper>
+        </Container>
+      </Grid>
+    </Grid>
   );
 };
 
