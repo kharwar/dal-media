@@ -60,8 +60,10 @@ const GroupManage = (props) => {
             Delete Group
           </Button>
         </Box>
-        <Box sx={{ display: "flex", mr: 1 }}>
-          <GroupAddMember groupId={props.groupId} />
+        <Box
+          sx={{ display: "flex", flex: 1, justifyContent: "flex-end", mr: 1 }}
+        >
+          {/* <GroupAddMember groupId={props.groupId} onSelectUser={}/> */}
         </Box>
       </Box>
       <GroupMemberList groupId={props.groupId} />

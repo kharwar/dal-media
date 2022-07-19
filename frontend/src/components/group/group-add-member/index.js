@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import { Stack, Box } from "@mui/material";
 import _ from "lodash";
@@ -21,18 +21,20 @@ const addUserToGroup = async (groupId, userId, setUsers) => {
     userId: userId,
   };
 
-  ServiceManager.getInstance()
-    .request(
+  let user = null;
+
+  try {
+    const { data } = await ServiceManager.getInstance().request(
       `${apiRoutes.groups}/${groupId}/${apiRoutes.groupMembers}`,
       params,
       "put"
-    )
-    .then((res) => {
-      setUsers(res.data);
-    })
-    .catch((error) => {
-      console.log({ error });
-    });
+    );
+    user = data;
+  } catch (error) {
+    console.log({ error });
+  }
+
+  return user;
 };
 
 const GroupAddMember = (props) => {
@@ -42,15 +44,25 @@ const GroupAddMember = (props) => {
     fetchUsersToAdd(props.groupId, setUsers);
   }, []);
 
-  const onChangeHandler = (event) => {
+  const onChangeHandler = async (event) => {
     if (!event.target?.id) {
       return;
     }
-    addUserToGroup(props.groupId, event.target.id, setUsers);
+    // const newUsers = [...users];
+    // newUsers;
+    const user = await addUserToGroup(props.groupId, event.target.id, setUsers);
+
+    if (users) {
+      props.onSelectUser?.(user);
+    }
   };
 
   return (
-    <Stack spacing={2} sx={{ width: 300 }}>
+    <Stack
+      direction="row"
+      spacing={2}
+      sx={{ width: "100%", justifyContent: "flex-end" }}
+    >
       <Autocomplete
         id="group-add-member"
         options={users}
@@ -60,9 +72,24 @@ const GroupAddMember = (props) => {
             {option.firstname} {option.lastname}
           </Box>
         )}
-        renderInput={(params) => <TextField {...params} label="Add User" />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Add User"
+            sx={{ display: "flex", flex: 1 }}
+          />
+        )}
         onChange={onChangeHandler}
+        sx={{ width: "40%" }}
       />
+
+      <Button
+        variant="contained"
+        sx={{ alignSelf: "center" }}
+        // onClick={deleteGroupHandler}
+      >
+        Add
+      </Button>
     </Stack>
   );
 };
