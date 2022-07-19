@@ -31,7 +31,10 @@ const findGroupId = async (id) => {
 const getAllGroups = async (userId) => {
   try {
     // const groups = await Group.find({members: {$contains: mongoose.Schema.Types.ObjectId(userId)}});
-    const groups = await Group.find();
+    const groups = await Group.find().populate({
+      path: "createdBy",
+      select: "-password",
+    });
     const userGroups = [];
     for (let group of groups) {
       for (let member of group.members) {
