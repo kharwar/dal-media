@@ -1,8 +1,6 @@
 export default {
   // baseURL: "http://localhost:8000/api/",
-  baseURL:
-    process.env.BASE_URL ||
-    "https://grp11-dal-media-backend-prod.herokuapp.com/api/",
+  baseURL: "https://grp11-dal-media-backend-prod.herokuapp.com/api/",
   getPosts: "posts",
   createPost: "posts/create",
   editPost: "posts/update",
