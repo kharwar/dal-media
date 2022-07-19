@@ -6,6 +6,7 @@
 
 const mongoose = require("mongoose");
 const { Group } = require("../../models");
+const { User } = require("../../models");
 const { validations } = require("../../utils");
 
 const createGroup = async (groupData) => {
@@ -58,8 +59,34 @@ const deleteGroupById = async (id) => {
 const getAllMembers = async (groupId) => {
   try {
     const group = await Group.findById(groupId).populate("members").lean();
-    console.log(group);
     return group.members;
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
+const getUsersToAdd = async (groupId) => {
+  try {
+    const group = await Group.findById(groupId).populate("members").lean();
+    const members = group.members;
+    const users = await User.find().lean();
+    return users.filter((user) => {
+      return !members.find((member) => {
+        return member.email === user.email;
+      });
+    });
+  } catch (error) {
+    throw validations.handleErrors(error);
+  }
+};
+
+const addUserToGroup = async (groupId, userId) => {
+  try {
+    const group = await Group.findById(groupId);
+    group.members.push(userId);
+    await group.save();
+    // const updatedGroup = await Group.save(group);
+    return group;
   } catch (error) {
     throw validations.handleErrors(error);
   }
@@ -72,4 +99,6 @@ module.exports = {
   updateGroupById,
   deleteGroupById,
   getAllMembers,
+  getUsersToAdd,
+  addUserToGroup,
 };

@@ -8,10 +8,9 @@ import { apiRoutes, ServiceManager } from "../../../services";
 
 const fetchGroupMembers = async (groupId, setUsers) => {
   ServiceManager.getInstance()
-    .request(`${apiRoutes.groups}/${groupId}/members`)
+    .request(`${apiRoutes.groups}/${groupId}/${apiRoutes.groupMembers}`)
     .then((res) => {
-      console.log(res.data);
-      // setUsers(res.data);
+      setUsers(res.data);
     })
     .catch((error) => {
       console.log({ error });
@@ -72,7 +71,7 @@ const GroupMemberList = (props) => {
     return (
       <GroupMember
         user={user}
-        key={user.id}
+        key={user._id}
         handleMenu={(event) => handleMenu(event, user)}
       />
     );
@@ -98,7 +97,6 @@ const GroupMemberList = (props) => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleAdmin}>Make Admin</MenuItem>
         <MenuItem onClick={handleRemove}>Remove</MenuItem>
       </Menu>
     </>

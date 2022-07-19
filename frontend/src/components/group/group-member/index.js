@@ -13,7 +13,7 @@ const GroupMember = ({ user, handleMenu }) => {
       <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
         <Box sx={{ display: "flex", flex: 1, mr: 1 }}>
           <Typography variant="body1" sx={{ lineHeight: 1.4 }}>
-            {user.name}
+            {user.firstname} {user.lastname}
           </Typography>
         </Box>
         <Box sx={{ display: "flex", flex: 1, mr: 1 }}>

@@ -84,13 +84,21 @@ const getAllMembers = async (req, res) => {
   }
 };
 
+const getUsersToAdd = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const usersToAdd = await groupService.getUsersToAdd(id);
+    return successResponse(res, "Users to Add Fetched", usersToAdd);
+  } catch (error) {
+    return errorResponse(res, error);
+  }
+};
+
 const addMember = async (req, res) => {
   const { body, params } = req;
   const { id } = params;
-
   try {
-    const group = await groupService.updateGroupById(id, body);
-
+    const group = await groupService.addUserToGroup(id, body.userId);
     return successResponse(res, "Group Member Added", group);
   } catch (error) {
     return errorResponse(res, error);
@@ -104,5 +112,6 @@ module.exports = {
   deleteGroup,
   getGroupById,
   addMember,
+  getUsersToAdd,
   getAllMembers,
 };

@@ -18,5 +18,6 @@ groupRouter.get("/:id", groupController.getGroupById);
 // Members
 groupRouter.get("/:id/members", groupController.getAllMembers);
 groupRouter.put("/:id/members", groupController.addMember);
+groupRouter.get("/:id/usersToAdd", groupController.getUsersToAdd);
 
 module.exports = groupRouter;
