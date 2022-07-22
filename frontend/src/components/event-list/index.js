@@ -9,7 +9,6 @@ import { apiRoutes, ServiceManager } from "../../services";
 
 const EventList = (props) => {
   const [events, setEvents] = useState(props.events);
-  //console.log("eventList");
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
   const eventRef = useRef(null);
@@ -37,7 +36,6 @@ const EventList = (props) => {
   };
 
   const onDelete = () => {
-
     const id = eventRef.current["_id"].toString();
 
     ServiceManager.getInstance()
@@ -47,12 +45,7 @@ const EventList = (props) => {
         snackbar.current.showSnackbar(true, "Event Deleted");
         navigate(0);
       })
-      .catch((error) => {
-        console.log({ error });
-      });
-
-
-
+      .catch((error) => {});
   };
 
   const handleDelete = (event) => {

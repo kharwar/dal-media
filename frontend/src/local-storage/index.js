@@ -27,9 +27,7 @@ export const getLoggedInUser = async () => {
     if (res.data) {
       user = res.data;
     }
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 
   return user;
 };

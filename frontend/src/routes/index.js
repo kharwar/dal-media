@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet, useNavigate, Navigate } from "react-router-dom";
-import { Navbar, Friends } from "../components";
+import { Navbar } from "../components";
 import { useAuth } from "../context";
 import {
   Home,
@@ -19,7 +19,8 @@ import {
   ForgotPassword,
   Profile,
   ChangePassword,
-  ResetPassword
+  ResetPassword,
+  Friends,
 } from "../pages";
 
 const AppRoutes = () => {
@@ -69,13 +70,11 @@ const ProtectedRoutes = () => {
         <Route path="/change-password" element={<ChangePassword />} />
       </Route>
     </Routes>
-    
   );
 };
 
 const RequireAuth = ({ children }) => {
   const { loggedInUser } = useAuth();
-  console.log({ route: loggedInUser });
   if (!loggedInUser) {
     return <Navigate to="/login" replace />;
   }

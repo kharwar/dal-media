@@ -41,11 +41,8 @@ const Profile = () => {
         apiRoutes.getPosts,
         { userId: loggedInUser._id }
       );
-      console.log({ data });
       setPosts(data);
-    } catch (error) {
-      console.log({ error });
-    }
+    } catch (error) {}
   };
 
   const handleClose = () => {

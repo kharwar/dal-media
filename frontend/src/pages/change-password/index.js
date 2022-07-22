@@ -72,14 +72,12 @@ const ChangePassword = () => {
     };
 
     try {
-      console.log(params);
       const res = await ServiceManager.getInstance().request(
         apiRoutes.changePassword,
         params,
         "post"
       );
 
-      console.log({ res });
       if (res.data.success) {
         // ServiceManager.getInstance().userToken = res.data.token;
         // storeLoggedInUser(res.data.token);

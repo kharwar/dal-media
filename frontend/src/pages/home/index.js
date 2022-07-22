@@ -1,5 +1,5 @@
 import { Container, Grid, InputBase, Paper, Stack } from "@mui/material";
-import { Friends, PostList, snackbar } from "../../components";
+import { FriendsList, PostList, snackbar } from "../../components";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useRef, useState } from "react";
 import { apiRoutes, ServiceManager } from "../../services";
@@ -18,12 +18,9 @@ const Home = () => {
       const { data } = await ServiceManager.getInstance().request(
         apiRoutes.getPosts
       );
-      console.log({ data });
       allPosts.current = data;
       setPosts(data);
-    } catch (error) {
-      console.log({ error });
-    }
+    } catch (error) {}
   };
 
   const debounceChangeText = _.debounce(async (keyword) => {
@@ -33,11 +30,8 @@ const Home = () => {
           apiRoutes.searchPost,
           { keyword }
         );
-        console.log({ data });
         setPosts(data);
-      } catch (error) {
-        console.log({ error });
-      }
+      } catch (error) {}
     } else {
       setPosts(allPosts.current);
     }
@@ -50,8 +44,8 @@ const Home = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={8.5}>
-        <Container maxWidth="sm">
+      <Grid item sm={12} md={8.5}>
+        <Container maxWidth="sm" fixed={true}>
           <Paper
             variant="outlined"
             sx={{ display: "flex", alignItems: "center", mt: 2 }}
@@ -67,12 +61,8 @@ const Home = () => {
           <PostList posts={posts} />
         </Container>
       </Grid>
-      <Grid item xs={3.5}>
-        <Container maxWidth="sm">
-          <Paper varaint="outlined" sx={{ py: 2 }}>
-            <Friends />
-          </Paper>
-        </Container>
+      <Grid item sm={0} md={3.5}>
+        <FriendsList />
       </Grid>
     </Grid>
   );

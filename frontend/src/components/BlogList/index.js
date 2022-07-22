@@ -16,13 +16,10 @@ const deleteBlog = (blogId, setBlogs) => {
   ServiceManager.getInstance()
     .request(`${apiRoutes.getBlogs}/${blogId}`, null, "delete")
     .then((res) => {
-      console.log(res.data);
       snackbar.current.showSnackbar(true, "Blog Deleted");
       fetchBlogs(setBlogs);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const fetchBlogs = async (setBlogs) => {
@@ -31,9 +28,7 @@ const fetchBlogs = async (setBlogs) => {
     .then((res) => {
       setBlogs(res.data.blogs);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const BlogList = () => {

@@ -11,7 +11,8 @@ import Event from "./event";
 import RichTextInput from "./RichTextInput";
 import BlogList from "./BlogList";
 import Poll from "./poll";
-import Friends from "./friends";
+import FriendsList from "./friends-list";
+
 export {
   PostTextInput,
   TextInput,
@@ -27,5 +28,5 @@ export {
   RichTextInput,
   BlogList,
   Poll,
-  Friends
+  FriendsList,
 };

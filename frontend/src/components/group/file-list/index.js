@@ -21,40 +21,30 @@ const createFileToGroup = async (file, url, groupId, setFiles) => {
       "post"
     );
     getAllFiles(groupId, setFiles);
-    console.log(res.message);
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 const getAllFiles = (groupId, setFiles) => {
   ServiceManager.getInstance()
     .request(`${apiRoutes.files}/${groupId}`)
     .then((res) => {
-      console.log("All Files", res.data);
       setFiles(res.data);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const deleteFile = (fileId, groupId, setFiles) => {
   ServiceManager.getInstance()
     .request(`${apiRoutes.files}/${fileId}`, null, "delete")
     .then((res) => {
-      console.log(res.data);
       snackbar.current.showSnackbar(true, "File Deleted");
       getAllFiles(groupId, setFiles);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const FileList = (props) => {
   const [files, setFiles] = useState([]);
-  console.log("fileList");
 
   const { setAlert, setOnAgree } = useAlert();
   const navigate = useNavigate();
@@ -77,7 +67,7 @@ const FileList = (props) => {
   };
 
   const handleDownload = () => {
-    window.open(fileRef.current.url, '_blank', 'noopener,noreferrer');
+    window.open(fileRef.current.url, "_blank", "noopener,noreferrer");
     handleClose();
   };
 

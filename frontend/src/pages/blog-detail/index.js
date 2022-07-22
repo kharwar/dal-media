@@ -17,18 +17,14 @@ const fetchBlog = (blogId, setBlog) => {
     .request(`${apiRoutes.getBlogs}/${blogId}`)
     .then((res) => {
       setBlog(res["data"].body);
-      console.log(res["data"]);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const BlogDetail = () => {
   const params = useParams();
   const { state } = useLocation();
   const { blog } = state;
-  console.log("Blog Detail", blog);
   // const [blog, setBlog] = useState(state.blog);
 
   const editor = useMemo(() => withReact(createEditor()), []);

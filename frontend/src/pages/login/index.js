@@ -13,7 +13,14 @@ import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
-import { Checkbox, FormControlLabel, Link, Paper, Stack } from "@mui/material";
+import {
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  Link,
+  Paper,
+  Stack,
+} from "@mui/material";
 import { formValidationMsgs, formValidator } from "../../utils";
 import { AuthContext } from "../../context";
 import { apiRoutes, ServiceManager } from "../../services";
@@ -25,6 +32,7 @@ const Login = () => {
   const { setLoggedInUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,6 +62,8 @@ const Login = () => {
       return;
     }
 
+    setLoading(true);
+
     //Backend Api call for implementing feature
     const params = {
       email: data.email,
@@ -71,9 +81,11 @@ const Login = () => {
         ServiceManager.getInstance().userToken = res.data.token;
         storeLoggedInUser(res.data.token);
         setLoggedInUser(res.data);
+        setLoading(false);
         navigate("/", { replace: true });
       }
     } catch (error) {
+      setLoading(false);
       snackbar.current.showSnackbar(true, "Authentication Failed");
     }
   };
@@ -129,17 +141,14 @@ const Login = () => {
               helperText={errors.pass}
               sx={{ mb: 2 }}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
-              Login
+              {loading ? <CircularProgress size={24} /> : "Login"}
             </Button>
           </Box>
           <Grid container>

@@ -7,7 +7,7 @@ import NavUser from "./nav-user";
 import { useNavigate } from "react-router-dom";
 
 const pages = ["Home", "Groups", "Events", "Blogs"];
-
+const menuPages = [...pages, "Friends"];
 const Navbar = () => {
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const Navbar = () => {
             }}
           />
 
-          <NavMenuPages pages={pages} />
+          <NavMenuPages pages={menuPages} />
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
