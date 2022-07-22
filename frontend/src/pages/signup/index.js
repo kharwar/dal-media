@@ -13,26 +13,28 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useLocation, useNavigate } from "react-router-dom";
 import { formValidator, formValidationMsgs, uploadFile } from "../../utils";
-import { Avatar, ButtonBase, Link, Paper } from "@mui/material";
+import {
+  Avatar,
+  ButtonBase,
+  CircularProgress,
+  Link,
+  Paper,
+} from "@mui/material";
 import Images from "../../assets";
 import { grey } from "@mui/material/colors";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { AuthContext, useAuth } from "../../context";
-import Axios from "axios";
-import { sendEmail, verifyCode } from "../../helper";
 import { apiRoutes, ServiceManager } from "../../services";
 import { snackbar } from "../../components";
 import { storeLoggedInUser } from "../../local-storage";
-import { async } from "@firebase/util";
-
 
 //Front end code for implementing user registration into the application and also profile edit of user
 const Signup = () => {
-
   const { loggedInUser, setLoggedInUser } = useAuth();
   const navigate = useNavigate();
   const { state } = useLocation();
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState({
     file: null,
     url: loggedInUser?.image ?? Images.avatarPlaceholder,
@@ -45,18 +47,15 @@ const Signup = () => {
 
   //Backend API call for implementing the edit-profile and user registration features
   const submit = async (params, url, method, successMsg) => {
-    console.log(params);
     if (imageChanged) {
       try {
         params["image"] = await uploadFile(image.file);
       } catch (error) {
-        console.log({ error });
+        setLoading(false);
       }
     } else {
       params["image"] = image.url;
     }
-
-    console.log({ params });
 
     try {
       const res = await ServiceManager.getInstance().request(
@@ -64,21 +63,21 @@ const Signup = () => {
         params,
         method
       );
-      console.log({ res });
       if (res.data.token) {
         ServiceManager.getInstance().userToken = res.data.token;
         storeLoggedInUser(res.data.token);
       }
 
       setLoggedInUser(res.data);
+      setLoading(false);
       if (isEditMode) {
-        navigate("/profile")
+        navigate("/profile");
         snackbar.current.showSnackback(successMsg);
       } else {
         navigate("/", { replace: true });
       }
     } catch (error) {
-      console.log({ error });
+      setLoading(false);
       // snackbar.current.showSnackbar()
     }
   };
@@ -115,18 +114,23 @@ const Signup = () => {
     if (!isError) {
       setErrors(errors);
     } else {
+      setLoading(true);
       const params = {
         firstname: data.firstName,
         lastname: data.lastName,
         bio: data.bio,
       };
       if (isEditMode) {
-        params['id'] = loggedInUser._id
-        submit(params, apiRoutes.editProfile, "put", "Profile updated successfully");
+        params["id"] = loggedInUser._id;
+        submit(
+          params,
+          apiRoutes.editProfile,
+          "put",
+          "Profile updated successfully"
+        );
       } else {
-
-        params['email'] = data.email
-        params['password'] = data.password
+        params["email"] = data.email;
+        params["password"] = data.password;
         submit(params, apiRoutes.signUp, "post");
       }
     }
@@ -276,8 +280,15 @@ const Signup = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
-              {isEditMode ? "Save" : "Sign up"}
+              {loading ? (
+                <CircularProgress size={24} />
+              ) : isEditMode ? (
+                "Save"
+              ) : (
+                "Sign up"
+              )}
             </Button>
           </Box>
           {!isEditMode && (

@@ -60,7 +60,6 @@ const CreateEvent = () => {
     let arr = [];
     for (let a of imageArray) {
       arr.push({ file: null, url: a });
-      //console.log("For loop: " + a);
     }
     return arr;
   };
@@ -70,7 +69,6 @@ const CreateEvent = () => {
       const { event } = state;
       event.description && textInput.current.setValue(event.description);
       setImages(getImageObject(event.images));
-      //console.log("Use Effect");
       setLocation(event.location);
       setTitle(event.title);
     }
@@ -102,7 +100,7 @@ const CreateEvent = () => {
     }
   };
 
-  //may require change here eventImages var need to change 
+  //may require change here eventImages var need to change
   const onDeleteImage = (url) => {
     const filteredImages = images.filter((image) => image.url != url);
     setImages(filteredImages);
@@ -122,19 +120,14 @@ const CreateEvent = () => {
     const imageUrls = [];
 
     try {
-
       for (let i = 0; i < images.length; i++) {
         if (images[i].file) {
           const imageUrl = await uploadFile(images[i].file);
           imageUrls.push(imageUrl);
-        }
-        else {
+        } else {
           imageUrls.push(images[i].url);
         }
       }
-
-
-
 
       // for (const file in eventImages) {
       //   const imageUrl = await uploadFile(file);
@@ -151,13 +144,10 @@ const CreateEvent = () => {
       start_DT: startDTvalue.toString(),
       end_DT: endDTvalue.toString(),
       images: imageUrls,
-      createBy: loggedInUser._id.toString(),  //add user id in form of string
+      createBy: loggedInUser._id.toString(), //add user id in form of string
     };
 
-
-
     if (state?.event) {
-
       try {
         const res = await ServiceManager.getInstance().request(
           apiRoutes.editEvent + "/" + state.event._id.toString(),
@@ -165,16 +155,11 @@ const CreateEvent = () => {
           "put"
         );
 
-        console.log({ res });
         const key = state?.event ? "updated" : "created";
         snackbar.current.showSnackbar(true, `Event ${key}`);
         navigate("/event-page");
-      } catch (error) {
-        console.log({ error });
-      }
-
-    }
-    else {
+      } catch (error) {}
+    } else {
       try {
         const res = await ServiceManager.getInstance().request(
           apiRoutes.createEvent,
@@ -182,15 +167,11 @@ const CreateEvent = () => {
           "post"
         );
 
-        console.log({ res });
         const key = state?.event ? "updated" : "created";
         snackbar.current.showSnackbar(true, `Event ${key}`);
         navigate("/event-page");
-      } catch (error) {
-        console.log({ error });
-      }
+      } catch (error) {}
     }
-
   };
 
   return (

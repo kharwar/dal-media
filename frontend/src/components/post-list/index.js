@@ -72,7 +72,6 @@ const PostList = (props) => {
         },
         "post"
       );
-      console.log({ data });
       // snackbar.current.showSnackbar(true, "Post Liked");
     } catch (error) {}
   };
@@ -87,7 +86,6 @@ const PostList = (props) => {
         },
         "post"
       );
-      console.log({ data });
       // snackbar.current.showSnackbar(true, "Post Liked");
     } catch (error) {}
   };

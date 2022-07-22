@@ -13,9 +13,7 @@ const fetchGroupMembers = async (groupId, setUsers) => {
     .then((res) => {
       setUsers(res.data);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const removeMemberFromGroup = async (groupId, userId, setUsers) => {
@@ -32,9 +30,7 @@ const removeMemberFromGroup = async (groupId, userId, setUsers) => {
     .then((res) => {
       fetchGroupMembers(groupId, setUsers);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const GroupMemberList = (props) => {
@@ -59,7 +55,6 @@ const GroupMemberList = (props) => {
   };
 
   const handleAdmin = () => {
-    console.log("Admin");
     setOnAgree(handleMakeAdmin);
     handleClose();
     setAlert(

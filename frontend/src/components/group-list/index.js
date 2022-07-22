@@ -15,14 +15,10 @@ const fetchGroups = async (userId, setGroups) => {
     .then((res) => {
       setGroups(res.data);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const removeMemberFromGroup = async (groupId, userId, setGroups) => {
-  console.log("UserId", userId);
-  console.log("GroupId", groupId);
   const params = {
     userId: userId,
   };
@@ -36,15 +32,12 @@ const removeMemberFromGroup = async (groupId, userId, setGroups) => {
     .then((res) => {
       fetchGroups(userId, setGroups);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const GroupList = () => {
   const { loggedInUser } = useAuth();
   const [groups, setGroups] = useState([]);
-  console.log("fileList");
 
   const { setAlert, setOnAgree } = useAlert();
   const fileRef = useRef(null);

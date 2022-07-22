@@ -35,7 +35,7 @@ const CreatePoll = () => {
   };
 
   // handle click event of the Remove button
-  const handleRemoveClick = index => {
+  const handleRemoveClick = (index) => {
     const list = [...optionList];
     list.splice(index, 1);
     setOptionList(list);
@@ -46,7 +46,6 @@ const CreatePoll = () => {
     setOptionList([...optionList, ""]);
   };
 
-
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
@@ -55,11 +54,8 @@ const CreatePoll = () => {
     setQuestion(event.target.value);
   };
 
-
   const onPost = async () => {
     setLoading(true);
-    //console.log(optionList);
-
 
     const params = {
       title: title,
@@ -81,13 +77,10 @@ const CreatePoll = () => {
       setQuestion("");
       setOptionList([""]);
       navigate(-1);
-
     } catch (error) {
-      console.log({ error });
       snackbar.current.showSnackbar(true, "Poll Can not be created");
       setLoading(false);
     }
-
   };
 
   return (
@@ -144,13 +137,17 @@ const CreatePoll = () => {
                 label="Enter your Option:"
                 variant="outlined"
                 value={x}
-                onChange={e => handleOptionChange(e, i)}
+                onChange={(e) => handleOptionChange(e, i)}
               />
               <div>
-                {optionList.length !== 1 && <button
-                  className="mr10"
-                  onClick={() => handleRemoveClick(i)}>Remove</button>}
-                {optionList.length - 1 === i && <button onClick={handleAddClick}>Add</button>}
+                {optionList.length !== 1 && (
+                  <button className="mr10" onClick={() => handleRemoveClick(i)}>
+                    Remove
+                  </button>
+                )}
+                {optionList.length - 1 === i && (
+                  <button onClick={handleAddClick}>Add</button>
+                )}
               </div>
               <br />
             </div>

@@ -3,7 +3,7 @@
   Author: Kavya Kasaraneni
 */
 
-import React, { useContext, useState, } from "react";
+import React, { useContext, useState } from "react";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -67,11 +67,10 @@ const ResetPassword = () => {
     }
     const params = {
       passcode,
-      password: data.password
+      password: data.password,
     };
 
     try {
-      console.log(params)
       const res = await ServiceManager.getInstance().request(
         apiRoutes.resetPassword,
         params,

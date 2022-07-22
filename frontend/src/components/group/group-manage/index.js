@@ -11,13 +11,10 @@ const deleteGroup = (groupId, navigate) => {
   ServiceManager.getInstance()
     .request(`${apiRoutes.groups}/${groupId}`, null, "delete")
     .then((res) => {
-      console.log(res.data);
       snackbar.current.showSnackbar(true, "Group Deleted");
       navigate("/groups");
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const GroupManage = (props) => {

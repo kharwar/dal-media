@@ -27,8 +27,6 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
   const { loggedInUser } = useAuth();
 
-  console.log({ state });
-
   useEffect(() => {
     if (state?.post) {
       const { post } = state;
@@ -54,7 +52,6 @@ const CreatePost = () => {
         newImages.push({ file, url });
         lastId = id;
       }
-      console.log({ newImages });
       setImages((oldImages) => [...oldImages, ...newImages]);
       e.target.value = "";
     }
@@ -119,7 +116,6 @@ const CreatePost = () => {
       groupId ? navigate(`/groups/${groupId}`) : navigate("/");
     } catch (error) {
       setLoading(false);
-      console.log({ error });
     }
   };
 

@@ -10,7 +10,6 @@ import { useResolvedPath } from "react-router-dom";
 const GroupMember = ({ user, handleMenu, createdBy }) => {
   const { loggedInUser } = useAuth();
 
-  console.log({ user });
   return (
     <Paper sx={{ p: 1.5, my: 1 }}>
       <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>

@@ -22,9 +22,7 @@ const fetchFriends = async (setFriends) => {
     .then((res) => {
       setFriends(res.data);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const fetchRequests = async (setRequests) => {
@@ -33,20 +31,15 @@ const fetchRequests = async (setRequests) => {
     .then((res) => {
       setRequests(res.data);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
-const Friends = () => {
+const FriendsList = () => {
   const { loggedInUser } = useAuth();
   const [requests, setRequests] = useState([]);
   const [friends, setFriends] = useState([]);
-  console.log("fileList");
 
   useEffect(() => {
-    // fetchRequests(setRequests);
-    // fetchFriends(setFriends);
     const reverseUsers = [...users].reverse();
     setFriends(reverseUsers);
     setRequests(users);
@@ -90,7 +83,8 @@ const Friends = () => {
   }, []);
 
   return (
-    <Container maxWidth="sm">
+    // <Container maxWidth="md">
+    <Paper varaint="outlined" sx={{ p: 2 }}>
       <Autocomplete
         id="group-add-member"
         options={friends}
@@ -119,8 +113,9 @@ const Friends = () => {
       <Box sx={{ height: "70vh", overflowY: "scroll" }}>
         {friends.map((user) => renderUserItem(false, user))}
       </Box>
-    </Container>
+    </Paper>
+    // </Container>
   );
 };
 
-export default Friends;
+export default FriendsList;

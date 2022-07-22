@@ -25,9 +25,7 @@ function App() {
         if (user) {
           setLoggedInUser(user);
         }
-      } catch (error) {
-        console.log({ error });
-      }
+      } catch (error) {}
       setAuthentication(true);
     })();
   }, []);

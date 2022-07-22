@@ -14,7 +14,6 @@ const Group = () => {
   const [tab, setTab] = useState(0);
   const [posts, setPosts] = useState([]);
 
-  console.log({ state });
   useEffect(() => {
     getGroupPosts();
   }, []);
@@ -25,11 +24,8 @@ const Group = () => {
         apiRoutes.getPosts,
         { groupId: params.id }
       );
-      console.log({ data });
       setPosts(data);
-    } catch (error) {
-      console.log({ error });
-    }
+    } catch (error) {}
   };
 
   const onTabChanged = (event, newValue) => {
@@ -100,7 +96,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }

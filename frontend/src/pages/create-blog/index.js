@@ -52,7 +52,6 @@ const CreateBlog = () => {
       const { blog } = state;
       blog.title != "" && setTitle(blog.title);
       setImage(getImageObject(blog.image));
-      console.log(blog.body);
       setBody(blog.body);
     }
   }, [state, id]);
@@ -107,9 +106,7 @@ const CreateBlog = () => {
       const key = state?.blog ? "updated" : "created";
       snackbar.current.showSnackbar(true, `Blog ${key}.`);
       navigate("/blogs");
-    } catch (error) {
-      console.log({ error });
-    }
+    } catch (error) {}
   };
 
   const onDeleteImage = () => {

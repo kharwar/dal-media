@@ -9,15 +9,6 @@ import { useParams } from "react-router-dom";
 const Groups = () => {
   const params = useParams();
   const [tab, setTab] = useState(0);
-  console.log("Group Params:");
-
-  useEffect(() => {
-    console.log("mount");
-    console.log("Group Params:");
-    return () => {
-      console.log("unmout");
-    };
-  }, []);
 
   const onTabChanged = (event, newValue) => {
     setTab(newValue);
@@ -71,7 +62,7 @@ function TabPanel(props) {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
+    "id": `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }

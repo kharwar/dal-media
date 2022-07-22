@@ -11,9 +11,7 @@ const fetchUsersToAdd = async (groupId, setUsers) => {
     .then((res) => {
       setUsers(res.data);
     })
-    .catch((error) => {
-      console.log({ error });
-    });
+    .catch((error) => {});
 };
 
 const addUserToGroup = async (groupId, userId, setUsers) => {
@@ -30,9 +28,7 @@ const addUserToGroup = async (groupId, userId, setUsers) => {
       "put"
     );
     user = data;
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 
   return user;
 };

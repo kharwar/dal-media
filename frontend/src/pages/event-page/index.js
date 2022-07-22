@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
-import { Container } from '@mui/material';
-import EventList from '../../components/event-list';
+import { Container } from "@mui/material";
+import EventList from "../../components/event-list";
 import { apiRoutes, ServiceManager } from "../../services";
 
-
 const EventPage = () => {
-
-
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -14,16 +11,12 @@ const EventPage = () => {
       .request(apiRoutes.getEvents)
       .then((res) => {
         setEvents(res["data"]);
-        //console.log(res["data"]);
       })
-      .catch((error) => {
-        console.log({ error });
-      });
+      .catch((error) => {});
   }, []);
 
-
   return (
-    <Container >
+    <Container>
       <EventList events={events} />
     </Container>
   );

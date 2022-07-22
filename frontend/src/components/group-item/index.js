@@ -9,7 +9,6 @@ import GroupsIcon from "@mui/icons-material/Groups";
 
 const GroupItem = ({ group, handleMenu }) => {
   const navigate = useNavigate();
-  console.log("Group");
 
   return (
     <Paper sx={{ p: 1.5, my: 1 }}>
