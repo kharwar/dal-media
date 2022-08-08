@@ -6,7 +6,8 @@ The application uses ReactJS as the frontend framework with conjunction to MUI a
 You can find the deployed application [here](https://grp11-dalmedia-production.herokuapp.com/).
 
 Feeling lazy registering a new user? You can use the following credentials:
-Email: sd807959@dal.ca
+
+Email: sd807959@dal.ca <br>
 Password: password
 ## Core Team
  1. Kavya Kasaraneni
